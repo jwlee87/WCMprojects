@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation=
+		"http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<context:component-scan base-package="com.worldspon">
+		<context:include-filter  type="annotation"  expression="org.springframework.stereotype.Controller"/>
+		<context:exclude-filter  type="annotation"  expression="org.springframework.stereotype.Service"/>
+		<context:exclude-filter  type="annotation"  expression="org.springframework.stereotype.Repository"/>
+	</context:component-scan>
+	
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+						<value>application/json; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	
+	<!-- ============================= -->
+	<!-- Annotation 지원 HandlerMapping -->
+	<!-- ============================= -->
+	<!-- resources mapping -->
+	<!-- [EX] <mvc:resources mapping="" location=""/> -->
+	<mvc:resources mapping="/node_moduels/*" location="/node_moduels"/>
+	<mvc:resources mapping="/view/*" location="/view"/>
+	<mvc:default-servlet-handler/>
+	
+	<mvc:view-resolvers>
+		<mvc:jsp prefix="/view/" suffix=".jsp"/>
+	</mvc:view-resolvers>
+	
+	<!-- ================ -->
+	<!-- ViewResolver 선언 -->
+	<!-- ================ -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+	</bean>
+	
+</beans>

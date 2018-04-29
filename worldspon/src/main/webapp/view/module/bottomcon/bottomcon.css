@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+.bottomcon {
+	width: 100%;
+	height: auto;
+	margin: 10px auto;
+	float: left;
+}
+
+.bottomcon hr {
+	color: #ddd;
+}
+
+.bottom-text {
+	text-align: center;
+	color: #a1a1a1;
+	font-size: 14px;
+}
