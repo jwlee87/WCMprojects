@@ -1,0 +1,50 @@
+@charset "UTF-8";
+body {
+	height: 100%;
+}
+
+.content-con {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.con-header {
+	padding: 50px;
+}
+
+.title-con {
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.explain-con {
+	padding: 10px;
+}
+
+.explain-con div {
+	width: 1000px;
+	text-align: center;
+}
+
+.explain-con div span {
+	font-size: 16px;
+	color: #4c4c4c;
+}
+
+.type-con {
+	text-align: center;
+}
+
+.btn-con {
+	text-align: right;
+}
+
+.delReq {
+	cursor: pointer;
+}
+
+.delReq:hover {
+	color: #ccc;
+	text-decoration: underline;
+}

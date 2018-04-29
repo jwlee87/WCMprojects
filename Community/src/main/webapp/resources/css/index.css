@@ -1,0 +1,42 @@
+.top-blank {
+	height: 100px;
+	text-align: center;
+}
+
+.hello-con {
+	height: 100px;
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+	color: #4c4c4c;
+}
+
+.main-con {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.box-con {
+	width: 440px;
+	margin: 0 auto;
+	height: 200px;
+	text-align: center;
+}
+
+.box {
+	margin: 10px;
+	width: 200px;
+	height: 180px;
+	float: left;
+}
+
+.btn-lg {
+	width: 200px;
+	height: 180px;
+}
+
+.login-con {
+	width: 440px;
+	margin: 10px auto;
+	text-align: center;
+}

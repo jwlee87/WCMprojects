@@ -1,0 +1,170 @@
+@charset "UTF-8";
+
+#frm {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.top-wrap {
+	height: 24px;
+	border: 1px solid #c4c4c4;
+	padding: 0 3px;
+	vertical-align: middle;
+}
+
+.title-wrap {
+	width: 1000px;
+	padding: 0;
+	margin-bottom: 0;
+}
+
+#title {
+	width: 1000px;
+	height: 40px;
+	line-height: 40px !important;
+	margin: 0 auto;
+	outline: none;
+	font-size: 14px;
+	vertical-align: middle;
+	padding: 2px 15px 5px 15px;
+	border: 1px solid #c4c4c4;
+	border-bottom: none;
+	background-color: #fafafa;
+	vertical-align: middle !important;
+	font-weight: 500;
+	color: #4e4e4e;
+}
+
+#frm > table {
+	width: 1000px;
+}
+
+.editor-con {
+	width: 1000px;
+}
+
+#contents {
+	width: 100%;
+	min-height: 200px;
+	max-height: 500px;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+#edit-con {
+	height: 550px;
+	border: 1px solid #c4c4c4;
+	padding: 10px;
+}
+
+.button-con {
+	width: 1000px;
+	height: 50px;
+	margin-top: 15px;
+	text-align: center;
+	padding: 0 !important;
+}
+
+.button-con > input {
+	width: 80px;
+	height: 20px;
+	font-size: 12px;
+	background-color: #eee;
+	border: 1px solid #c4c4c4;
+	cursor: pointer;
+	margin: 0 auto;
+	margin-left: 5px;
+	margin-right: 5px;
+	
+}
+
+.button-con > input:hover {
+	background-color: #ccc;
+	cursor: pointer;
+}
+
+label {
+	padding: 0 12px;
+	color: #4e4e4e;
+	font-size: 14px;
+	font-weight: normal;
+	vertical-align: middle;
+}
+.write-wrap {
+	width: 100%;
+}
+
+#name, #pass {
+	background-color: #fafafa;
+	outline: none;
+	width: 100px !important;
+	border: none;
+	border-left: 1px solid #c4c4c4;
+	border-right: 1px solid #c4c4c4;
+	padding-left: 5px;
+}
+
+#name:focus, #pass:focus, #title:focus {
+	background-color: #fff;
+}
+
+#secret {
+	padding: 0;
+	margin: 3px -10px 0 10px;
+	vertical-align: middle;
+	-ms-transform: scale(1);
+	-moz-transform: scale(1);
+	-webkit-transform: scale(1);
+	-o-transform: scale(1);
+}
+
+#uploadFile {
+	height: 24px;
+	width: 20%;
+	float: left;
+}
+
+#clearFile {
+	height: 24px;
+	float: left;
+}
+
+.button-con > span {
+	padding-top: 3px;
+	vertical-align: middle;
+	float: left;
+	font-size: 12px;
+	color: #ccc;
+}
+
+.preview-con {
+	max-width: 1000px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	text-align: center;
+	display: none;
+}
+
+.preview-con img {
+	max-width: 970px;
+}
+
+
+/* 업데이트.jsp update.jsp */
+.update-preview {
+	width: 1000px;
+	padding: 10px;
+	text-align: center;
+}
+
+.update-preview img {
+	max-width: 960px;
+}
+
+.inputFile {
+	display: none;
+}
+
+#deleteFile {
+	margin-top: 10px;
+}

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation=
+		"http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<context:component-scan base-package="com.cmt">
+		<context:include-filter  type="annotation"  expression="org.springframework.stereotype.Controller"/>
+		<context:exclude-filter  type="annotation"  expression="org.springframework.stereotype.Service"/>
+		<context:exclude-filter  type="annotation"  expression="org.springframework.stereotype.Repository"/>
+	</context:component-scan>
+	
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+						<value>application/json; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	
+	<!-- ========= -->
+	<!-- 인터셉터 처리 -->
+	<!-- ========= -->
+	
+	<!-- 
+	<mvc:interceptors>
+	<mvc:interceptor>
+		<mvc:maaping path="/board/**"/>
+		</mvc:interceptor>
+		<mvc:intercoptor>
+		</mvc:intercoptor>
+	</mvc:interceptors>
+	-->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/bann"/>
+			<mvc:mapping path="/bann/adReq"/>
+			<mvc:mapping path="/line"/>
+			<mvc:mapping path="/line/add"/>
+			<mvc:mapping path="/line/addAction"/>
+			<bean class="com.cmt.interceptor.AuthenticationInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!-- ============================= -->
+	<!-- Annotation 지원 HandlerMapping -->
+	<!-- ============================= -->
+	<mvc:resources mapping="/resources/**"	location="/resources/"/>
+	<mvc:resources mapping="/board/**"		location="/board/"/>
+	<mvc:resources mapping="/bann/**"		location="/bann/"/>
+	<mvc:resources mapping="/test/**"		location="/test/"/>
+	<mvc:resources mapping="/line/**"		location="/line/"/>
+	<mvc:resources mapping="/account/**"	location="/account/"/>
+	<mvc:resources mapping="/SE2/**"		location="/SE2/"/>
+	
+	<mvc:default-servlet-handler/>
+	
+	<mvc:view-resolvers>
+		<mvc:jsp prefix="/" suffix=".jsp"/>
+	</mvc:view-resolvers>
+	
+	<!-- ================ -->
+	<!-- ViewResolver 선언 -->
+	<!-- ================ -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+	</bean>
+	
+</beans>

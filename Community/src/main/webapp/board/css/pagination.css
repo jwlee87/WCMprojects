@@ -1,0 +1,161 @@
+@charset "UTF-8";
+
+.section_footer {
+	width: 1000px;
+	margin: 0 auto;
+	margin-top: 10px;
+	display: block;
+	font-size: 12px;
+	text-decoration: none;
+	color: #4e4e4e;
+	height: 80px !important;
+}
+
+.div_pagination {
+	text-align: center;
+	line-height: 1.5;
+	height: 80px !important;
+}
+
+.pagination {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	height: 34px;
+	display: inline-block;
+	margin-top: -1px;
+	z-index: 3;
+	font-size: 10px;
+}
+
+.pagination li a {
+	text-decoration: none;
+	color: #4e4e4e;
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+	color: #4e4e4e;
+	cursor: pointer;
+	background-color: #d1d1d1;
+	border: 1px solid #ddd;
+}
+
+.wt_box {
+	position: relative;
+	list_style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.wt_box li {
+	list-style: none;
+}
+
+.gray_color {
+	background-color: #fcfcfc;
+}
+
+.search_padding {
+	background: transparent;
+	margin-left: 10px;
+}
+
+
+.wt_box li {
+	float: left;
+	border: 1px solid #ddd;
+}
+
+.board_input select, .board_input input, .board_input button {
+	background: transparent;
+	padding: 0;
+	border: 0;s
+	cursor: pointer;
+	height: 28px;
+}
+
+.board_input, .search_input {
+	display: inline-block;
+}
+
+select.search_form {
+	min-width: 55px;
+	border: 1px solid #ddd;
+}
+
+.board_input input.search_keyword {
+	cursor: text;
+	width: 130px;
+}
+
+.wt_box .right {
+	color: #4e4e4e;
+	font-size: 12px;
+	float: right;
+	border: 1px solid #ddd;
+	padding: 5px 15px;
+	margin-right: 10px;
+}
+
+.right:hover {
+	background-color: #eee;
+	cursor: pointer;
+}
+
+.right a {
+	color: #4e4e4e;
+	text-decoration: none;
+}
+.right a:hover {
+	text-decoration: none;
+}
+
+#selectbox {
+	position: relative;
+	z-index: 1;
+	float: left;
+	width: 85px;
+	background-color: #fff;
+	border-right: 1px solid #ddd;
+}
+
+.search_form:focus {
+	outline: none !important;
+}
+
+.search_keyword:focus, button:focus {
+	outline: none;
+}
+button:focus {
+	background-color: #eee;
+}
+
+.search_input {
+	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	padding-left: 3px;
+}
+
+select option {
+	margin-left: 5px;
+}
+
+select:focus {
+	outline: none;
+	border: 1px solid #ccc;
+}
+
+.search_btn {
+	width: 45px;
+	text-align: center;
+}
+
+.currentTab {
+	background-color: #eee;
+}
+

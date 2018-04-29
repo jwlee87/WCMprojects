@@ -1,0 +1,99 @@
+@charset "UTF-8";
+body {
+	height: 100%;
+}
+
+.content-con {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.con-header {
+	padding: 50px;
+}
+
+.title-con {
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.explain-con {
+	padding: 10px;
+}
+
+.explain-con div {
+	width: 1000px;
+	text-align: center;
+}
+
+.explain-con div span {
+	font-size: 16px;
+	color: #4c4c4c;
+}
+
+.type-con {
+	height: 600px;
+}
+
+.select-type {
+	width: 320px;
+	height: 100%;
+	border: 1px solid #ccc;
+	float: left;
+	margin-left: 10px;
+	text-align: center;
+}
+
+.select-type:hover {
+	background-color: #efefef;
+}
+
+.selected {
+	background-color: #efefef;
+}
+
+.select-con {
+	padding-top: 10px;
+	width: 300px;
+	height: 300px;
+	margin: 0 auto;
+}
+
+.span-con div{
+	margin: 5px auto;
+}
+
+input[type="radio"] {
+	width: 18px;
+	height: 18px;
+	margin: 10px auto;
+}
+
+.file-con {
+	margin: 10px auto;
+}
+
+.preview-con {
+	max-width: 960px;
+	margin: 10px auto;
+}
+
+.preview-con img {
+	max-width: 960px;
+	min-width: 400px;
+	overflow-x: scroll;
+}
+
+.price-con {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.ex_img {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px 0;
+	width: 200px;
+	height: 340px;
+}

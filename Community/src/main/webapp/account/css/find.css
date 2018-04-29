@@ -1,0 +1,30 @@
+@charset "UTF-8";
+.txt-label {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.row {
+	margin-bottom: 10px;
+}
+
+#spinner {
+	position: absolute;
+	top: 30%;
+	left: 42%;
+	display: none;
+}
+
+.col-xs-8 span {
+	font-size: 32px;
+}
+
+#phone {
+	height: 200%;
+	font-size: 1.8em;
+}
+
+#mail_btn {
+	height: 200%;
+	font-size: 1.8em;
+}

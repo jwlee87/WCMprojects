@@ -1,0 +1,51 @@
+.body-con {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.blank-con {
+	height: 300px;
+}
+
+.contents-con {
+	text-align: center;
+	padding: 10px;
+}
+
+.form-group > select {
+	margin-top: 10px;
+	width: 200px;
+}
+
+.form-group > label {
+	float: left;
+}
+
+.select-con {
+	margin-top: 10px;
+	margin-right: 10px;
+	width: 200px;
+	float: left;
+}
+
+.price-con {
+	width: 500px;
+	height: 50px;
+	float: left;
+	padding: 10px;
+}
+.price-con > span {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.price-con > .price {
+	color: #ff0000;
+	font-weight: normal;
+}
+
+.button-con > button {
+	margin-top: 10px;
+	width: 200px;
+}
+

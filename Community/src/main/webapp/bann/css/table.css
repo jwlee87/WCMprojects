@@ -1,0 +1,102 @@
+@charset "UTF-8";
+table {
+	width: 1000px;
+	margin: 7px auto;
+	text-align: center;
+	border: 1px solid #e6e6e6;
+	cellpadding:8;
+	cellspacing:0;
+}
+
+table tr:nth-child(odd) {
+	background: #f9f9f9;
+}
+table tr:nth-child(even) {
+	background: #fff;
+}
+
+table tbody tr:hover {
+	background: #f3f3f3;
+}
+
+thead th {
+	text-align: center;
+	font-weight: normal;
+	font-size: 12px;
+	white-space: nowrap;
+	padding: 3px 0;
+	border: 1px solid #e6e6e6;
+}
+
+thead th:nth-child(1){
+	width: 10%;
+}
+thead th:nth-child(2){
+	width: 40%;
+}
+thead th:nth-child(3){
+	width: 20%;
+}
+thead th:nth-child(4){
+	width: 20%;
+}
+
+
+table td {
+	border-right: 1px solid #eee;
+	border-bottom: 1px solid #e6e6e6;
+	overflow: hidden;
+	white-space: nowrap;
+	vertical-align: middle;
+	line-height: 1.5;
+	font-size: 12px;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.title a {
+	text-decoration: none;
+	color: #4a4a4a;
+	max-width: 500px;
+	float: left;
+	width: auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-right: 5px;
+}
+
+.number {
+	padding: 3px;
+	background-color: #f0f0f0;
+	text-align: center;
+	border-radius: 5px;
+	color: #404040;
+}
+
+.title a:hover {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.ico_new {
+	margin: 2px;
+}
+
+.lockbbs {
+	float: left;
+	margin-top: -1px;
+	margin-right: 5px;
+}
+
+.notice {
+	background-color: #FFF4B7 !important;
+}
+.notice:hover {
+	background-color: #e4e4e4 !important;
+}
+.notice-title {
+	font-weight: bold;
+}
+
