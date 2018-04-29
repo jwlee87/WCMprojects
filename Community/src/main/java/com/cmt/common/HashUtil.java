@@ -126,7 +126,7 @@ public class HashUtil {
 					
 					logger.debug("유저가 널이 아니고 유니크 아이디가 같고 리워드 중복 지급이 아니므로 리워드 지급!");
 
-					HashMap<String, Object> paramMap = new HashMap();
+					HashMap<String, Object> paramMap = new HashMap<String, Object>();
 					paramMap.put("rewardList", igaReward);
 					logger.debug("hashUtil Debugging@@@@+before:"+igaReward);
 
@@ -165,7 +165,6 @@ public class HashUtil {
 		}
 		
 		Gson gson = new Gson();
-		
 		return gson.toJson(obj);
 	}
 	

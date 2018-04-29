@@ -14,8 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
 
 import com.cmt.domain.ADRequest;
 import com.cmt.domain.AttachFile;
@@ -35,7 +33,7 @@ public class UtilFile {
 	// file upload method
 	public HashMap<String, Object> fileUpload(HttpServletRequest request
 								, MultipartFile uploadFile, Object obj) {
-		HashMap<String, Object> resultMap = new HashMap();
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		String path = "";
 		String fileName = "";
 		

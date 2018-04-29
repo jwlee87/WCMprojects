@@ -102,7 +102,7 @@ public class BoardServiceImpl implements BoardService {
 		if(viewCount==0) {
 			viewCount = 1;
 		}else {
-			viewCount = ++viewCount;
+			viewCount = viewCount++;
 			//logger.debug("viewCount = "+viewCount);
 		}
 		b.setViewCount(viewCount);

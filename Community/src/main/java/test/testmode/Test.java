@@ -1,12 +1,10 @@
 package test.testmode;
 
-import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.springframework.beans.factory.annotation.Value;
 
 public class Test {
 

@@ -1,8 +1,8 @@
 package com.cmt.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -10,23 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,7 +46,6 @@ import com.cmt.domain.Tab;
 import com.cmt.service.BoardService;
 import com.cmt.service.MemberService;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 @Controller
 public class HomeController {
@@ -183,6 +168,8 @@ public class HomeController {
 			Member member = (Member)session.getAttribute("member");
 			logger.debug("[HomeController] /board/ session not null = "+member);
 			session.setAttribute("member", member);
+		} else {
+			logger.debug("[HomeController] /board/ session null || AccessIP= "+ request.getRemoteAddr()+ " ,requestURI= "+ request.getRequestURL());
 		}
 		
 		//댓글 페이지 설정
@@ -729,7 +716,7 @@ public class HomeController {
 		
 		String plainText = usn + reward_key + quantity +  campaign_key;
 		
-		RewardList rewardList = new RewardList();
+		
 		
 		System.out.println("signed_value= "+signed_value);
 		System.out.println("usn= "+usn);
@@ -743,6 +730,7 @@ public class HomeController {
 		System.out.println("time_stamp= "+time_stamp);
 		System.out.println("adid= "+adid);
 		
+		RewardList rewardList = new RewardList();
 		rewardList.setAdid(adid);
 		rewardList.setAppKey(app_key);
 		rewardList.setAppName(app_name);
@@ -784,56 +772,63 @@ public class HomeController {
 	@RequestMapping(value="/appang")
 	public void appangCallback(HttpServletRequest request, HttpServletResponse response) {
 		
-		
+		//String testIP = "127.0.0.1";
 		String nasIP = "222.122.49.171";
+		JSONObject jsonObj = new JSONObject();
+		
+		
+		
 		
 		String sentAddr = request.getRemoteAddr().trim();
 		logger.debug("보내는곳: "+sentAddr);
 
+//		if(sentAddr.equals(testIP)) {
 		if(sentAddr.equals(nasIP)) {
-			while( request.getParameterNames().hasMoreElements() ) {
-				String param = request.getParameterNames().nextElement();
-				logger.debug(param);
-				logger.debug(request.getParameterValues(param));
-			}
-			response.setStatus(200);
+			String s	= request.getParameter("s");
+			String ud	= request.getParameter("ud");
+			String p	= request.getParameter("p");
+			String r	= request.getParameter("r");
+			String ai	= request.getParameter("ai");
+			String ak	= request.getParameter("ak");
+			String n	= request.getParameter("n");
+			String t	= request.getParameter("t");
+			String adid	= request.getParameter("adid");
+			String ip	= request.getParameter("ip");
+			
+			String param = s + " / " + ud + " / " + p + " / " + r + " / " + ai + " / " + ak + " / " + n + " / " + t + " / " + adid + " / " + ip;
+			logger.debug(param);
+			
+			RewardList rewardList = new RewardList();
+			rewardList.setAdid(adid);
+			rewardList.setAppKey(ak);
+			rewardList.setAppName(n);
+			rewardList.setCompany(1);
+			
+			logger.debug("ㅁㄴㅇ"+rewardList.toString());
+			
+			jsonObj.put("result", "1");
+			jsonObj.put("result", p);
+			
 		} else {
 			logger.debug("!!! WRONG ACCEESS !!!");
 			response.setStatus(200);
+			
+			jsonObj.put("result", "0");
+		}
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(jsonObj);
+		
+		response.setStatus(200);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		try {
+			response.getWriter().write(json);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 	}
-	
-	// 비보상형
-	@RequestMapping(value="/appangNoReward")
-	public void appangNoRewardCallback(HttpServletRequest request) {
-		while( request.getParameterNames().hasMoreElements() ) {
-			String param = request.getParameterNames().nextElement();
-			logger.debug(param);
-			logger.debug(request.getParameterValues(param));
-		}
-	}
-	
-	// 비보상형 이벤트 콜백
-	@RequestMapping(value="/appangNoRewardEvent")
-	public void appangNoRewardEventCallback(HttpServletRequest request) {
-		while( request.getParameterNames().hasMoreElements() ) {
-			String param = request.getParameterNames().nextElement();
-			logger.debug(param);
-			logger.debug(request.getParameterValues(param));
-		}
-	}
-	
-	// 비보상형 광고 종료
-	@RequestMapping(value="/appangNoRewardStop")
-	public void appangNoRewardStopCallback(HttpServletRequest request) {
-		while( request.getParameterNames().hasMoreElements() ) {
-			String param = request.getParameterNames().nextElement();
-			logger.debug(param);
-			logger.debug(request.getParameterValues(param));
-		}
-	}
-	
 	
 	///////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////

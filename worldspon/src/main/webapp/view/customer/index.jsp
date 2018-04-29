@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<c:import url="/view/common/jsp/defaultSetting.jsp?ver=1.0"></c:import>
+	<c:import url="/view/common/jsp/defaultSetting.jsp"></c:import>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/view/customer/css/index.css?ver=1.0">
