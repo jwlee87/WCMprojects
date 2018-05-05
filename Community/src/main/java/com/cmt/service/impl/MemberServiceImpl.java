@@ -104,6 +104,11 @@ public class MemberServiceImpl implements MemberService {
 	public List<RewardList> getRewardList(int userUniqueID) throws Exception {
 		return memberDao.getRewardList(userUniqueID);
 	}
+	
+	@Override
+	public List<RewardList> getRewardListTNK(int userUniqueID) throws Exception {
+		return memberDao.getRewardListTNK(userUniqueID);
+	}
 
 	@Override
 	public void addReward(HashMap<String, Object> paramMap) throws Exception {

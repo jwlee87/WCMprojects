@@ -81,6 +81,11 @@ public class MemberDaoImpl implements MemberDao {
 	public List<RewardList> getRewardList(int userUniqueID) throws Exception {
 		return sqlSession.selectList("MemberMapper.getRewardList", userUniqueID);
 	}
+	
+	@Override
+	public List<RewardList> getRewardListTNK(int userUniqueID) throws Exception {
+		return sqlSession.selectList("MemberMapper.getRewardListTNK", userUniqueID);
+	}
 
 	@Override
 	public void addReward(HashMap<String, Object> paramMap) throws Exception {

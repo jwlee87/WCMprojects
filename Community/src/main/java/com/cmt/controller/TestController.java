@@ -1,51 +1,31 @@
 package com.cmt.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.JSONObject;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
 
 import com.cmt.common.EmailSender;
 import com.cmt.common.HashUtil;
-import com.cmt.common.UtilFile;
-import com.cmt.domain.ADRequest;
-import com.cmt.domain.AttachFile;
 import com.cmt.domain.Board;
-import com.cmt.domain.Comment;
 import com.cmt.domain.Email;
 import com.cmt.domain.RewardList;
-import com.cmt.domain.Line;
-import com.cmt.domain.Member;
-import com.cmt.domain.Page;
-import com.cmt.domain.Promotion;
-import com.cmt.domain.ServerList;
-import com.cmt.domain.SystemInfo;
-import com.cmt.domain.Tab;
 import com.cmt.service.BoardService;
 import com.cmt.service.MemberService;
-import com.google.gson.Gson;
 
 @Controller
 public class TestController {
@@ -103,6 +83,47 @@ public class TestController {
 		model.addAttribute("board", board);
 		
 		return "board/test";
+	}
+	
+	@RequestMapping(value="/parameterTest")
+	public void parameterTest(HttpServletRequest request) throws Exception {
+		HashMap<String, Object> paramResult = (HashMap)request.getParameterMap();
+		for( String key : paramResult.keySet() ) {
+			logger.debug("param: "+key+", value: "+paramResult.get(key));
+		}
+		
+		String appKey = "f807bb0a6c8e263aaeceec6c994fa58f";
+		String md_chk = request.getParameter("md_chk");
+		String memberUniqueID = request.getParameter("md_user_nm").trim();
+		String rewardKey = request.getParameter("seq_id").trim();
+		String quantity  = request.getParameter("pay_pnt").trim();
+		String campaignKey = request.getParameter("app_id");
+		String campaignName = request.getParameter("app_nm");
+		String plainText = appKey+memberUniqueID+rewardKey;
+		
+		RewardList rewardList = new RewardList();
+		rewardList.setMemberUniqueID(Integer.parseInt(memberUniqueID));
+		rewardList.setRewardKey(rewardKey);
+		rewardList.setQuantity(Integer.parseInt(quantity));
+		rewardList.setCampaignKey(campaignKey);
+		rewardList.setCampaignName(campaignName);
+		rewardList.setCampaignType("TNK");
+		rewardList.setAppKey(appKey);
+		rewardList.setAppName("World Spon(월드스폰)");
+		rewardList.setTimeStamp(request.getParameter("pay_amt"));
+		rewardList.setCompany(2);
+		
+		logger.debug("md_chk="+md_chk);
+		logger.debug(rewardList);
+		logger.debug("md_chk= "+md_chk+", plainText= "+plainText);
+		
+		String verifyCode = DigestUtils.md5Hex(plainText);
+		
+		if(verifyCode.equals(md_chk)) {
+			logger.debug("둘이같다.");
+		}else {
+			logger.debug("둘이다르다.");
+		}
 	}
 		
 }

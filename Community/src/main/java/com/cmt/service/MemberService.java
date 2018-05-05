@@ -20,6 +20,8 @@ public interface MemberService {
 	public int updatePass(HashMap paramMap) throws Exception;
 	public Member getMemberByUniqueID(int uniqueID) throws Exception;
 	public List<RewardList> getRewardList(int userUniqueID) throws Exception;
+	public List<RewardList> getRewardListTNK(int userUniqueID)throws Exception;
 	public void addReward(HashMap<String, Object> paramMap) throws Exception;
 	public ServerList getServerList() throws Exception;
+	
 }

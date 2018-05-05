@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
@@ -133,7 +134,6 @@ public class RewardController {
 		String plainText = usn + reward_key + quantity +  campaign_key;
 		
 		
-		
 		System.out.println("signed_value= "+signed_value);
 		System.out.println("usn= "+usn);
 		System.out.println("reward_key= "+reward_key);
@@ -171,7 +171,7 @@ public class RewardController {
 		logger.debug("  ip addr  "+serverIP.trim());
 		logger.debug("=========================================================");
 		
-		String json = hashUtil.returnCheck(signed_value, plainText, usn, reward_key, member, memberService, rewardList, hashUtil, serverIP);
+		String json = hashUtil.returnCheck(signed_value, plainText, usn, reward_key, member, memberService, rewardList, serverIP);
 		
 		logger.debug("JSON return Value = "+json);
 		
@@ -247,7 +247,7 @@ public class RewardController {
 			logger.debug("  ip addr  "+serverIP.trim());
 			logger.debug("=========================================================");
 			
-			String returnValue = hashUtil.returnCheckForAppang( ud.trim(), s.trim(), ai.trim(), member, memberService, rewardList, hashUtil, serverIP);
+			String returnValue = hashUtil.returnCheckForAppang( ud.trim(), s.trim(), ai.trim(), member, memberService, rewardList, serverIP);
 			logger.debug(returnValue);
 			
 		} else {
@@ -255,6 +255,58 @@ public class RewardController {
 		}
 		
 		response.setStatus(200);
+	}
+	
+	////////////////////////////////////////////
+	///// TNK CALL BACK URL /////
+	////////////////////////////////////////////
+	@RequestMapping(value="/tnkCallBack", method=RequestMethod.POST)
+	public void tnkCallBack(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
+		
+		String appKey = "f807bb0a6c8e263aaeceec6c994fa58f";
+		String md_chk = request.getParameter("md_chk");
+		String memberUniqueID = request.getParameter("md_user_nm").trim();
+		String rewardKey = request.getParameter("seq_id").trim();
+		String quantity  = request.getParameter("pay_pnt").trim();
+		String campaignKey = request.getParameter("app_id");
+		String campaignName = request.getParameter("app_nm");
+		String plainText = appKey+memberUniqueID+rewardKey;
+		
+		RewardList rewardList = new RewardList();
+		rewardList.setMemberUniqueID(Integer.parseInt(memberUniqueID));
+		rewardList.setRewardKey(rewardKey);
+		rewardList.setQuantity(Integer.parseInt(quantity));
+		rewardList.setCampaignKey(campaignKey);
+		rewardList.setCampaignName(campaignName);
+		rewardList.setCampaignType("TNK");
+		rewardList.setAppKey(appKey);
+		rewardList.setAppName("World Spon(월드스폰)");
+		rewardList.setTimeStamp(request.getParameter("pay_amt"));
+		rewardList.setCompany(2);
+		logger.debug("TNK REWARD DOMAIN = "+rewardList.toString());
+		
+		String verifyCode = DigestUtils.md5Hex(plainText);
+		
+		int userUniqueID = Integer.parseInt(memberUniqueID);
+		Member member = memberService.getMemberByUniqueID(userUniqueID);
+		ServerList serverURL = memberService.getServerList();
+		String serverIP = serverURL.getAddress();
+		
+		logger.debug("=========================================================");
+		logger.debug("  ip addr  "+serverIP.trim());
+		logger.debug("=========================================================");
+		// 지급절차로직 진행
+		if (verifyCode.equals(md_chk)) {
+			String returnCode = hashUtil.tnkLogic( memberUniqueID, rewardKey, member, memberService, rewardList, serverIP);
+			logger.debug("returnCode = "+returnCode);
+		} else {
+			logger.debug(" 지급절차 중지 - 비정상적인 접근 - 사용자: "+request.getRemoteAddr());
+		}
+		
+		response.setStatus(200);
+	
 	}
 	
 }

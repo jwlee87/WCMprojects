@@ -73,8 +73,7 @@ public class HashUtil {
 	// ad popcorn reward //
 	///////////////////////
 	public String returnCheck(String signedValue, String plainText, String usn, String rewardKey, 
-			Member member, MemberService memberService, RewardList igaReward, HashUtil hashUtil, 
-			String serverIP) throws Exception {
+			Member member, MemberService memberService, RewardList igaReward, String serverIP) throws Exception {
 		
 		logger.debug(" JSON OBJECT MAKING METHOD START ");
 		
@@ -165,7 +164,7 @@ public class HashUtil {
 	// appang reward return method //
 	/////////////////////////////////
 	public String returnCheckForAppang(String usn, String rewardKey, String adID, Member member, MemberService memberService,
-			RewardList apReward, HashUtil hashUtil, String serverIP) throws Exception {
+			RewardList apReward, String serverIP) throws Exception {
 		
 		logger.debug(" JSON OBJECT MAKING METHOD START ");
 		
@@ -221,6 +220,80 @@ public class HashUtil {
 		}
 		return returnValue;
 	}
+	
+	
+	/////////////////////////////////
+	// TNK reward return method //
+	/////////////////////////////////
+	public String tnkLogic(String usn, String rewardKey, Member member, 
+			MemberService memberService, RewardList tnkReward, String serverIP)throws Exception {
+	
+		logger.debug(" JSON OBJECT MAKING METHOD START ");
+		
+		List<RewardList> rewardList = memberService.getRewardListTNK(Integer.parseInt(usn));
+		
+		boolean checkKey = false;
+		String returnValue = "false";
+		// 리워드 리스트가 0이 아닐때
+		if(rewardList.size() != 0) {
+			for(RewardList reward : rewardList) {
+				//콜백 중복 호출시 적립금 중복 지금 방지 리워드키 중복일 경우 checkKey true로 바뀜
+				if(reward.getRewardKey().equals(rewardKey)) {
+					checkKey = true;
+				}
+			}
+		}
+	
+		if (member != null) {
+		
+			logger.debug("유저가 널이 아님");
+	
+			if ( member.getUniqueID() != Integer.parseInt(usn.trim()) ) {
+				logger.debug("유저가 널이 아니지만 유니크 아이디가 같지 않음");
+				returnValue = "0001";
+			// 리워드 중복 지급
+			}else if ( checkKey ) {
+				logger.debug("유저가 널이 아니고 유니크 아이디가 같지만 리워드 중복 지급");
+				returnValue = "0002";
+			//리워드 지금 성공					
+			} else {
+				logger.debug("유저가 널이 아니고 유니크 아이디가 같고 리워드 중복 지급이 아니므로 리워드 지급!");
+			
+				HashMap<String, Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("rewardList", tnkReward);
+				logger.debug("hashUtil Debugging :: before :: "+tnkReward);
+				memberService.addReward(paramMap);
+				logger.debug("hashUtil Debugging :: after :: "+tnkReward);
+				// 지급 절차 통신  //
+				String httpReturn = httpClient(serverIP, tnkReward);
+				returnValue = "1111";
+			}
+		
+		// 예외사항 발생
+		} else {
+			logger.debug("리워드 지급 예외상황 발생 - member null");
+			returnValue = "0004";
+		}
+			return returnValue;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public String simpleJson() {
 		Gson gson = new Gson();
