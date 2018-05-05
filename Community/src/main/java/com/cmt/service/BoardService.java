@@ -36,4 +36,7 @@ public interface BoardService {
 	public Map<String, Object> getLineList(HashMap<String, Object> paramMap, int countTabs) throws Exception;
 	public Promotion getPromotion(int memberUniqueID) throws Exception;
 	public void deleteLine(int uniqueID) throws Exception;
+	
+	
+	public Board getBoardTest(int boardUniqueID) throws Exception;
 }

@@ -286,4 +286,18 @@ public class BoardServiceImpl implements BoardService {
 		boardDao.deleteLine(uniqueID);
 	}
 
+	
+	
+	
+	
+	
+	
+	//////////
+	// TEST //
+	//////////
+	@Override
+	public Board getBoardTest(int boardUniqueID) throws Exception {
+		return boardDao.getBoardTest(boardUniqueID);
+	}
+
 }

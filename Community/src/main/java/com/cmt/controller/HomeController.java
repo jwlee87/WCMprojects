@@ -143,6 +143,8 @@ public class HomeController {
 			session.setAttribute("member", member);
 		}
 		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
+		
 		int pageNo;
 		if(request.getParameter("pageNo") == null) { pageNo=1; }
 		else { pageNo = Integer.parseInt(request.getParameter("pageNo")); }
@@ -162,6 +164,8 @@ public class HomeController {
 	
 	@RequestMapping(value="/board/{boardUniqueID}")
 	public String boardDetail(HttpSession session, HttpServletRequest request, @PathVariable int boardUniqueID, Model model) throws Exception{
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
 		// 로그인 여부 판단후 세션에 로그인 정보 담아주기
 		if(session.getAttribute("member")!=null) {
@@ -194,6 +198,11 @@ public class HomeController {
 		
 		Board board = boardService.getBoard(page, boardUniqueID);
 		
+		// 게시글 내용 게행 되게 변경
+		String texts = board.getContents();
+		texts = texts.replaceAll(System.getProperty("line.separator"), "<br>");
+		board.setContents(texts);
+		
 		logger.debug(" reply count: "+board.getReplyCount());
 		
 		model.addAttribute("board", board);
@@ -203,6 +212,8 @@ public class HomeController {
 	
 	@RequestMapping(value="/board/update/{bID}")
 	public String boardUpdate(HttpServletRequest request, @PathVariable int bID, Model model) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
 		//댓글 페이지 설정
 		int pageNo;
@@ -219,6 +230,8 @@ public class HomeController {
 	// @RequestParam("uploadFile") MultipartFile uploadFile
 	@RequestMapping(value="/board/writeAction", method=RequestMethod.POST)
 	public String boardWriteAction(HttpServletRequest request, MultipartRequest mRequest, @ModelAttribute Board board) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
 		Member member = (Member)request.getSession().getAttribute("member");
 		logger.debug(member);
@@ -258,6 +271,8 @@ public class HomeController {
 	// frm action URI in board/update.jsp
 	@RequestMapping(value="/board/updateAction", method=RequestMethod.POST)
 	public String boardUpdateAction(HttpSession session, HttpServletRequest request, MultipartRequest mRequest, @ModelAttribute Board board) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
 		logger.debug("[HomeController] /board/updateAction :: Board="+board);
 		Member member = (Member)session.getAttribute("member");
@@ -300,6 +315,8 @@ public class HomeController {
 	@RequestMapping(value="/board/cmtAction", method=RequestMethod.POST)
 	public String cmtAction(HttpServletRequest request, @ModelAttribute Comment comment) throws Exception {
 		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
+		
 		Member member = (Member)request.getSession().getAttribute("member");
 		logger.debug(member);
 		if(member == null) {
@@ -319,7 +336,10 @@ public class HomeController {
 	
 	// ajax in board/list.jsp
 	@RequestMapping(value="/board/loginChk")
-	public @ResponseBody Map<String, Object> boardLoginChk(HttpSession session) throws Exception {
+	public @ResponseBody Map<String, Object> boardLoginChk(HttpSession session, HttpServletRequest request) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
+		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		
 		if(session.getAttribute("member")==null) {
@@ -336,7 +356,10 @@ public class HomeController {
 	
 	// ajax in board/login.jsp ->  controller /loginAction
 	@RequestMapping(value="/board/idChk")
-	public @ResponseBody Map<String, Object> boardIdChk(HttpSession session, @RequestParam Map<String, Object> paramMap) throws Exception {
+	public @ResponseBody Map<String, Object> boardIdChk(HttpSession session, HttpServletRequest request, @RequestParam Map<String, Object> paramMap) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
+		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		String iTradeMark = (String)paramMap.get("tradeMark");
 		String iPassword = (String)paramMap.get("password");
@@ -364,7 +387,10 @@ public class HomeController {
 	
 	// ajax in board/read.jsp
 	@RequestMapping(value="/board/delete", method=RequestMethod.POST)
-	public @ResponseBody Map<String, Object> boardDelete(@RequestParam Map<String, Object> paramMap) throws Exception {
+	public @ResponseBody Map<String, Object> boardDelete(@RequestParam Map<String, Object> paramMap, HttpServletRequest request) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
+		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 
 		int boardUniqueID = Integer.parseInt((String)paramMap.get("bID"));
@@ -381,7 +407,10 @@ public class HomeController {
 	
 	// ajax in board/update.js
 	@RequestMapping(value="/board/deleteAttachFile", method=RequestMethod.POST)
-	public @ResponseBody Map<String, Object> deleteAttachFile(@RequestParam Map<String, Object> paramMap) throws Exception {
+	public @ResponseBody Map<String, Object> deleteAttachFile(@RequestParam Map<String, Object> paramMap, HttpServletRequest request) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
+		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		
 		int fileUniqueID = Integer.parseInt((String)paramMap.get("fID"));
@@ -410,7 +439,10 @@ public class HomeController {
 	
 	// ajax in board/read.jsp read.js
 	@RequestMapping(value="/board/deleteCmt", method=RequestMethod.POST)
-	public @ResponseBody Map<String, Object> deleteCmt(@RequestParam Map<String, Object> paramMap) throws Exception {
+	public @ResponseBody Map<String, Object> deleteCmt(@RequestParam Map<String, Object> paramMap, HttpServletRequest request) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
+		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		
 		int commentUniqueID = Integer.parseInt((String)paramMap.get("cID"));
@@ -434,6 +466,7 @@ public class HomeController {
 	@RequestMapping(value="/bann")
 	public String goAd(HttpSession session, HttpServletRequest request, Model model) throws Exception {
 		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
 		Member member = (Member)session.getAttribute("member");
 		
@@ -462,7 +495,7 @@ public class HomeController {
 	@RequestMapping(value="/adReqAction", method=RequestMethod.POST)
 	public String reqAction(HttpServletRequest request, MultipartRequest mRequest, @ModelAttribute ADRequest adr) throws Exception {
 		
-		logger.debug("들어오는지 체크");
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
 		Member member = (Member)request.getSession().getAttribute("member");
 		logger.debug(member);
@@ -501,7 +534,10 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/bann/delete/{memberUniqueID}/{adUniqueID}", method=RequestMethod.POST)
-	public void deleteADReq(@PathVariable int memberUniqueID, @PathVariable int adUniqueID) throws Exception {
+	public void deleteADReq(@PathVariable int memberUniqueID, @PathVariable int adUniqueID, HttpServletRequest request) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
+		
 		logger.debug(memberUniqueID+", "+adUniqueID);
 		ADRequest adr = boardService.getADReqBan(adUniqueID);
 		logger.debug("@@@"+adr);
@@ -518,6 +554,9 @@ public class HomeController {
 	////////////////////////////
 	@RequestMapping(value="/line", method=RequestMethod.GET)
 	public String lindAD(Model model, HttpSession session, HttpServletRequest request) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
+		
 		Member member = (Member)session.getAttribute("member");
 		int pageNo;
 		
@@ -539,24 +578,30 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/line/add", method=RequestMethod.GET)
-	public String lineAdd(Model model) throws Exception {
+	public String lineAdd(Model model, HttpServletRequest request) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
+		
 		SystemInfo si = boardService.getSystemInfo();
 		model.addAttribute("onedayPirce", si.getPromotionOnedayPay());
 		return "line/add";
 	}
 	
 	@RequestMapping(value="/line/addAction", method=RequestMethod.POST)
-	public String lineAddAction(@ModelAttribute Line line) throws Exception {
+	public String lineAddAction(@ModelAttribute Line line, HttpServletRequest request) throws Exception {
 		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		logger.debug("add Line :: "+line);
-		
 		
 		boardService.addLine(line);
 		return "redirect:/line";
 	}
 	
 	@RequestMapping(value="/line/auth", method=RequestMethod.POST)
-	public @ResponseBody Map<String, Object> authCheck(@RequestParam Map<String, Object> paramMap) throws Exception {
+	public @ResponseBody Map<String, Object> authCheck(@RequestParam Map<String, Object> paramMap, HttpServletRequest request) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
+		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		int memberUniqueID = Integer.parseInt((String)paramMap.get("userUniqueID"));
 		Promotion pm = boardService.getPromotion(memberUniqueID);
@@ -573,7 +618,9 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/line/delete/{uniqueID}", method=RequestMethod.POST)
-	public void deleteLine(@PathVariable int uniqueID) throws Exception {
+	public void deleteLine(@PathVariable int uniqueID, HttpServletRequest request) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		logger.debug(uniqueID);
 		boardService.deleteLine(uniqueID);
 	}
@@ -584,12 +631,15 @@ public class HomeController {
 	/////////////	비	밀	번	호	찾	기	//////////////////////////
 	//////////////////////////////////////////////////////////////////
 	@RequestMapping(value="/find", method=RequestMethod.GET)
-	public String goFindPw() throws Exception {
+	public String goFindPw(HttpServletRequest request) throws Exception {
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		return "account/find";
 	}
 	
 	@RequestMapping(value="/change/{userUniqueID}/{authkey}", method=RequestMethod.GET)
-	public String goPwChange(@PathVariable int userUniqueID, @PathVariable int authkey, Model model) throws Exception {
+	public String goPwChange(@PathVariable int userUniqueID, @PathVariable int authkey, Model model, HttpServletRequest request) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		
@@ -616,7 +666,9 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/changeAction/{userUniqueID}/{pass}", method=RequestMethod.POST)
-	public @ResponseBody Map<String, Object> changeAction(@PathVariable int userUniqueID, @PathVariable int pass) throws Exception {
+	public @ResponseBody Map<String, Object> changeAction(@PathVariable int userUniqueID, @PathVariable int pass, HttpServletRequest request) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userUniqueID", userUniqueID);
@@ -633,7 +685,9 @@ public class HomeController {
 		return resultMap;
 	}
 	@RequestMapping(value="/find/pw", method=RequestMethod.POST)
-	public @ResponseBody Map<String, Object> sendMain(@RequestParam Map<String, Object> paramMap) throws Exception {
+	public @ResponseBody Map<String, Object> sendMain(@RequestParam Map<String, Object> paramMap, HttpServletRequest request) throws Exception {
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
@@ -671,163 +725,9 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/msg", method=RequestMethod.GET)
-	public String goMsg() throws Exception {
+	public String goMsg(HttpServletRequest request) throws Exception {
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		return "account/msg";
-	}
-	
-	////////////////////////////////////////////
-	///// IGAWORKS ADPOPCORN CALL BACK URL /////
-	////////////////////////////////////////////
-	@RequestMapping(value="/reward", method=RequestMethod.POST)
-	public void receiveParam(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		
-		logger.debug("리워드 컨트롤러 탐");
-		
-		// signed_value : 리워드 요청 보안 체크 값
-		String signed_value = request.getParameter("signed_value");
-		//usn 리워드를 지급할 유저 ID
-		String usn = request.getParameter("usn");
-		// reward_key : 리워드 요청에 대한 transaction_id(각 리워드 요청당 unique)
-		String reward_key = request.getParameter("reward_key");
-		// quantity : 리워드 지급량
-		String quantity = request.getParameter("quantity");
-		// campaign_key : 참여 완료한 캠페인 키
-		String campaign_key = request.getParameter("campaign_key");
-		// campaign_name : 유저가 참여 완료한 캠페인의 이름
-		
-		String campaign_name = request.getParameter("campaign_name");
-		campaign_name = campaign_name == null ? "" : campaign_name; 
-		//campaign_type : 유저가 참여 완료한 캠페인의 타입
-		String campaign_type = request.getParameter("campaign_type");
-		campaign_type = campaign_type == null ? "" : campaign_type; 
-		// app_key : IGAWorks 앱 키
-		String app_key = request.getParameter("app_key");
-		app_key = app_key == null ? "" : app_key; 
-		// app_name : IGAWorks 앱 이름
-		String app_name = request.getParameter("app_name");
-		app_name = app_name == null ? "" : app_name; 
-		// time_stamp : 캠페인 참여 완료 시각
-		String time_stamp = request.getParameter("time_stamp");
-		time_stamp = time_stamp == null ? "" : time_stamp; 
-		// adid : 유저가 참여 완료한 디바이스의 구글 광고 아이디
-		String adid = request.getParameter("adid");
-		adid = adid == null ? "" : adid; 
-		
-		String plainText = usn + reward_key + quantity +  campaign_key;
-		
-		
-		
-		System.out.println("signed_value= "+signed_value);
-		System.out.println("usn= "+usn);
-		System.out.println("reward_key= "+reward_key);
-		System.out.println("quantity= "+quantity);
-		System.out.println("campaign_key= "+campaign_key);
-		System.out.println("campaign_name= "+campaign_name);
-		System.out.println("campaign_type= "+campaign_type);
-		System.out.println("app_key= "+app_key);
-		System.out.println("app_name= "+app_name);
-		System.out.println("time_stamp= "+time_stamp);
-		System.out.println("adid= "+adid);
-		
-		RewardList rewardList = new RewardList();
-		rewardList.setAdid(adid);
-		rewardList.setAppKey(app_key);
-		rewardList.setAppName(app_name);
-		rewardList.setCampaignKey(campaign_key);
-		rewardList.setCampaignName(campaign_name);
-		rewardList.setCampaignType(campaign_type);
-		rewardList.setMemberUniqueID(Integer.parseInt(usn.trim()));
-		rewardList.setQuantity(Integer.parseInt(quantity));
-		rewardList.setRewardKey(reward_key);
-		rewardList.setTimeStamp(time_stamp);
-		rewardList.setCompany(1);
-		
-		logger.debug("ㅁㄴㅇ"+rewardList.toString());
-		
-		System.out.println("@@@@@@@"+usn.trim()+"@@@@@@@");
-		int userUniqueID = Integer.parseInt(usn.trim());
-		Member member = memberService.getMemberByUniqueID(userUniqueID);
-		ServerList serverURL = memberService.getServerList();
-		String serverIP = serverURL.getAddress();
-		
-		logger.debug("=========================================================");
-		logger.debug("  ip addr  "+serverIP.trim());
-		logger.debug("=========================================================");
-		
-		String json = hashUtil.returnCheck(signed_value, plainText, usn, reward_key, member, memberService, rewardList, hashUtil, serverIP);
-		
-		System.out.println("@@@"+json);
-		
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(json);
-		
-	}
-	
-	////////////////////////////////////////////
-	///// APPPANG ADPOPCORN CALL BACK URL //////
-	////////////////////////////////////////////
-	// 보상형
-	@RequestMapping(value="/appang")
-	public void appangCallback(HttpServletRequest request, HttpServletResponse response) {
-		
-		//String testIP = "127.0.0.1";
-		String nasIP = "222.122.49.171";
-		JSONObject jsonObj = new JSONObject();
-		
-		
-		
-		
-		String sentAddr = request.getRemoteAddr().trim();
-		logger.debug("보내는곳: "+sentAddr);
-
-//		if(sentAddr.equals(testIP)) {
-		if(sentAddr.equals(nasIP)) {
-			String s	= request.getParameter("s");
-			String ud	= request.getParameter("ud");
-			String p	= request.getParameter("p");
-			String r	= request.getParameter("r");
-			String ai	= request.getParameter("ai");
-			String ak	= request.getParameter("ak");
-			String n	= request.getParameter("n");
-			String t	= request.getParameter("t");
-			String adid	= request.getParameter("adid");
-			String ip	= request.getParameter("ip");
-			
-			String param = s + " / " + ud + " / " + p + " / " + r + " / " + ai + " / " + ak + " / " + n + " / " + t + " / " + adid + " / " + ip;
-			logger.debug(param);
-			
-			RewardList rewardList = new RewardList();
-			rewardList.setAdid(adid);
-			rewardList.setAppKey(ak);
-			rewardList.setAppName(n);
-			rewardList.setCompany(1);
-			
-			logger.debug("ㅁㄴㅇ"+rewardList.toString());
-			
-			jsonObj.put("result", "1");
-			jsonObj.put("result", p);
-			
-		} else {
-			logger.debug("!!! WRONG ACCEESS !!!");
-			response.setStatus(200);
-			
-			jsonObj.put("result", "0");
-		}
-		
-		Gson gson = new Gson();
-		String json = gson.toJson(jsonObj);
-		
-		response.setStatus(200);
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		try {
-			response.getWriter().write(json);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 	}
 	
 	///////////////////////////////////////////////////////////
@@ -838,7 +738,9 @@ public class HomeController {
 	///////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////
 	@RequestMapping(value="/test")
-	public String goTestPage() throws Exception{
+	public String goTestPage(HttpServletRequest request) throws Exception{
+		
+		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
 		RewardList rewardList = new RewardList();
 		rewardList.setAdid("TEST");
@@ -860,5 +762,5 @@ public class HomeController {
 		
 		return "test/index";
 	}
-		
+	
 }

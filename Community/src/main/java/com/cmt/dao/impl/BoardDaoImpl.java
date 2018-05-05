@@ -182,4 +182,14 @@ public class BoardDaoImpl implements BoardDao {
 		sqlSession.delete("BoardMapper.deleteLine", uniqueID);
 	}
 
+	
+	
+	//////////////
+	//// TEST ////
+	//////////////
+	@Override
+	public Board getBoardTest(int boardUniqueID) throws Exception {
+		return sqlSession.selectOne("BoardMapper.selectBoard", boardUniqueID);
+	}
+
 }

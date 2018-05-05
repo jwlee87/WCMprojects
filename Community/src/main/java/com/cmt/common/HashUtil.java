@@ -69,18 +69,21 @@ public class HashUtil {
 		return encodedString;
 	}
 	
+	///////////////////////
+	// ad popcorn reward //
+	///////////////////////
 	public String returnCheck(String signedValue, String plainText, String usn, String rewardKey, 
 			Member member, MemberService memberService, RewardList igaReward, HashUtil hashUtil, 
 			String serverIP) throws Exception {
 		
-		logger.debug("flush하는 메소드 진입");
+		logger.debug(" JSON OBJECT MAKING METHOD START ");
 		
 		String hash_key = "1339caa7b57c40f3";
 		JSONObject obj = new JSONObject();
 		
 		String decodedValue = stringToHMACMD5(hash_key, plainText);
 		
-		logger.debug("DEBUGGING@@="+decodedValue);
+		logger.debug("AD POPCORN DECODEDVALUE ="+decodedValue);
 		List<RewardList> rewardList = memberService.getRewardList(Integer.parseInt(usn));
 		
 		boolean checkKey = false;
@@ -128,25 +131,16 @@ public class HashUtil {
 
 					HashMap<String, Object> paramMap = new HashMap<String, Object>();
 					paramMap.put("rewardList", igaReward);
-					logger.debug("hashUtil Debugging@@@@+before:"+igaReward);
 
-					////////////////
+					logger.debug("hashUtil Debugging :: before :: "+igaReward);
+					memberService.addReward(paramMap);
+					logger.debug("hashUtil Debugging :: after :: "+igaReward);
 					// 지급 절차 통신  //
-					////////////////
 					String httpReturn = httpClient(serverIP, igaReward);
 					
-					if(httpReturn.equals("true")) {
-						obj.put("Result", true);
-						obj.put("ResultCode", 1);
-						obj.put("ResultMsg", "success");
-						memberService.addReward(paramMap);
-					} else {
-						logger.debug("리워드 지급 통신 에러!");
-						obj.put("Result", false);
-						obj.put("ResultCode", 4000);
-						obj.put("ResultMsg", "custom error message");
-					}
-					logger.debug("hashUtil Debugging@@@@+after:"+igaReward);
+					obj.put("Result", true);
+					obj.put("ResultCode", 1);
+					obj.put("ResultMsg", "success");
 				}
 				
 			// 예외사항 발생
@@ -166,6 +160,66 @@ public class HashUtil {
 		
 		Gson gson = new Gson();
 		return gson.toJson(obj);
+	}
+	/////////////////////////////////
+	// appang reward return method //
+	/////////////////////////////////
+	public String returnCheckForAppang(String usn, String rewardKey, String adID, Member member, MemberService memberService,
+			RewardList apReward, HashUtil hashUtil, String serverIP) throws Exception {
+		
+		logger.debug(" JSON OBJECT MAKING METHOD START ");
+		
+		List<RewardList> rewardList = memberService.getRewardList(Integer.parseInt(usn));
+		
+		boolean checkKey = false;
+		String returnValue = "false";
+		// 리워드 리스트가 0이 아닐때
+		if(rewardList.size() != 0) {
+			for(RewardList reward : rewardList) {
+				// 콜백 중복 호출시 적립금 중복 지금 방지 리워드키 중복일 경우 checkKey true로 바뀜
+				if(reward.getRewardKey().equals(rewardKey)) {
+					checkKey = true;
+				// 동일 사용자에게 적립금 중복 지급을 방지하기 위해, 개발사의 회원 ID와 광고ID 값 기준으로 중복 체크
+				}else if(reward.getCampaignKey().equals(adID)){
+					checkKey = true;
+				}
+			}
+		}
+		
+		if (member != null) {
+			
+			logger.debug("유저가 널이 아님");
+			
+			if ( member.getUniqueID() != Integer.parseInt(usn.trim()) ) {
+				logger.debug("유저가 널이 아니지만 유니크 아이디가 같지 않음");
+				returnValue = "0001";
+			// 리워드 중복 지급
+			}else if ( checkKey ) {
+				logger.debug("유저가 널이 아니고 유니크 아이디가 같지만 리워드 중복 지급");
+				returnValue = "0002";
+
+			//리워드 지금 성공					
+			} else {
+				
+				logger.debug("유저가 널이 아니고 유니크 아이디가 같고 리워드 중복 지급이 아니므로 리워드 지급!");
+
+				HashMap<String, Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("rewardList", apReward);
+				logger.debug("hashUtil Debugging :: before :: "+apReward);
+				memberService.addReward(paramMap);
+				logger.debug("hashUtil Debugging :: after :: "+apReward);
+				// 지급 절차 통신  //
+				String httpReturn = httpClient(serverIP, apReward);
+				returnValue = "1111";
+				
+			}
+			
+		// 예외사항 발생
+		} else {
+			logger.debug("리워드 지급 예외상황 발생");
+			returnValue = "0004";
+		}
+		return returnValue;
 	}
 	
 	public String simpleJson() {
@@ -200,6 +254,10 @@ public class HashUtil {
 		return paramList;
 	}
 	
+	
+	//////////////////
+	/// httpClient ///
+	//////////////////
 	public String httpClient(String url, RewardList igaReward) {
 		
 		RequestConfig defaultRequestConfig = RequestConfig.custom()
@@ -230,7 +288,7 @@ public class HashUtil {
 		}
 		post.addHeader("User-Agent", "Mozila/5.0");
 		
-		logger.debug("보내기 전");
+		logger.debug(" 이사님 서버로 보내기 전 ");
 		
 		HttpResponse httpResponse;
 		try {
@@ -255,7 +313,7 @@ public class HashUtil {
 			}
 		}
 		
-		logger.debug("보내기 후");
+		logger.debug(" 이사님 서버로 보내기 후");
 		
 		returnStr = returnStr.equals("") ? "false" : returnStr;
 		return returnStr;

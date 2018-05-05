@@ -64,8 +64,6 @@
 			data = {};
 			data["phone"] = phone;
 			
-			alert("++"+data["phone"]);
-			
 			$.ajax({
 				type: "POST"
 				, url: "/find/pw"

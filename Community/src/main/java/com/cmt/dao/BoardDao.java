@@ -42,4 +42,12 @@ public interface BoardDao {
 	public int getLineTotalCount(int uniqueID) throws Exception;
 	public Promotion getPromotion(int memberUniqueID) throws Exception;
 	public void deleteLine(int uniqueID) throws Exception;
+	
+	
+	
+	
+	////////////
+	/// TEST ///
+	////////////
+	public Board getBoardTest(int boardUniqueID) throws Exception;
 }
