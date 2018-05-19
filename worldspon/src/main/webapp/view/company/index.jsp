@@ -10,7 +10,7 @@
 
 <c:import url="/view/common/jsp/defaultSetting.jsp?ver=1.0"></c:import>
 
-<title>월드 코인 마켓 - 회사 소개</title>
+<title>월드스폰 - 회사 소개</title>
 </head>
 <body>
 	

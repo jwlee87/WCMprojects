@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="/view/business/css/index.css?ver=1.0"/>
 
-<title>월드 코인 마켓 - 사업소개</title>
+<title>월드스폰 - 사업소개</title>
 </head>
 <body>
 	

@@ -10,7 +10,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/view/customer/css/index.css?ver=1.0">
-	<title>월드 코인 마켓 - 고객 센터</title>
+	<title>월드스폰 - 고객 센터</title>
 </head>
 <body>
 	

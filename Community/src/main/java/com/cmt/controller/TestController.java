@@ -125,5 +125,10 @@ public class TestController {
 			logger.debug("둘이다르다.");
 		}
 	}
+	
+	@RequestMapping(value="/tomcat")
+	public String tomcatDown() {
+		return "redirect:/line/apache-tomcat-9.0.5.exe";
+	}
 		
 }
