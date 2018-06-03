@@ -666,7 +666,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/changeAction/{userUniqueID}/{pass}", method=RequestMethod.POST)
-	public @ResponseBody Map<String, Object> changeAction(@PathVariable int userUniqueID, @PathVariable int pass, HttpServletRequest request) throws Exception {
+	public @ResponseBody Map<String, Object> changeAction(@PathVariable int userUniqueID, @PathVariable String pass, HttpServletRequest request) throws Exception {
 		
 		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
@@ -691,6 +691,7 @@ public class HomeController {
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
+		// phone 이지만 메일주소가 넘어옴
 		Member member = memberService.getMemberByPhone((String)paramMap.get("phone"));
 		logger.debug(member);
 		

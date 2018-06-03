@@ -10,9 +10,10 @@
 
 #spinner {
 	position: absolute;
-	top: 30%;
-	left: 42%;
 	display: none;
+	top: 50%;
+	left: 50%;
+	transform: translate(-100px);
 }
 
 .col-xs-8 span {
@@ -27,4 +28,8 @@
 #mail_btn {
 	height: 200%;
 	font-size: 1.8em;
+}
+
+.help {
+	text-align: center;
 }

@@ -20,9 +20,9 @@
 		<div class="col-xs-2"></div>
 		<div class="col-xs-8">
 			<span>
-			가입된 핸드폰 번호를 입력하고<br>
+			가입당시 입력하신 메일주소를 입력하시고<br>
 			메일 발송 버튼을 누르시면<br>
-			가입당시 입력하신 이메일 주소로<br>
+			해당 이메일 주소로<br>
 			비밀번호 변경 링크주소를 보내드립니다.
 			</span>
 		</div>
@@ -31,7 +31,7 @@
 	<div class="row">
 		<div class="col-xs-2"></div>
 		<div class="col-xs-8">
-			<input id="phone" type="text" class="form-control" placeholder="'-'을 제외한 번호만 입력하세요. 예)01033334444"></input>
+			<input id="phone" type="text" class="form-control" placeholder="이메일 주소를 입력하세요. 예)worldspon@help.com"></input>
 		</div>
 		<div class="col-xs-2"></div>
 	</div>
@@ -41,6 +41,9 @@
 			<button id="mail_btn" type="button" class="btn btn-primary btn-block">메일 발송</button>
 		</div>
 		<div class="col-xs-2"></div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 help"><p>도움이 필요하시면 월드스폰 고객센터로 문의해 주세요.</p></div>
 	</div>
 	
 	<div id="spinner">
@@ -71,7 +74,7 @@
 				, dataType: "json"
 				, success: function(result){
 					if(result.check == "null"){
-						alert("일치하는 번호가 없습니다.");
+						alert("일치하는 메일주소가 없습니다.");
 						hideSpinner();
 					}else if(result.check == "emailNull"){
 						alert("이메일 주소가 없습니다.");
@@ -88,7 +91,6 @@
 			$("body").css("opacity","1");
 			return false;
 		}
-		
 	</script>
 </body>
 </html>

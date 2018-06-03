@@ -76,6 +76,9 @@
 			if(pass.length < 4){
 				alert("비밀번호가 너무 짧습니다.");
 				return false;
+			}else if(pass.length > 20){
+				alert("비밀번호는 20자 이하로 만들어주세요.");
+				return false;
 			}else if(pass != passCheck){
 				alert("비밀번호가 일치하지 않습니다.");
 				return false;
