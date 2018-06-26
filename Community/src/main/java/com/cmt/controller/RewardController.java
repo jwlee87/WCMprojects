@@ -175,6 +175,7 @@ public class RewardController {
 		
 		logger.debug("JSON return Value = "+json);
 		
+		response.setHeader("Content-Type", "text/html");
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(json);

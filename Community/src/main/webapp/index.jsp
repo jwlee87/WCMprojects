@@ -39,6 +39,12 @@
 			</div>
 		</div>
 		
+		<div class="login-con">
+			<div class="login-btn-box">
+				<a href="/game/selectList/zombie" id="btn-login" type="button" class="btn btn-default btn-block">좀비게임 결과</a>
+			</div>
+		</div>
+		
 		<c:if test="${sessionScope.member eq null}">
 		<div class="login-con">
 			<div class="login-btn-box">

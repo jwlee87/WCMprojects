@@ -36,7 +36,7 @@
 		</tr>
 		<tr>
 			<td class="button-con">
-				<input type="file" id="uploadFile" name="uploadFile" value=""/>
+				<input type="file" id="uploadFile" name="uploadFile" value="" disabled/>
 				<input type="button" id="clearFile" value="초기화">
 				<span> 용량제한 4MB</span>
 			</td>
