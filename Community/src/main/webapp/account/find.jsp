@@ -59,31 +59,37 @@
 		
 		$("#mail_btn").on("click", function(){
 			
-			
-			$("#spinner").show();
-			$("body").css("opacity","0.3");
-			
 			var phone = $("#phone").val();
 			data = {};
 			data["phone"] = phone;
 			
-			$.ajax({
-				type: "POST"
-				, url: "/find/pw"
-				, data: data
-				, dataType: "json"
-				, success: function(result){
-					if(result.check == "null"){
-						alert("일치하는 메일주소가 없습니다.");
-						hideSpinner();
-					}else if(result.check == "emailNull"){
-						alert("이메일 주소가 없습니다.");
-						hideSpinner();
-					}else{
-						location.href = "/msg";
+			if( data["phone"] == '' || data["phone"] == null ){
+				alert("메일을 입력해주세요.");
+				return false;
+			}else{
+				
+				$("#spinner").show();
+				$("body").css("opacity","0.3");
+				
+				$.ajax({
+					type: "POST"
+					, url: "/find/pw"
+					, data: data
+					, dataType: "json"
+					, success: function(result){
+						if(result.check == "null"){
+							alert("일치하는 메일주소가 없습니다.");
+							hideSpinner();
+						}else if(result.check == "emailNull"){
+							alert("이메일 주소가 없습니다.");
+							hideSpinner();
+						}else{
+							location.href = "/msg";
+						}
 					}
-				}
-			})
+				})
+			}
+			
 		});
 		
 		function hideSpinner(){

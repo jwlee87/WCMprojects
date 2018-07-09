@@ -1,14 +1,7 @@
 package com.cmt.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
@@ -17,37 +10,18 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
 
 import com.cmt.common.EmailSender;
 import com.cmt.common.HashUtil;
-import com.cmt.common.UtilFile;
-import com.cmt.domain.ADRequest;
-import com.cmt.domain.AttachFile;
-import com.cmt.domain.Board;
-import com.cmt.domain.Comment;
 import com.cmt.domain.Email;
 import com.cmt.domain.RewardList;
-import com.cmt.domain.Line;
 import com.cmt.domain.Member;
-import com.cmt.domain.Page;
-import com.cmt.domain.Promotion;
 import com.cmt.domain.ServerList;
-import com.cmt.domain.SystemInfo;
-import com.cmt.domain.Tab;
 import com.cmt.service.BoardService;
 import com.cmt.service.MemberService;
-import com.google.gson.Gson;
 
 @Controller
 public class RewardController {

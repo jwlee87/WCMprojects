@@ -96,6 +96,11 @@ public class MemberDaoImpl implements MemberDao {
 	public ServerList getServerList() throws Exception {
 		return sqlSession.selectOne("MemberMapper.getServerList");
 	}
-	
+
+	@Override
+	public int updatePoint(HashMap<String, Object> paramMap) throws Exception {
+		System.out.println(paramMap);
+		return sqlSession.update("MemberMapper.updatePoint", paramMap);
+	}
 	
 }

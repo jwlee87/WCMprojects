@@ -23,5 +23,6 @@ public interface MemberDao {
 	public List<RewardList> getRewardListTNK(int userUniqueID) throws Exception;
 	public void addReward(HashMap<String, Object> paramMap) throws Exception;
 	public ServerList getServerList() throws Exception;
+	public int updatePoint(HashMap<String, Object> paramMap) throws Exception;
 	
 }
