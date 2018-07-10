@@ -17,8 +17,8 @@ public class StoreController {
 	@Autowired
 	StoreServiceInterface ssi;
 	
-	@RequestMapping("/appang/store/callback")
-	public void appangStoreCallBack(HttpServletRequest req, HttpServletResponse res) {
+	@RequestMapping("/appang/store/payment")
+	public void appangStorePayment(HttpServletRequest req, HttpServletResponse res) {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
@@ -45,5 +45,9 @@ public class StoreController {
 			e.printStackTrace();
 		}
 	}
-
+	
+	@RequestMapping("/appang/store/refund")
+	public void appangStoreRefund(HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("환불 시스템");
+	}
 }

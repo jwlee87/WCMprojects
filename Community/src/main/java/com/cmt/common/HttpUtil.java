@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
 public class HttpUtil {
 
 	public HttpUtil() {
@@ -55,6 +59,13 @@ public class HttpUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static JsonObject getJsonOfResponse(String url) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String jsonStr = "";
+		Gson gson = new GsonBuilder().create();
+		return new JsonObject();
 	}
 	
 }

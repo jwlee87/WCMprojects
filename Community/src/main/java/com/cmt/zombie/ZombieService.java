@@ -48,7 +48,7 @@ public class ZombieService implements ZombieServiceInterface {
 			tp.remove("_DateTime");
 			index++;
 		}
-		JSONObject.toJSONString(tempMap);
+		
 		mav.addObject("data", JSONObject.toJSONString(tempMap));
 		return mav;
 	}

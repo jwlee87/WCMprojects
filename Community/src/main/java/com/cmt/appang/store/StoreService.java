@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.cmt.common.HttpUtil;
 import com.cmt.dao.MemberDao;
 import com.cmt.domain.Member;
+import com.google.gson.JsonObject;
 
 @Service
 public class StoreService implements StoreServiceInterface {
