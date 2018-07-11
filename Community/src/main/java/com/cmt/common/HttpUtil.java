@@ -34,12 +34,8 @@ public class HttpUtil {
 	}
 	
 	public static ModelAndView makeJsonView(HashMap<String, Object> map) {
-		
 		ModelAndView mav = new ModelAndView();
-		
 		String jsonStr = JSONObject.toJSONString(map);
-		System.out.println("jsonStr= "+jsonStr);
-		
 		mav.addObject("json", jsonStr);
 		mav.setViewName("json");
 		
@@ -48,12 +44,8 @@ public class HttpUtil {
 	
 	
 	public static void makeJsonWriter(HttpServletResponse res, HashMap<String, Object> map) {
-		
 		res.setContentType("text/html;charset=utf-8");
-		
 		String jsonStr = JSONObject.toJSONString(map);
-		System.out.println("jsonStr= "+jsonStr);
-		
 		try {
 			res.getWriter().write(jsonStr);
 		} catch (IOException e) {

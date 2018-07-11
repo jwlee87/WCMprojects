@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.cmt.common.HttpUtil;
 import com.cmt.dao.MemberDao;
 import com.cmt.domain.Member;
-import com.google.gson.JsonObject;
 
 @Service
 public class StoreService implements StoreServiceInterface {
@@ -24,8 +23,67 @@ public class StoreService implements StoreServiceInterface {
 	@Qualifier("memberDaoImpl")
 	private MemberDao mdi;
 	
+	// 결제 시스템
 	@Override
-	public HashMap<String, Object> payment(HttpServletRequest req) {
+	public HashMap<String, Object> payment(HttpServletRequest req) throws Exception {
+		
+		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		boolean returnFlag = false;
+		int checkFlag = 0;
+		
+		paramMap = HttpUtil.getParamMap(req);
+		resultMap = sdi.selectPayment(paramMap);
+		
+		for(String key : resultMap.keySet()) {
+			if(key.equals("resultListCount")) {
+				if((resultMap.get(key).toString()).trim().equals("0")) {
+					checkFlag = 1;
+				}
+			}
+		}
+		
+		// 결제 프로세스 진행
+		if(checkFlag==1) {
+			checkFlag = 0;
+			String userUniqueId = paramMap.get("UD").toString().trim();
+			String p = paramMap.get("P").toString().trim();
+			int uui = Integer.parseInt(userUniqueId);
+			long price = Integer.parseInt(p);
+			long priceGap = 0;
+			HashMap<String, Object> tempMap = new HashMap<String, Object>();
+			Member member = mdi.getMemberByUniqueID(uui);
+			long memberPoint = member.getPoint();
+			
+			if(memberPoint > price) {
+				priceGap = member.getPoint() - price;
+				tempMap.put("uniqueID", uui);
+				tempMap.put("priceGap", priceGap);
+				if(mdi.updatePoint(tempMap)==1) {
+					checkFlag=1;
+				};
+			}
+			
+			if(checkFlag==1) {
+				//결제 정보 저장
+				paramMap.put("US", 2);
+				if(sdi.insertPayment(paramMap)==1) {
+					returnFlag = true;
+				}else{
+					paramMap.put("P", memberPoint);
+					mdi.updatePoint(paramMap);
+				};
+			}
+			returnMap.put("money", priceGap);
+		}
+		returnMap.put("returnFlag", returnFlag);
+		return returnMap;
+	}
+
+	// 환불 시스템
+	@Override
+	public HashMap<String, Object> refund(HttpServletRequest req) throws Exception {
 		
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
@@ -35,18 +93,18 @@ public class StoreService implements StoreServiceInterface {
 		int checkFlag = 0;
 		
 		paramMap = HttpUtil.getParamMap(req);
-		System.out.println(paramMap);
+		paramMap.put("USE_STATUS", 2);
 		resultMap = sdi.selectPayment(paramMap);
 		
 		for(String key : resultMap.keySet()) {
 			if(key.equals("resultListCount")) {
-				if((resultMap.get(key).toString()).trim().equals("0")) {
+				if((resultMap.get(key).toString()).trim().equals("1")) {
 					checkFlag = 1;
-					System.out.println(checkFlag);
 				}
 			}
 		}
 		
+		// 환불 프로세스 진행
 		if(checkFlag==1) {
 			checkFlag = 0;
 			String userUniqueId = paramMap.get("UD").toString().trim();
@@ -55,38 +113,29 @@ public class StoreService implements StoreServiceInterface {
 			long price = Integer.parseInt(p);
 			long priceGap = 0;
 			HashMap<String, Object> tempMap = new HashMap<String, Object>();
-			try {
-				Member member = mdi.getMemberByUniqueID(uui);
-				System.out.println(member);
-				if(member.getPoint() > price) {
-					priceGap = member.getPoint() - price;
-					System.out.println("priceGap= "+priceGap);
-					
-					tempMap.put("uniqueID", uui);
-					tempMap.put("priceGap", priceGap);
-					if(mdi.updatePoint(tempMap)==1) {
-						checkFlag=1;
-					};
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			Member member = mdi.getMemberByUniqueID(uui);
+			long memberPoint = member.getPoint();
+			
+			priceGap = member.getPoint() + price;
+			
+			tempMap.put("uniqueID", uui);
+			tempMap.put("priceGap", priceGap);
+			if(mdi.updatePoint(tempMap)==1) {
+				checkFlag=1;
+			};
 			
 			if(checkFlag==1) {
+				//환불 정보 저장
+				paramMap.put("US", 3);
 				if(sdi.insertPayment(paramMap)==1) {
 					returnFlag = true;
 				}else{
-					try {
-//						포인트 환불 시스템 가동;
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					paramMap.put("P", memberPoint);
+					mdi.updatePoint(paramMap);
 				};
 			}
-			returnMap.put("money", priceGap);
 		}
 		returnMap.put("returnFlag", returnFlag);
-		
 		return returnMap;
 	}
 

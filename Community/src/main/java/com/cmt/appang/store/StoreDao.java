@@ -17,7 +17,6 @@ public class StoreDao implements StoreDaoInterface {
 	
 	@Override
 	public int insertPayment(HashMap<String, Object> param) {
-		System.out.println(param);
 		return session.insert("store.insertPayment", param);
 	}
 
@@ -30,17 +29,5 @@ public class StoreDao implements StoreDaoInterface {
 		resultMap.put("resultListCount", resultList.size());
 		return resultMap;
 	}
-
-	@Override
-	public int updatePayment(HashMap<String, Object> param) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deletePayment(HashMap<String, Object> param) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 }
