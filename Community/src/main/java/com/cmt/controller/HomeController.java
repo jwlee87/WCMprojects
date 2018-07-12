@@ -1,18 +1,15 @@
 package com.cmt.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,12 +37,10 @@ import com.cmt.domain.Line;
 import com.cmt.domain.Member;
 import com.cmt.domain.Page;
 import com.cmt.domain.Promotion;
-import com.cmt.domain.ServerList;
 import com.cmt.domain.SystemInfo;
 import com.cmt.domain.Tab;
 import com.cmt.service.BoardService;
 import com.cmt.service.MemberService;
-import com.google.gson.Gson;
 
 @Controller
 public class HomeController {
@@ -70,9 +65,6 @@ public class HomeController {
 	
 	@Autowired
 	private Email email;
-	
-	@Autowired
-	private HashUtil hashUtil;
 	
 	@Autowired
 	private EmailSender emailSender;
