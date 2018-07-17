@@ -82,8 +82,19 @@
 		$(".price").text(totalPrice);
 	});
 	
+	function valCheck(){
+		text = $("#chat").val();
+		if(text.length >= 10 && text.length <= 80){
+			$("#frm").submit();
+		}else{
+			alert("한줄 광고는 10자이상 80자이하로 등록해주세요.")
+			event.stopPropagation();
+			return false;
+		}
+	}
+	
 	$("#ok_btn").on("click", function(){
-		$("#frm").submit();
+		valCheck();
 	});
 	
 </script>

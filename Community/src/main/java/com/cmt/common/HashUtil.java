@@ -197,7 +197,7 @@ public class HashUtil {
 				logger.debug("유저가 널이 아니고 유니크 아이디가 같지만 리워드 중복 지급");
 				returnValue = "0002";
 
-			//리워드 지금 성공					
+			//리워드 지금 성공
 			} else {
 				
 				logger.debug("유저가 널이 아니고 유니크 아이디가 같고 리워드 중복 지급이 아니므로 리워드 지급!");

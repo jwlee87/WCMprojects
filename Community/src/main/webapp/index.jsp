@@ -41,7 +41,7 @@
 		
 		<div class="login-con">
 			<div class="login-btn-box">
-				<a href="/game/selectList/zombie" id="btn-login" type="button" class="btn btn-default btn-block">좀비게임 결과</a>
+				<a href="/game/selectList/zombie" type="button" class="btn btn-default btn-block">좀비게임 결과</a>
 			</div>
 		</div>
 		
