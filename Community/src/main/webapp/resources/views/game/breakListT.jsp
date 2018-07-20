@@ -87,10 +87,10 @@ $(document).ready(function(){
 		targetHour = targetHour + 1;
 	}
 	
-	console.log("final_min check= "+final_min);
+// 	console.log("final_min check= "+final_min);
 	
 	var nowTime = date.getFullYear()+"/"+Number(date.getMonth()+1)+"/"+date.getDate()+" "+targetHour+":"+final_min+":15";
-	console.log(nowTime);
+// 	console.log(nowTime);
 	
 	$('#clock').countdown(nowTime)
 		.on('update.countdown', function(event) {
@@ -287,7 +287,7 @@ $(document).ready(function(){
 			+'</tr>';
 	}
 	
-	console.log(html);
+// 	console.log(html);
 	$("tbody").append(html);
 	
 });
