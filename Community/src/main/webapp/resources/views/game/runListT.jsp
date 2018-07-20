@@ -36,6 +36,7 @@
 	<section>
 		<div class="result-box">
 			<p>매 5분마다 결과가 공개됩니다.</p>
+			<p>게임결과가 먼저 공개되는것을 방지하고자 실제 게임과는 10초 정도의 오차가 있습니다.</p>
 			<p>결과가 보이지 않을시 새로고침(F5)을 눌러주세요.</p>
 			<button class="stats">어제 결과</button>
 			<div class="countdown">
