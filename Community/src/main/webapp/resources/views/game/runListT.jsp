@@ -120,7 +120,7 @@ $(document).ready(function(){
 	
 	$(".stats").on("click", function(){
 		/*window.open("https://www.naver.com", "게임통계", window_features);*/
-		var win = window.open("../yList/zombie", "게임통계", 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width='+w+',height='+h);
+		var win = window.open("../run/yList", "게임통계", 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width='+w+',height='+h);
 		win.moveTo(p_left, p_top);
 	});
 	

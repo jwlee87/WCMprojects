@@ -41,7 +41,12 @@
 		
 		<div class="login-con">
 			<div class="login-btn-box">
-				<a href="/game/selectList/zombie" type="button" class="btn btn-default btn-block">좀비게임 결과</a>
+				<a href="/game/run/tList" type="button" class="btn btn-default btn-block">좀비레이스 게임 결과</a>
+			</div>
+		</div>
+		<div class="login-con">
+			<div class="login-btn-box">
+				<a href="game/break/tList" type="button" class="btn btn-default btn-block">좀비격파 게임 결과</a>
 			</div>
 		</div>
 		

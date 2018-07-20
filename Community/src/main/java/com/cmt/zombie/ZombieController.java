@@ -14,9 +14,9 @@ public class ZombieController {
 	@Autowired
 	ZombieServiceInterface zsi;
 	
-	@RequestMapping("/game/{type}/{menu}")
-	public ModelAndView result(@PathVariable String type, @PathVariable String menu, HttpServletRequest req) {
-		return zsi.zombie(menu, type, req);
+	@RequestMapping("/game/{gameName}/{menu}")
+	public ModelAndView result(@PathVariable String gameName, @PathVariable String menu, HttpServletRequest req) {
+		return zsi.zombie(gameName, menu, req);
 	}
 
 }
