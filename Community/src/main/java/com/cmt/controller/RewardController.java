@@ -45,13 +45,7 @@ public class RewardController {
 	private int promotionLevel;
 	
 	@Autowired
-	private Email email;
-	
-	@Autowired
 	private HashUtil hashUtil;
-	
-	@Autowired
-	private EmailSender emailSender;
 	
 	@Autowired
 	@Qualifier("memberServiceImpl")
@@ -167,8 +161,6 @@ public class RewardController {
 		
 		String testIP = "127.0.0.1";
 		String nasIP = "222.122.49.171";
-		JSONObject jsonObj = new JSONObject();
-		
 		String sentAddr = request.getRemoteAddr().trim();
 		logger.debug("보내는곳: "+sentAddr);
 
@@ -179,7 +171,7 @@ public class RewardController {
 			// [USER_DATA]										- memberUniqueID
 			String ud	= request.getParameter("ud");
 			// [PRICE] : 광고 단가 (매체 수익금)
-			String p	= request.getParameter("p");
+//			String p	= request.getParameter("p");
 			// [REWARD] : 리워드 금액 (오퍼월에서 참여한 경우에만 값이 있음)	- quantity
 			String r	= request.getParameter("r");
 			// [AI_ID] : 광고 ID									- campaignKey
@@ -193,7 +185,7 @@ public class RewardController {
 			// [USER_ADID] : 사용자 기기 36자리 광고 ID				- adid
 			String adid	= request.getParameter("adid");
 			// [USER_IP] : 사용자 IP주소
-			String ip	= request.getParameter("ip");
+//			String ip	= request.getParameter("ip");
 			String appKey = "78fc99a71bcbdca32d569265c91c9b24";
 			String appName = "월드스폰 - 구글플레이";
 			int userUniqueID = Integer.parseInt(ud.trim());

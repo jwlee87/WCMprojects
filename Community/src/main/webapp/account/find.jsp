@@ -20,9 +20,9 @@
 		<div class="col-xs-2"></div>
 		<div class="col-xs-8">
 			<span>
-			가입당시 입력하신 메일주소를 입력하시고<br>
+			회원님의 스마트아이디를 입력하시고<br>
 			메일 발송 버튼을 누르시면<br>
-			해당 이메일 주소로<br>
+			가입당시 입력하신 이메일 주소로<br>
 			비밀번호 변경 링크주소를 보내드립니다.
 			</span>
 		</div>
@@ -31,7 +31,7 @@
 	<div class="row">
 		<div class="col-xs-2"></div>
 		<div class="col-xs-8">
-			<input id="phone" type="text" class="form-control" placeholder="이메일 주소를 입력하세요. 예)worldspon@help.com"></input>
+			<input id="nickName" type="text" class="form-control" placeholder="스마트아이디를 입력하세요. 예)월드스폰"></input>
 		</div>
 		<div class="col-xs-2"></div>
 	</div>
@@ -59,12 +59,12 @@
 		
 		$("#mail_btn").on("click", function(){
 			
-			var phone = $("#phone").val();
+			var nickName = $("#nickName").val();
 			data = {};
-			data["phone"] = phone;
+			data["nickName"] = nickName;
 			
-			if( data["phone"] == '' || data["phone"] == null ){
-				alert("메일을 입력해주세요.");
+			if( data["nickName"] == '' || data["nickName"] == null ){
+				alert("스마트아이디를 입력해주세요.");
 				return false;
 			}else{
 				
@@ -78,10 +78,10 @@
 					, dataType: "json"
 					, success: function(result){
 						if(result.check == "null"){
-							alert("일치하는 메일주소가 없습니다.");
+							alert("일치하는 스마트아이디가 없습니다.");
 							hideSpinner();
 						}else if(result.check == "emailNull"){
-							alert("이메일 주소가 없습니다.");
+							alert("등록된 이메일 주소가 없습니다. 고객센터로 문의해주세요.");
 							hideSpinner();
 						}else{
 							location.href = "/msg";

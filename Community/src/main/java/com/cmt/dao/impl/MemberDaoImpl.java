@@ -43,8 +43,8 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public Member getMemberByPhone(String phone) throws Exception {
-		return sqlSession.selectOne("MemberMapper.selectMemberByPhone", phone);
+	public Member getMemberByNick(String nickName) throws Exception {
+		return sqlSession.selectOne("MemberMapper.selectMemberByNick", nickName);
 	}
 
 	@Override

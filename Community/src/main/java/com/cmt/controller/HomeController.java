@@ -25,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.cmt.common.EmailSender;
-import com.cmt.common.HashUtil;
 import com.cmt.common.UtilFile;
 import com.cmt.domain.ADRequest;
 import com.cmt.domain.AttachFile;
@@ -87,7 +86,7 @@ public class HomeController {
 	@RequestMapping(value="/iframe")
 	public String iframeList(Model model, HttpSession session, HttpServletRequest request) throws Exception {
 		if(session.getAttribute("member")!=null) {
-			logger.debug("[HomeController] /board/ session not null");
+//			logger.debug("[HomeController] /board/ session not null");
 			Member member = (Member)session.getAttribute("member");
 			session.setAttribute("member", member);
 		}
@@ -130,7 +129,7 @@ public class HomeController {
 	public String boardIndex(Model model, HttpSession session, HttpServletRequest request) throws Exception {
 		
 		if(session.getAttribute("member")!=null) {
-			logger.debug("[HomeController] /board/ session not null");
+//			logger.debug("[HomeController] /board/ session not null");
 			Member member = (Member)session.getAttribute("member");
 			session.setAttribute("member", member);
 		}
@@ -177,13 +176,13 @@ public class HomeController {
 		Page page = new Page(pageNo, commentRows);
 		
 		
-		logger.debug("디벅= "+totalComment+" , "+commentRows);
+//		logger.debug("디벅= "+totalComment+" , "+commentRows);
 		
 		// 댓글 갯수 0이 아닐때
 		if(totalComment != 0) {
 			Tab tab = new Tab(pageNo, totalComment, commentRows);
 			
-			logger.debug("탭 디벅= "+tab);
+//			logger.debug("탭 디벅= "+tab);
 			
 			model.addAttribute("pageResult", tab);
 		}
@@ -195,7 +194,7 @@ public class HomeController {
 		texts = texts.replaceAll(System.getProperty("line.separator"), "<br>");
 		board.setContents(texts);
 		
-		logger.debug(" reply count: "+board.getReplyCount());
+//		logger.debug(" reply count: "+board.getReplyCount());
 		
 		model.addAttribute("board", board);
 		
@@ -226,7 +225,7 @@ public class HomeController {
 		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
 		Member member = (Member)request.getSession().getAttribute("member");
-		logger.debug(member);
+//		logger.debug(member);
 		if(member == null) {
 			return "redirect:/board/login";
 		}
@@ -266,9 +265,9 @@ public class HomeController {
 		
 		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
-		logger.debug("[HomeController] /board/updateAction :: Board="+board);
+//		logger.debug("[HomeController] /board/updateAction :: Board="+board);
 		Member member = (Member)session.getAttribute("member");
-		logger.debug(member);
+//		logger.debug(member);
 		if(member == null) {
 			return "redirect:/board/login";
 		}
@@ -284,7 +283,7 @@ public class HomeController {
 			for(String fileName: fileNames) {
 			
 				if(fileName != null && fileName != "") {
-					logger.debug("[HomeController] uploadFile : " + uploadFile);
+//					logger.debug("[HomeController] uploadFile : " + uploadFile);
 					UtilFile utilFile = new UtilFile();
 //					파일 업로드 결과값을 path로 받아온다
 					HashMap<String, Object> hm = utilFile.fileUpload(request, uploadFile, board);
@@ -310,12 +309,12 @@ public class HomeController {
 		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
 		Member member = (Member)request.getSession().getAttribute("member");
-		logger.debug(member);
+//		logger.debug(member);
 		if(member == null) {
 			return "redirect:/board/login";
 		}
 		
-		logger.debug(comment);
+//		logger.debug(comment);
 		boardService.addComment(comment);
 		return "redirect:/board/"+comment.getBoardUniqueID();
 	}
@@ -335,11 +334,11 @@ public class HomeController {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		
 		if(session.getAttribute("member")==null) {
-			logger.debug("session member null");
+//			logger.debug("session member null");
 			resultMap.put("check", "false");
 			
 		}else if(session.getAttribute("member")!=null){
-			logger.debug("session member not null");
+//			logger.debug("session member not null");
 			resultMap.put("check", "true");
 			
 		}
@@ -419,7 +418,7 @@ public class HomeController {
 		} else if (rv.equals("null")) {
 		}
 		
-		logger.debug(cv);
+//		logger.debug(cv);
 		
 		if(cv.equals("ok")) {
 			resultMap.put("check", "ok");
@@ -490,12 +489,12 @@ public class HomeController {
 		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
 		Member member = (Member)request.getSession().getAttribute("member");
-		logger.debug(member);
+//		logger.debug(member);
 		if(member == null) {
 			return "redirect:/board/login";
 		}
 		
-		logger.debug("파일 경로 저장전 디버깅= "+adr);
+//		logger.debug("파일 경로 저장전 디버깅= "+adr);
 		
 		List<MultipartFile> fileList = mRequest.getFiles("uploadFile"); 
 		
@@ -507,7 +506,7 @@ public class HomeController {
 			for(String fileName: fileNames) {
 			
 				if(fileName != null && fileName != "") {
-					logger.debug("[HomeController] uploadFile : " + uploadFile);
+//					logger.debug("[HomeController] uploadFile : " + uploadFile);
 					UtilFile utilFile = new UtilFile();
 //					파일 업로드 결과값을 path로 받아온다
 					HashMap<String, Object> hm = utilFile.fileUpload(request, uploadFile, adr);
@@ -515,7 +514,7 @@ public class HomeController {
 					
 					adr.setFileName((String)hm.get("fileName"));
 					adr.setFilePath((String)hm.get("filePath"));
-					logger.debug("파일 경로 저장 후 디버깅= "+adr);
+//					logger.debug("파일 경로 저장 후 디버깅= "+adr);
 				}
 			}
 		}
@@ -530,9 +529,9 @@ public class HomeController {
 		
 		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		
-		logger.debug(memberUniqueID+", "+adUniqueID);
+//		logger.debug(memberUniqueID+", "+adUniqueID);
 		ADRequest adr = boardService.getADReqBan(adUniqueID);
-		logger.debug("@@@"+adr);
+//		logger.debug("@@@"+adr);
 		
 		UtilFile uf = new UtilFile();
 		uf.deleteADReq(adr);
@@ -583,7 +582,7 @@ public class HomeController {
 	public String lineAddAction(@ModelAttribute Line line, HttpServletRequest request) throws Exception {
 		
 		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
-		logger.debug("add Line :: "+line);
+//		logger.debug("add Line :: "+line);
 		
 		boardService.addLine(line);
 		return "redirect:/line";
@@ -613,7 +612,7 @@ public class HomeController {
 	public void deleteLine(@PathVariable int uniqueID, HttpServletRequest request) throws Exception {
 		
 		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
-		logger.debug(uniqueID);
+//		logger.debug(uniqueID);
 		boardService.deleteLine(uniqueID);
 	}
 	
@@ -668,7 +667,7 @@ public class HomeController {
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		int rv = memberService.updatePass(paramMap);
-		logger.debug(rv);
+//		logger.debug(rv);
 		if(rv != 0) {
 			resultMap.put("key", "true");
 		}else {
@@ -676,19 +675,20 @@ public class HomeController {
 		}
 		return resultMap;
 	}
+	
+	/*ajax로 입력한 닉네임을 받아온다.*/
 	@RequestMapping(value="/find/pw", method=RequestMethod.POST)
 	public @ResponseBody Map<String, Object> sendMain(@RequestParam Map<String, Object> paramMap, HttpServletRequest request) throws Exception {
 		
 		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
-		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
 		// phone 이지만 메일주소가 넘어옴
-		Member member = memberService.getMemberByPhone((String)paramMap.get("phone"));
-		logger.debug(member);
+		Member member = memberService.getMemberByNick((String)paramMap.get("nickName"));
+//		logger.debug(member);
 		
 		if (member == null) {
-			logger.debug("member null 일 경우");
+//			logger.debug("member null 일 경우");
 			resultMap.put("check", "null");
 		} else {
 			
@@ -749,9 +749,9 @@ public class HomeController {
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("rewardList", rewardList);
 		
-		logger.debug("before="+rewardList);
+//		logger.debug("before="+rewardList);
 		memberService.addReward(paramMap);
-		logger.debug("after="+rewardList);
+//		logger.debug("after="+rewardList);
 		
 		return "test/index";
 	}

@@ -11,7 +11,7 @@ import com.cmt.domain.ServerList;
 public interface MemberDao {
 	public int getMember() throws Exception;
 	public Member getMemberByTM(String iTradeMark) throws Exception;
-	public Member getMemberByPhone(String phone) throws Exception;
+	public Member getMemberByNick(String nick) throws Exception;
 	
 	public int addAuthKey(Email email) throws Exception;
 	public void deleteCheck(int uniqueID) throws Exception;

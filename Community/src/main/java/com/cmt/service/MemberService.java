@@ -11,7 +11,7 @@ import com.cmt.domain.ServerList;
 public interface MemberService {
 	public int getMember() throws Exception;
 	public HashMap<String, Object> getMemberByTM(String iTradeMark, String iPassword) throws Exception;
-	public Member getMemberByPhone(String phone) throws Exception;
+	public Member getMemberByNick(String nickName) throws Exception;
 	
 	public int addAuthKey(Email email) throws Exception;
 	public void deleteCheck(int uniqueID) throws Exception;

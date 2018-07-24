@@ -18,5 +18,19 @@ public class ZombieController {
 	public ModelAndView result(@PathVariable String gameName, @PathVariable String menu, HttpServletRequest req) {
 		return zsi.zombie(gameName, menu, req);
 	}
+	
+	@RequestMapping("/game/{gameName}/{menu}/{userNo}")
+	public ModelAndView result(@PathVariable String gameName, @PathVariable String menu, @PathVariable int userNo, HttpServletRequest req) {
+		return zsi.myBet(gameName, menu, userNo, req);
+	}
+	
+	@RequestMapping("/ri/{uniqueID}")
+	public ModelAndView recodeIntegration(@PathVariable String uniqueID, HttpServletRequest req) {
+		
+		
+		
+		ModelAndView aa = new ModelAndView();
+		return aa;
+	}
 
 }

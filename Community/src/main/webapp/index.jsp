@@ -49,6 +49,11 @@
 				<a href="game/break/tList" type="button" class="btn btn-default btn-block">좀비격파 게임 결과</a>
 			</div>
 		</div>
+		<div class="login-con">
+			<div class="login-btn-box">
+				<a href="game/fight/tList" type="button" class="btn btn-default btn-block">좀비격투 게임 결과</a>
+			</div>
+		</div>
 		
 		<c:if test="${sessionScope.member eq null}">
 		<div class="login-con">

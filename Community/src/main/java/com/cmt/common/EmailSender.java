@@ -49,7 +49,7 @@ public class EmailSender {
 				+"===================================<br>"
 				+"<a href='"+uri+"'>비밀번호 변경 페이지로 이동합니다.</a><br>"
 				+"===================================<br>"
-				+"<p>도움이 필요하시면 <a href='mailto:mail.worldspon@gmail.com'>mail.worldspon@gmail.com</a>으로 연락해 주세요.</p><br>"
+				+"<p>도움이 필요하시면 <a href='mailto:worldspon@gmail.com'>worldspon@gmail.com</a>으로 연락해 주세요.</p><br>"
 				+"<p style='font-size: 8px;'>월드코인마켓 / 서비스이용방침 / 개인정보처리방침</p>"
 				+"</div></meta>";
 	}

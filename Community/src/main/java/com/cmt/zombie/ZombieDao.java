@@ -17,6 +17,9 @@ public class ZombieDao implements ZombieDaoInterface {
 	
 	@Resource(name="breakSession")
 	SqlSession breakSession;
+	
+	@Resource(name="fightSession")
+	SqlSession fightSession;
 
 	@Override
 	public HashMap<String, Object> selectList(HashMap<String, Object> param) {
@@ -32,12 +35,16 @@ public class ZombieDao implements ZombieDaoInterface {
 			useSession = session;
 		}else if(gameName.equals("break")) {
 			useSession = breakSession;
+		}else if(gameName.equals("fight")) {
+			useSession = fightSession;
 		}
 		
 		if(menu.equals("tList")) {
 			result.put("result", useSession.selectList(gameName + ".selectList", DateUtil.today()));
 		}else if(menu.equals("yList")) {
 			result.put("result", useSession.selectList(gameName + ".selectList", DateUtil.yesterday()));
+		}else if(menu.equals("myBet")) {
+			result.put("result", useSession.selectList(gameName + ".selectBetList", (int)param.get("userNo")));
 		}
 		
 //		System.out.println(result);

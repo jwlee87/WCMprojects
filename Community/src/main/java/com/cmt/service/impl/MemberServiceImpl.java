@@ -66,8 +66,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Member getMemberByPhone(String phone) throws Exception {
-		return memberDao.getMemberByPhone(phone);
+	public Member getMemberByNick(String nickName) throws Exception {
+		return memberDao.getMemberByNick(nickName);
 	}
 
 	@Override
