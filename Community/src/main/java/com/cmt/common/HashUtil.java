@@ -135,7 +135,9 @@ public class HashUtil {
 					memberService.addReward(paramMap);
 					logger.debug("hashUtil Debugging :: after :: "+igaReward);
 					// 지급 절차 통신  //
-					String httpReturn = httpClient(serverIP, igaReward);
+					if(!serverIP.equals("EXCEPTION")) {
+						httpClient(serverIP, igaReward);
+					}
 					
 					obj.put("Result", true);
 					obj.put("ResultCode", 1);
@@ -208,9 +210,10 @@ public class HashUtil {
 				memberService.addReward(paramMap);
 				logger.debug("hashUtil Debugging :: after :: "+apReward);
 				// 지급 절차 통신  //
-				String httpReturn = httpClient(serverIP, apReward);
+				if(!serverIP.equals("EXCEPTION")) {
+					httpClient(serverIP, apReward);
+				}
 				returnValue = "1111";
-				
 			}
 			
 		// 예외사항 발생
@@ -265,7 +268,9 @@ public class HashUtil {
 				memberService.addReward(paramMap);
 				logger.debug("hashUtil Debugging :: after :: "+tnkReward);
 				// 지급 절차 통신  //
-				String httpReturn = httpClient(serverIP, tnkReward);
+				if(!serverIP.equals("EXCEPTION")) {
+					httpClient(serverIP, tnkReward);
+				}
 				returnValue = "1111";
 			}
 		

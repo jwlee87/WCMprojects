@@ -112,12 +112,12 @@ public class BoardServiceImpl implements BoardService {
 		
 		//첨부파일 여부 확인
 		List<AttachFile> afl = boardDao.getAttachFile(b.getBoardUniqueID());
-		logger.debug(" 첨부파일 리스트 사이즈= "+afl.size());
+//		logger.debug(" 첨부파일 리스트 사이즈= "+afl.size());
 		if(afl.size() != 0) {
-			logger.debug(" 첨부파일 존재 ");
+//			logger.debug(" 첨부파일 존재 ");
 			b.setAttachFileList(afl);
 		}else {
-			logger.debug(" 첨부파일 없음 ");
+//			logger.debug(" 첨부파일 없음 ");
 			b.setAttachFileList(null);
 		}
 		
@@ -138,7 +138,7 @@ public class BoardServiceImpl implements BoardService {
 			
 			b.setCommentList(cl);
 			
-			logger.debug("댓글 리스트 체크: "+cl);
+//			logger.debug("댓글 리스트 체크: "+cl);
 			
 		}
 		
@@ -161,7 +161,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		if(rsv.trim().equals("2")) returnValue = "ok";
 		
-		logger.debug(returnValue);
+//		logger.debug(returnValue);
 		
 		return returnValue;
 	}

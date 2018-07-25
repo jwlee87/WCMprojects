@@ -67,8 +67,7 @@ public class ZombieService implements ZombieServiceInterface {
  		param.put("userNo", userNo);
 		
 		HashMap<String, Object> tempMap = zdi.selectList(param);
-		
-		System.out.println(tempMap);
+//		System.out.println(tempMap);
 		
 		@SuppressWarnings("unchecked")
 		ArrayList<HashMap<String, Object>> tempList = (ArrayList<HashMap<String, Object>>) tempMap.get("result");
@@ -79,9 +78,6 @@ public class ZombieService implements ZombieServiceInterface {
 				}
 			}
 		}
-		
-		System.out.println(tempList);
-		
 		mav.addObject("data", JSONObject.toJSONString(tempMap));
 		mav.setViewName("resources/views/game/myBet");
 		return mav;

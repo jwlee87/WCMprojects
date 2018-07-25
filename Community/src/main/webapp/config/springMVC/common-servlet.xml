@@ -92,4 +92,15 @@
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
 	</bean>
 	
+	<!-- Exception Resolver -->
+	<bean id="exceptionMapping" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="Exception">resources/views/exception/exception</prop>
+			</props>
+		</property>
+		<property name="exceptionAttribute" value="exceptionMsg"/>
+		<property name="defaultErrorView" value="Error"/>
+	</bean>
+	
 </beans>

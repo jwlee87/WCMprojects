@@ -28,6 +28,7 @@ public class ZombieDao implements ZombieDaoInterface {
 		String gameName = (String)param.get("gameName");
 		String menu = (String)param.get("menu");
 		
+		result.put("gameName", gameName);
 //		System.out.println("gameName= "+gameName+", menu= "+menu);
 		
 		SqlSession useSession = null;

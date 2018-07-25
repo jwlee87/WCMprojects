@@ -133,7 +133,12 @@ public class RewardController {
 		
 		Member member = memberService.getMemberByUniqueID(userUniqueID);
 		ServerList serverURL = memberService.getServerList();
-		String serverIP = serverURL.getAddress();
+		String serverIP = "";
+		if(serverURL == null) {
+			serverIP = "EXCEPTION";
+		}else {
+			serverIP = serverURL.getAddress();
+		}
 		
 		logger.debug("=========================================================");
 		logger.debug("  ip addr  "+serverIP.trim());
@@ -208,7 +213,12 @@ public class RewardController {
 			
 			Member member = memberService.getMemberByUniqueID(userUniqueID);
 			ServerList serverURL = memberService.getServerList();
-			String serverIP = serverURL.getAddress();
+			String serverIP = "";
+			if(serverURL == null) {
+				serverIP = "EXCEPTION";
+			}else {
+				serverIP = serverURL.getAddress();
+			}
 			
 			logger.debug("=========================================================");
 			logger.debug("  ip addr  "+serverIP.trim());
@@ -259,7 +269,12 @@ public class RewardController {
 		int userUniqueID = Integer.parseInt(memberUniqueID);
 		Member member = memberService.getMemberByUniqueID(userUniqueID);
 		ServerList serverURL = memberService.getServerList();
-		String serverIP = serverURL.getAddress();
+		String serverIP = "";
+		if(serverURL == null) {
+			serverIP = "EXCEPTION";
+		}else {
+			serverIP = serverURL.getAddress();
+		}
 		
 		logger.debug("=========================================================");
 		logger.debug("  ip addr  "+serverIP.trim());
