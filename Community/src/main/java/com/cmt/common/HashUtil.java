@@ -78,6 +78,7 @@ public class HashUtil {
 		logger.debug(" JSON OBJECT MAKING METHOD START ");
 		
 		String hash_key = "1339caa7b57c40f3";
+		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		JSONObject obj = new JSONObject();
 		
 		String decodedValue = stringToHMACMD5(hash_key, plainText);
@@ -111,9 +112,12 @@ public class HashUtil {
 				if ( member.getUniqueID() != Integer.parseInt(usn.trim()) ) {
 					
 					logger.debug("유저가 널이 아니지만 유니크 아이디가 같지 않음");
+					tempMap.put("Result", false);
+					tempMap.put("ResultCode", 3200);
+					tempMap.put("ResultMsg", "invalid user");
 					obj.put("Result", false);
 					obj.put("ResultCode", 3200);
-					obj.put("ResultMsg", "invalid user ");
+					obj.put("ResultMsg", "invalid user");
 					
 				// 리워드 중복 지급
 				}else if ( checkKey ) {

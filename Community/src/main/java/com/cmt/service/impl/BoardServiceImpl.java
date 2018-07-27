@@ -97,14 +97,19 @@ public class BoardServiceImpl implements BoardService {
 		
 		Board b = boardDao.getBoard(boardUniqueID);
 
+		logger.debug(b);
+		
 		//조회수 업데이트
 		int viewCount = b.getViewCount();
+		
+		logger.debug(viewCount);
+		
 		if(viewCount==0) {
 			viewCount = 1;
 		}else {
-			viewCount = viewCount++;
-			//logger.debug("viewCount = "+viewCount);
+			viewCount = viewCount+1;
 		}
+		logger.debug(viewCount);
 		b.setViewCount(viewCount);
 
 		// 조회수 업데이트 쿼리
@@ -132,13 +137,13 @@ public class BoardServiceImpl implements BoardService {
 			
 			List<Comment> cl = boardDao.getCommentList(hm);
 			for(Comment c: cl) {
+				String texts = c.getComment();
+				texts = texts.replaceAll(System.getProperty("line.separator"), "<br>");
+				c.setComment(texts);
 				SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 				c.setDateFormat(df.format(c.getWriteDate()));
 			}
-			
 			b.setCommentList(cl);
-			
-//			logger.debug("댓글 리스트 체크: "+cl);
 			
 		}
 		

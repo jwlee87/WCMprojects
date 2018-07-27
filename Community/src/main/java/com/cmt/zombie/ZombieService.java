@@ -59,13 +59,17 @@ public class ZombieService implements ZombieServiceInterface {
 	}
 
 	@Override
-	public ModelAndView myBet(String gameName, String menu, int userNo, HttpServletRequest req) {
+	public ModelAndView myBet(String gameName, String menu, int userNo, HttpServletRequest req) throws Exception {
 		HashMap<String, Object> param = new HashMap<String, Object>();
 		ModelAndView mav = new ModelAndView();
 		param.put("gameName", gameName);
  		param.put("menu", menu);
  		param.put("userNo", userNo);
 		
+ 		if(!menu.equals("myBet")) {
+ 			throw new Exception();
+ 		}
+ 		
 		HashMap<String, Object> tempMap = zdi.selectList(param);
 //		System.out.println(tempMap);
 		

@@ -163,7 +163,7 @@ $("#modify").click(function(){
 	var data = {};
 	data["bID"] = $("#boardUniqueID").val();
 	
-	location.href = "/board/update/"+data["bID"];
+	location.href = "/board/update/"+encodeURI(data["bID"]);
 	
 });
 
@@ -194,7 +194,7 @@ function goList(){
 
 function goPage(pageNo){
 	var boardUniqueID = $("#boardUniqueID").val();
-	location.href = "/board/"+boardUniqueID+"?pageNo="+pageNo;
+	location.href = "/board/"+boardUniqueID+"?pageNo="+encodeURI(pageNo);
 }
 </script>
 

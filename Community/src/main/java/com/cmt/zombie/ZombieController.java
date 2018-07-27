@@ -20,7 +20,7 @@ public class ZombieController {
 	}
 	
 	@RequestMapping("/game/{gameName}/{menu}/{userNo}")
-	public ModelAndView result(@PathVariable String gameName, @PathVariable String menu, @PathVariable int userNo, HttpServletRequest req) {
+	public ModelAndView result(@PathVariable String gameName, @PathVariable String menu, @PathVariable int userNo, HttpServletRequest req) throws Exception {
 		return zsi.myBet(gameName, menu, userNo, req);
 	}
 	

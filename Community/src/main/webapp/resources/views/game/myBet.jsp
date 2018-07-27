@@ -177,7 +177,7 @@ $(document).ready(function(){
 
 			switch(result2[i]._WinLose) {
 				case 0:
-					result = '준비중';
+					result = '기록없음';
 					break;
 				case 1:
 					result = '당첨';
@@ -298,7 +298,7 @@ $(document).ready(function(){
 			
 			switch(result2[i]._Result) {
 				case 0:
-					result = '준비중';
+					result = '기록없음';
 					break;
 				case 1:
 					result = '1등';
@@ -433,7 +433,7 @@ $(document).ready(function(){
 			
 			switch(result2[i]._Result) {
 				case 0:
-					result = '준비중';
+					result = '기록없음';
 					break;
 				case 1:
 					result = '승리';

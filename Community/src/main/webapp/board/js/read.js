@@ -27,8 +27,11 @@ $(document).ready(function(){
 		}
 		
 		$("#cmtFrm").submit();
-		
 	});
+	
+	function cmt_submit(){
+		$("#cmtFrm").submit();
+	}
 	
 	
 	$(".cmt_delete").on("click", function(event){

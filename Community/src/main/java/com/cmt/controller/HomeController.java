@@ -174,16 +174,12 @@ public class HomeController {
 		if(request.getParameter("pageNo") == null) { pageNo=1; }
 		else { pageNo = Integer.parseInt(request.getParameter("pageNo")); }
 		Page page = new Page(pageNo, commentRows);
-		
-		
 //		logger.debug("디벅= "+totalComment+" , "+commentRows);
 		
 		// 댓글 갯수 0이 아닐때
 		if(totalComment != 0) {
 			Tab tab = new Tab(pageNo, totalComment, commentRows);
-			
 //			logger.debug("탭 디벅= "+tab);
-			
 			model.addAttribute("pageResult", tab);
 		}
 		
@@ -388,8 +384,10 @@ public class HomeController {
 		
 		int totalComment = boardService.getTotalComment(boardUniqueID);
 		if(totalComment != 0) {
+			System.out.println("0이아님");
 			resultMap.put("check", "comment");
 		}else {
+			System.out.println("0");
 			boardService.deleteBoard(boardUniqueID);
 		}
 		

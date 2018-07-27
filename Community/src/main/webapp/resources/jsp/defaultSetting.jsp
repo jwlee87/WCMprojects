@@ -7,3 +7,4 @@
 <script src="/resources/js/jquery.modal.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 <script src="/resources/js/defaultSetting.js"></script>
+<script src="/board/js/common.js"></script>
