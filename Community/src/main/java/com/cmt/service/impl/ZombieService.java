@@ -26,8 +26,7 @@ public class ZombieService implements ZombieServiceInterface {
 		ModelAndView mav = new ModelAndView();
 		param.put("gameName", gameName);
  		param.put("menu", menu);
-//		param.put("param", HttpUtil.getParamMap(req));
-//		System.out.println("gameName= "+gameName+", menu= "+menu);
+		System.out.println("gameName= "+gameName+", menu= "+menu);
 		
 		if("run".equals(gameName)) {
 			if("tList".equals(menu)) {
@@ -52,6 +51,9 @@ public class ZombieService implements ZombieServiceInterface {
 		}
 		
 		HashMap<String, Object> tempMap = zdi.selectList(param);
+		
+		System.out.println(tempMap);
+		
 		mav.addObject("data", JSONObject.toJSONString(tempMap));
 		return mav;
 	}

@@ -32,6 +32,9 @@ public class GameController {
 	
 	@RequestMapping("/game/{gameName}/{menu}")
 	public ModelAndView result(@PathVariable String gameName, @PathVariable String menu, HttpServletRequest req) {
+		
+		System.out.println("인입?");
+		
 		return zsi.zombie(gameName, menu, req);
 	}
 	

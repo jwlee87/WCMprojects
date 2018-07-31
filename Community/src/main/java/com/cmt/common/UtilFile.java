@@ -121,7 +121,8 @@ public class UtilFile {
 	// 업로드한 파일의 경로가 도메인 별로 달라야 하는 기능을 위해 도메인의 타입을 비교하여 파일 저장 경로를 다르게 지정
 	private String getSaveLocation(HttpServletRequest request, Object obj) {
 		
-		String uploadPath = request.getServletContext().getRealPath("/");
+//		String uploadPath = request.getServletContext().getContextPath();
+		String uploadPath = request.getContextPath();
 		String attachPath = "resources/files/";
 		
 		if(obj instanceof Board) {
