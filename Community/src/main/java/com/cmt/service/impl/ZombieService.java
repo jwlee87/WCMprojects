@@ -1,4 +1,4 @@
-package com.cmt.zombie;
+package com.cmt.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +8,10 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.cmt.common.HttpUtil;
+import com.cmt.dao.ZombieDaoInterface;
+import com.cmt.service.ZombieServiceInterface;
 
 @Service
 public class ZombieService implements ZombieServiceInterface {
@@ -85,6 +89,18 @@ public class ZombieService implements ZombieServiceInterface {
 		mav.addObject("data", JSONObject.toJSONString(tempMap));
 		mav.setViewName("resources/views/game/myBet");
 		return mav;
+	}
+
+	@Override
+	public ModelAndView history(HttpServletRequest req) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("resources/views/game/history");
+		return mav;	
+	}
+
+	@Override
+	public HashMap<String, Object> getHis(HttpServletRequest req) {
+		return zdi.getHistory(HttpUtil.getParamMap(req));
 	}
 
 }

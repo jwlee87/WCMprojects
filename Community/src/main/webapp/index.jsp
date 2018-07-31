@@ -69,6 +69,14 @@
 			</div>
 		</div>
 		</c:if>
+		<br><br>
+		<c:if test="${sessionScope.member._class eq 3}">
+		<div class="login-con">
+			<div class="login-btn-box">
+				<a href="game/history" type="button" class="btn btn-default btn-block">게임기록</a>
+			</div>
+		</div>
+		</c:if>
 	</div>
 	
 <script>

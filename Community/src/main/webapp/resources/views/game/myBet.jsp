@@ -92,10 +92,10 @@ $(document).ready(function(){
 			var ko_check;
 			var result;
 			var beforeGM = numberWithCommas(result2[i]._B_GMoney);
-			var afterGM = numberWithCommas(result2[i]._A_GMoney);
+			var nowGM = numberWithCommas(result2[i]._N_GMoney);
 			var resultGM = numberWithCommas(result2[i]._Result_GMoney);
 			var resultRP = numberWithCommas(result2[i]._Result_RankValue);
-			var total = afterGM + resultGM;
+			var total = numberWithCommas(result2[i]._A_GMoney);
 			
 			switch(result2[i]._BetZombiUniqueID){
 				case -1:
@@ -187,8 +187,6 @@ $(document).ready(function(){
 					break;
 			}
 			
-			total = Number(result2[i]._A_GMoney) + Number(result2[i]._Result_GMoney);
-			
 			html += '<tr>'
 				+'<td class="jw-bold">'+result2[i]._DateTime+'</td>'
 				+'<td>'+result2[i]._GameCount+'</td>'
@@ -196,7 +194,7 @@ $(document).ready(function(){
 				+'<td>'+ko_check+'</td>'
 				+'<td>'+beforeGM+'</td>'
 				+'<td>'+result2[i]._Coupon+'개</td>'
-				+'<td>'+afterGM+'</td>'
+				+'<td>'+nowGM+'</td>'
 				+'<td class="jw-yellow">'+resultGM+'</td>'
 				+'<td class="jw-yellow">'+resultRP+'점</td>'
 				+'<td>'+result2[i]._CoinGain+'개</td>';
@@ -205,7 +203,7 @@ $(document).ready(function(){
 				}else{
 					html += '<td class="jw-bold jw-red">'+result+'</td>';
 				}
-				html += '<td>'+numberWithCommas(total)+'</td></tr>';
+				html += '<td>'+total+'</td></tr>';
 		}
 	}else if(result.gameName == 'run'){
 		html += '<tr><th>일시</th>'
@@ -225,10 +223,10 @@ $(document).ready(function(){
 			var zombie;
 			var result;
 			var beforeGM = numberWithCommas(result2[i]._B_GMoney);
-			var afterGM = numberWithCommas(result2[i]._A_GMoney);
+			var nowGM = numberWithCommas(result2[i]._N_GMoney);
 			var resultGM = numberWithCommas(result2[i]._Result_GMoney);
 			var resultRP = numberWithCommas(result2[i]._Result_RankValue);
-			var total = afterGM + resultGM;
+			var total = numberWithCommas(result2[i]._A_GMoney);
 				
 			switch(result2[i]._BetZombiUniqueID){
 				case -1:
@@ -317,15 +315,13 @@ $(document).ready(function(){
 					break;
 			}
 			
-			total = Number(result2[i]._A_GMoney) + Number(result2[i]._Result_GMoney);
-			
 			html += '<tr>'
 				+'<td class="jw-bold">'+result2[i]._DateTime+'</td>'
 				+'<td>'+result2[i]._GameCount+'</td>'
 				+'<td>'+zombie+'</td>'
 				+'<td>'+beforeGM+'</td>'
 				+'<td>'+result2[i]._Coupon+'개</td>'
-				+'<td>'+afterGM+'</td>'
+				+'<td>'+nowGM+'</td>'
 				+'<td class="jw-yellow">'+resultGM+'</td>'
 				+'<td class="jw-yellow">'+resultRP+'점</td>';
 				if(result == '1등'){
@@ -341,7 +337,7 @@ $(document).ready(function(){
 				}else{
 					html += '<td>'+result+'</td>';
 				}
-			html += '<td>'+numberWithCommas(total)+'</td></tr>';
+			html += '<td>'+total+'</td></tr>';
 		}
 	}else if(result.gameName == 'break'){
 		html += '<tr><th>일시</th>'
@@ -360,10 +356,10 @@ $(document).ready(function(){
 			var zombie;
 			var result;
 			var beforeGM = numberWithCommas(result2[i]._B_GMoney);
-			var afterGM = numberWithCommas(result2[i]._A_GMoney);
+			var nowGM = numberWithCommas(result2[i]._N_GMoney);
 			var resultGM = numberWithCommas(result2[i]._Result_GMoney);
 			var resultRP = numberWithCommas(result2[i]._Result_RankValue);
-			var total = afterGM + resultGM;
+			var total = numberWithCommas(result2[i]._A_GMoney);
 				
 			switch(result2[i]._BetZombiUniqueID){
 				case -1:
@@ -446,15 +442,13 @@ $(document).ready(function(){
 					break;
 			}
 			
-			total = Number(result2[i]._A_GMoney) + Number(result2[i]._Result_GMoney);
-			
 			html += '<tr>'
 				+'<td class="jw-bold">'+result2[i]._DateTime+'</td>'
 				+'<td>'+result2[i]._GameCount+'</td>'
 				+'<td>'+zombie+'</td>'
 				+'<td>'+beforeGM+'</td>'
 				+'<td>'+result2[i]._Coupon+'개</td>'
-				+'<td>'+afterGM+'</td>'
+				+'<td>'+nowGM+'</td>'
 				+'<td class="jw-yellow">'+resultGM+'</td>'
 				+'<td class="jw-yellow">'+resultRP+'점</td>';
 				if(result == '승리'){
@@ -466,7 +460,7 @@ $(document).ready(function(){
 				}else{
 					html += '<td>'+result+'</td>';
 				}
-			html += '<td>'+numberWithCommas(total)+'</td></tr>';
+			html += '<td>'+total+'</td></tr>';
 		}
 	}
 	

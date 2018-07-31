@@ -217,6 +217,11 @@ for(var i = 0; i < result2.length; i++){
 				loser = entry_2;
 				ko_check = '판정승';
 				break;
+			case 21:
+				winner = entry_1;
+				loser = entry_2;
+				ko_check = '판정승';
+				break;
 			case 11:
 				winner = entry_1;
 				loser = entry_2;
@@ -227,6 +232,11 @@ for(var i = 0; i < result2.length; i++){
 				loser = entry_1;
 				ko_check = '판정승';
 				break;
+			case 22:
+				winner = entry_2;
+				loser = entry_1;
+				ko_check = '판정승';
+				break;	
 			case 12:
 				winner = entry_2;
 				loser = entry_1;

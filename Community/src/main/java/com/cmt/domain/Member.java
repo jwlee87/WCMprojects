@@ -13,6 +13,7 @@ public class Member {
 	private long lockCoin;
 	private String phone;
 	private String eMail;
+	private int _class;
 	
 	///Constructor
 	public Member() {
@@ -99,11 +100,19 @@ public class Member {
 		this.eMail = eMail;
 	}
 
+	public int get_class() {
+		return _class;
+	}
+
+	public void set_class(int _class) {
+		this._class = _class;
+	}
+
 	@Override
 	public String toString() {
 		return "Member [uniqueID=" + uniqueID + ", infoLocate=" + infoLocate + ", tradeMark=" + tradeMark
 				+ ", password=" + password + ", point=" + point + ", lockPoint=" + lockPoint + ", coin=" + coin
-				+ ", lockCoin=" + lockCoin + ", phone=" + phone + ", eMail=" + eMail + "]";
+				+ ", lockCoin=" + lockCoin + ", phone=" + phone + ", eMail=" + eMail + ", _class="+_class+"]";
 	}
 	
 }

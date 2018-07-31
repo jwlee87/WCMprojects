@@ -64,6 +64,7 @@
 			<mvc:mapping path="/line"/>
 			<mvc:mapping path="/line/add"/>
 			<mvc:mapping path="/line/addAction"/>
+			<mvc:mapping path="/game/history"/>
 			<bean class="com.cmt.interceptor.AuthenticationInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>

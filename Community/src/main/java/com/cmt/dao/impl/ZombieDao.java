@@ -1,6 +1,8 @@
-package com.cmt.zombie;
+package com.cmt.dao.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -8,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.cmt.common.DateUtil;
+import com.cmt.dao.ZombieDaoInterface;
 
 @Repository
 public class ZombieDao implements ZombieDaoInterface {
@@ -20,6 +23,9 @@ public class ZombieDao implements ZombieDaoInterface {
 	
 	@Resource(name="fightSession")
 	SqlSession fightSession;
+	
+	@Resource(name="historySession")
+	SqlSession historySession;
 
 	@Override
 	public HashMap<String, Object> selectList(HashMap<String, Object> param) {
@@ -51,6 +57,20 @@ public class ZombieDao implements ZombieDaoInterface {
 //		System.out.println(result);
 		
 		return result;
+	}
+
+	@Override
+	public HashMap<String, Object> getHistory(HashMap<String, Object> paramMap) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		List<HashMap<String, Object>> resultList = new ArrayList<HashMap<String, Object>>();
+		
+		System.out.println(paramMap);
+		
+		resultList = historySession.selectList("history.selectList", paramMap);
+		
+		System.out.println(resultList);
+		resultMap.put("resultList", resultList);
+		return resultMap;
 	}
 
 }
