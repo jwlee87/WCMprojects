@@ -52,7 +52,7 @@ public class ZombieService implements ZombieServiceInterface {
 		
 		HashMap<String, Object> tempMap = zdi.selectList(param);
 		
-		System.out.println(tempMap);
+//		System.out.println(tempMap);
 		
 		mav.addObject("data", JSONObject.toJSONString(tempMap));
 		return mav;

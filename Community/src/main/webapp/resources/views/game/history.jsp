@@ -25,6 +25,7 @@
 	</div>
 	<br><br>
 	<div class="table_con"></div>
+	<br><br>
 </c:if>
 <script>
 $(document).ready(function(){
@@ -97,7 +98,7 @@ $(document).ready(function(){
 			
 			html += "<tr style='border: 1px solid #ccc;'>"
 				 +"<td>"+Number(i+1)+"</td>"
-				 +"<td>"+date.substr(0,19)+"</td>"
+				 +"<td>"+date+"</td>"
 				 +"<td>"+userNo+"</td>"
 				 +"<td>"+nickName+"</td>"
 				 +"<td>"+pCode+"</td>"
@@ -113,8 +114,13 @@ $(document).ready(function(){
 		$(".table_con").append('<table id="his_table"></table>');
 		$("#his_table").append(html);
 		$("#his_table").css("max-width", "1200px").css("width", "100%").css("border", "1px solid #ccc").css("margin", "0 auto");
-		$("#his_table > tr > th").css("border", "1px solid #ccc");
-		$("#his_table > tr > td").css("border", "1px solid #ccc");
+		$("#his_table > tr > th").css("border", "1px solid #ccc").css("text-align", "center");
+		$("#his_table > tr > td").css("border", "1px solid #ccc").css("text-align", "right");
+		$("#his_table > tr").mouseenter(function(){
+			$(this).css("background-color", "#ccc").css("font-weight", "bold");
+		}).mouseleave(function(){
+			$(this).css("background-color", "white").css("font-weight", "normal");
+		});
 	}
 
 	$("#nickName").keypress(function(event){
