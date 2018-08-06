@@ -106,7 +106,6 @@ $(document).ready(function(){
 		location.reload();
 	});
 	
-	
 	var w = 610;
 	var h = 800;
 	var p_left = (window.screen.width/2)-(w/2);

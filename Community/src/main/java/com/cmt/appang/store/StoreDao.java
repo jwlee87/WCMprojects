@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class StoreDao implements StoreDaoInterface {
 	
-	@Resource(name="sqlSessionTemplate")
+	@Resource(name="wsSession")
 	SqlSession session;
 	
 	@Override

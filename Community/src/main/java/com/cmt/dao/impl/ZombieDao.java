@@ -15,8 +15,8 @@ import com.cmt.dao.ZombieDaoInterface;
 @Repository
 public class ZombieDao implements ZombieDaoInterface {
 	
-	@Resource(name="sqlSession2")
-	SqlSession session;
+	@Resource(name="runSession")
+	SqlSession runSession;
 	
 	@Resource(name="breakSession")
 	SqlSession breakSession;
@@ -35,11 +35,10 @@ public class ZombieDao implements ZombieDaoInterface {
 		String menu = (String)param.get("menu");
 		
 		result.put("gameName", gameName);
-//		System.out.println("gameName= "+gameName+", menu= "+menu);
 		
 		SqlSession useSession = null;
 		if(gameName.equals("run")) {
-			useSession = session;
+			useSession = runSession;
 		}else if(gameName.equals("break")) {
 			useSession = breakSession;
 		}else if(gameName.equals("fight")) {
@@ -53,8 +52,6 @@ public class ZombieDao implements ZombieDaoInterface {
 		}else if(menu.equals("myBet")) {
 			result.put("result", useSession.selectList(gameName + ".selectBetList", (int)param.get("userNo")));
 		}
-		
-//		System.out.println(result);
 		
 		return result;
 	}

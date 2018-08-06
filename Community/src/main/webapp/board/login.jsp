@@ -39,8 +39,8 @@
 	$("#save").on("click", function(){
 		
 		var data = {};
-		data["tradeMark"] = $("#name").val();
-		data["password"] = $("#pass").val();
+		data["tradeMark"] = ($("#name").val()).trim();
+		data["password"] = ($("#pass").val()).trim();
 		
 		$.ajax({
 			type: "POST"

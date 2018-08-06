@@ -39,6 +39,14 @@
 			</div>
 		</div>
 		
+		<c:if test="${sessionScope.member ne null}">
+		<div class="login-con">
+			<div class="login-btn-box">
+				<button id="btn-benefit" type="button" class="btn btn-primary btn-block" style="height: 150px; font-size: 1.8em;">월드스폰 수익보기</button>
+			</div>
+		</div>
+		</c:if>
+		
 		<div class="login-con">
 			<div class="login-btn-box">
 				<a href="/game/run/tList" type="button" class="btn btn-default btn-block">좀비레이스 게임 결과</a>
@@ -76,6 +84,11 @@
 				<a href="game/history" type="button" class="btn btn-default btn-block">게임기록</a>
 			</div>
 		</div>
+		<div class="login-con">
+			<div class="login-btn-box">
+				<a href="point/refund" type="button" class="btn btn-default btn-block">포인트 환급</a>
+			</div>
+		</div>
 		</c:if>
 	</div>
 	
@@ -85,7 +98,7 @@
 	});
 	
 	$("#btn-ad").on("click", function(){
-		location.href="/bann"
+		location.href="/bann";
 	});
 	
 	$("#btn-login").on("click", function(){
@@ -93,8 +106,12 @@
 	});
 	
 	$("#btn-linead").on("click", function(){
-		location.href="/line"
+		location.href="/line";
 	});
+	
+	$("#btn-benefit").on("click", function(){
+		location.href="/benefit/data/cm";
+	})
 	
 	$("#btn-logout").on("click", function(){
 		
@@ -107,7 +124,7 @@
 	});
 	
 	$("#btn_findPw").on("click", function(){
-		location.href="/find"
+		location.href="/find";
 	});
 </script>
 </body>
