@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import com.cmt.common.DateUtil;
 import com.cmt.dao.PointDaoInterface;
 
 @Repository
@@ -33,19 +32,28 @@ public class PointDao implements PointDaoInterface {
 	}
 
 	@Override
-	public HashMap<String, Object> selectOne(HashMap<String, Object> param) {
+	public HashMap<String, Object> selectOneRefund(HashMap<String, Object> param) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		HashMap<String, Object> checkMap = wsSession.selectOne("point.getChangeCheck", param);
-		System.out.println("CheckMap: "+checkMap);
-		
+		HashMap<String, Object> checkMap = wsSession.selectOne("point.selectOneRefund", param);
+		resultMap.put("type", param.get("type"));
 		if(checkMap.get("_ResultTime") == null) {
-			System.out.println("결과시간 널 트루");
 			resultMap.put("changeCheck", true);
 		} else {
-			System.out.println("결과시간 널 펄스");
 			resultMap.put("changeCheck", false);
 		}
 		return resultMap;
 	}
+
+	@Override
+	public int updatePoint(HashMap<String, Object> paramMap) {
+		return wsSession.update("point.updatePoint", paramMap);
+	}
+
+	@Override
+	public HashMap<String, Object> selectOnePoint(HashMap<String, Object> paramMap) {
+		return wsSession.selectOne("point.selectOneMember", paramMap);
+	}
+	
+	
 
 }

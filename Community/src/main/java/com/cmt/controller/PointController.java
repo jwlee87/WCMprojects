@@ -24,13 +24,13 @@ public class PointController {
 	public ModelAndView refund(HttpServletRequest req) {
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("state", 0);
-		return psi.pointList(req, paramMap);
+		return psi.getPointList(req, paramMap);
 	}
 	
 	@RequestMapping(value="/point/getAjax", method=RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, Object> acceptList(HttpServletRequest req) {
-		long start = System.currentTimeMillis();
+//		long start = System.currentTimeMillis();
 		
 		HashMap<String, Object> paramMap = HttpUtil.getParamMap(req);
 		
@@ -45,16 +45,17 @@ public class PointController {
 			paramMap.put("state", 0);
 		}
 		
-		long end = System.currentTimeMillis();
-		System.out.println("실행시간: "+(end - start)/1000.0);
-		return psi.pointAjaxList(req, paramMap);
+//		long end = System.currentTimeMillis();
+//		System.out.println("실행시간: "+(end - start)/1000.0);
+		
+		return psi.getPointAjaxList(req, paramMap);
 	}
 	
-	// 승인
+	// 포인트 업데이트 ajax
 	@RequestMapping(value="/point/update", method=RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, Object> update(HttpServletRequest req) {
-		return psi.pointUpdate(req);
+		return psi.updatePoint(req);
 	}
 	
 }

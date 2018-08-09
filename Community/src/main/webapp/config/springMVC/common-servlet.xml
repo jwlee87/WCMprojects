@@ -69,6 +69,7 @@
 			<mvc:mapping path="/benefit/data/pm"/>
 			<mvc:mapping path="/benefit/data/cm"/>
 			<mvc:mapping path="/point/refund"/>
+			<mvc:mapping path="/point/update"/>
 			<bean class="com.cmt.interceptor.AuthenticationInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>

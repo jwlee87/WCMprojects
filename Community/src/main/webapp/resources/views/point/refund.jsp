@@ -44,6 +44,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 	
+	
+<c:if test="${sessionScope.member._class eq 3}">
 	<div class="container">
 		
 		<div class="row btn_con">
@@ -79,6 +81,12 @@
 		
 		
 	</div>
+</c:if>
+<c:if test="${sessionScope.member._class ne 3}">
+	<div class="container">
+		<h1>경고! 비정상적인 접근입니다.</h1>
+	</div>
+</c:if>
 
 		<script type="text/javascript">
 
@@ -148,7 +156,7 @@ $(document).ready(function(){
 		$("body > #result").remove();
 		var html = "";
 		
-		console.log(list);
+// 		console.log(list);
 		
 		if(list.length == 0){
 			html = "<div id='result' style='text-align: center;'>"
@@ -182,10 +190,10 @@ $(document).ready(function(){
 					 }
 				}else if(list[i]._State == 2){
 					 html += "<td>"+list[i]._BankUser+"</td>";
-					 if(list[i]._resultTime == '' || list[i]._resultTime == null){
+					 if(list[i]._ResultTime == '' || list[i]._ResultTime == null){
 						html += "<td><a href='#' title='정보없음'>취소완료</a></td>";
 					 }else{
-						html += "<td><a href='#' title='"+list[i]._resultTime+"'>취소완료</a></td>";
+						html += "<td><a href='#' title='"+list[i]._ResultTime+"'>취소완료</a></td>";
 					 }
 				}
 			}
@@ -219,8 +227,16 @@ $(document).ready(function(){
 						type: "POST",
 						data: data
 					}).done(function(rv){
-						alert("환급에 성공하였습니다.");
-						makeReadyList(list);
+						if(rv.result == 1){
+							alert("환급에 성공하였습니다.");
+						}else if(rv.result == 0){
+							alert("이미 처리되었습니다.");
+						}else{
+							alert("로그인 후 처리해주세요.");
+							location.reload();
+							return false;
+						}
+							makeReadyList(list);
 					}).fail(function(){
 						alert("환급 실패! 관리자에게 문의해 주세요.");
 					});
@@ -247,13 +263,22 @@ $(document).ready(function(){
 					data.type = 'refuse';
 					data.userNo = userNo;
 					data.uniqueID = uniqueID;
+					data.point = point;
 					
 					$.ajax({
 						url: "/point/update",
 						type: "POST",
 						data: data
 					}).done(function(rv){
-						alert("거절에 성공하였습니다.");
+						if(rv.result == 1){
+							alert("거절 하였습니다.");
+						}else if(rv.result == 0){
+							alert("이미 처리되었습니다.");
+						}else{
+							alert("로그인 후 처리해주세요.");
+							location.reload();
+							return false;
+						}
 						makeReadyList(list);
 					}).fail(function(){
 						alert("거절 실패! 관리자에게 문의해 주세요.");

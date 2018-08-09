@@ -1,8 +1,6 @@
 package com.cmt.service.impl;
 
 import java.util.HashMap;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,7 @@ public class PointService implements PointServiceInterface {
 	private PointDaoInterface pdi;
 
 	@Override
-	public ModelAndView pointList(HttpServletRequest req, HashMap<String, Object> paramMap) {
+	public ModelAndView getPointList(HttpServletRequest req, HashMap<String, Object> paramMap) {
 		
 		ModelAndView mav = new ModelAndView();
 		HashMap<String, Object> tempMap = pdi.selectList(paramMap);
@@ -34,25 +32,40 @@ public class PointService implements PointServiceInterface {
 	}
 
 	@Override
-	public HashMap<String, Object> pointAjaxList(HttpServletRequest req, HashMap<String, Object> paramMap) {
+	public HashMap<String, Object> getPointAjaxList(HttpServletRequest req, HashMap<String, Object> paramMap) {
 		return DateUtil.transformateDate((HashMap<String, Object>)pdi.selectList(paramMap));
 	}
 
 	@Override
-	public HashMap<String, Object> pointUpdate(HttpServletRequest req) {
+	public HashMap<String, Object> updatePoint(HttpServletRequest req) {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
 		HashMap<String, Object> paramMap = HttpUtil.getParamMap(req);
+		
 		System.out.println(paramMap);
-		HashMap<String, Object> checkMap = pdi.selectOne(paramMap);
+		
+		HashMap<String, Object> checkMap = pdi.selectOneRefund(paramMap);
 		boolean cc = (boolean) checkMap.get("changeCheck");
+		
+		System.out.println(cc);
+		
 		if(cc) {
-			System.out.println("체크 트루");
 			paramMap.put("dateTime", DateUtil.todayKoreanString());
-			paramMap.put("state", 1);
+			
+			String type = (String)paramMap.get("type");
+			if(type.equals("accept")) {
+				paramMap.put("state", 1);
+			} else if(type.equals("refuse")) {
+				paramMap.put("state", 2);
+				String pointWithComma = (String) paramMap.get("point");
+				paramMap.put("point", Integer.parseInt(pointWithComma.replaceAll(",", "")));
+				HashMap<String, Object> tempMap = pdi.selectOnePoint(paramMap);
+				int sum = Integer.parseInt(paramMap.get("point").toString()) + Integer.parseInt(tempMap.get("_Point").toString());
+				paramMap.put("point", sum);
+				pdi.pointUpdate(paramMap);
+			}
 			returnMap = pdi.pointUpdate(paramMap);
 		}else {
-			System.out.println("체크 펄스");
-			returnMap.put("result", "false");
+			returnMap.put("result", 0);
 		}
 		return returnMap;
 	}
