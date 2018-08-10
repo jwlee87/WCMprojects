@@ -25,7 +25,7 @@ public class PointDao implements PointDaoInterface {
 	}
 
 	@Override
-	synchronized public HashMap<String, Object> pointUpdate(HashMap<String, Object> param) {
+	synchronized public HashMap<String, Object> updateState(HashMap<String, Object> param) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("result", wsSession.update("point.updateState", param));
 		return resultMap;
@@ -53,7 +53,5 @@ public class PointDao implements PointDaoInterface {
 	public HashMap<String, Object> selectOnePoint(HashMap<String, Object> paramMap) {
 		return wsSession.selectOne("point.selectOneMember", paramMap);
 	}
-	
-	
 
 }

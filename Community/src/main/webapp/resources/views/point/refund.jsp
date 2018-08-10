@@ -156,7 +156,7 @@ $(document).ready(function(){
 		$("body > #result").remove();
 		var html = "";
 		
-// 		console.log(list);
+		console.log(list);
 		
 		if(list.length == 0){
 			html = "<div id='result' style='text-align: center;'>"
@@ -165,8 +165,8 @@ $(document).ready(function(){
 		}else{
 			for(var i = 0; i < list.length; i++){
 				html += "<tr>"
-					 + "<th scope='row'>"+Number(i+1)+"</th>"
-					 + "<td id='uniqueID' style='display: none;'>"+list[i]._UniqueID+"</td>"
+// 					 + "<th scope='row' style='display: none;>"+Number(i+1)+"</th>"
+					 + "<th scope='row' id='uniqueID'>"+list[i]._UniqueID+"</th>"
 					 + "<td>"+list[i]._DateTime+"</td>"
 					 + "<td style='display: none;' id='userNo'>"+list[i]._UserUniqueID+"</td>"
 					 + "<td id='nickName'><b>"+list[i]._Trademark+"</b></td>";

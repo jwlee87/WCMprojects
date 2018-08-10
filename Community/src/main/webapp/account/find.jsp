@@ -81,10 +81,14 @@
 							alert("일치하는 스마트아이디가 없습니다.");
 							hideSpinner();
 						}else if(result.check == "emailNull"){
-							alert("등록된 이메일 주소가 없습니다. 고객센터로 문의해주세요.");
+							alert("등록된 이메일 주소가 없습니다.\n고객센터로 문의해주세요.");
 							hideSpinner();
-						}else{
+						}else if(result.check == 'validEmail'){
+							alert("등록되어있는 "+result.mail+"로 메일을 보내드렸습니다.");
 							location.href = "/msg";
+						}else if(result.check == 'invalidEmail'){
+							alert("등록되어있는 "+result.mail+"은 잘못된 메일주소입니다.\n고객센터로 문의해주세요.");
+							hideSpinner();
 						}
 					}
 				})

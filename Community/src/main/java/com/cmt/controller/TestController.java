@@ -1,10 +1,6 @@
 package com.cmt.controller;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -26,6 +22,8 @@ import com.cmt.domain.Email;
 import com.cmt.domain.RewardList;
 import com.cmt.service.BoardService;
 import com.cmt.service.MemberService;
+
+import test.testmode.Test;
 
 @Controller
 public class TestController {
@@ -129,6 +127,28 @@ public class TestController {
 	@RequestMapping(value="/tomcat")
 	public String tomcatDown() {
 		return "redirect:/line/apache-tomcat-9.0.5.exe";
+	}
+	
+	@RequestMapping(value="/emailTest")
+	public void publicTest() {
+		String invalidEmail = "1eejw";
+		String validEmail = "1eejw@naver";
+		
+		Test t = new Test();
+		Email email = new Email();
+		
+		System.out.println("Invalid Check: "+t.checkEmailAddr(invalidEmail));
+		System.out.println("Valid Check: "+t.checkEmailAddr(validEmail));
+		
+		email.setContent("테스트");
+		email.setSubject("테스트");
+		email.setReceiver(validEmail);
+		try {
+			emailSender.sendEmail(email);
+		} catch (Exception e) {
+			System.out.println("ERROR! Email Send Exception!");
+			e.printStackTrace();
+		}
 	}
 		
 }

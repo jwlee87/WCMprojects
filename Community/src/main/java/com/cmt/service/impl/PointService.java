@@ -40,13 +40,8 @@ public class PointService implements PointServiceInterface {
 	public HashMap<String, Object> updatePoint(HttpServletRequest req) {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
 		HashMap<String, Object> paramMap = HttpUtil.getParamMap(req);
-		
-		System.out.println(paramMap);
-		
 		HashMap<String, Object> checkMap = pdi.selectOneRefund(paramMap);
 		boolean cc = (boolean) checkMap.get("changeCheck");
-		
-		System.out.println(cc);
 		
 		if(cc) {
 			paramMap.put("dateTime", DateUtil.todayKoreanString());
@@ -61,9 +56,8 @@ public class PointService implements PointServiceInterface {
 				HashMap<String, Object> tempMap = pdi.selectOnePoint(paramMap);
 				int sum = Integer.parseInt(paramMap.get("point").toString()) + Integer.parseInt(tempMap.get("_Point").toString());
 				paramMap.put("point", sum);
-				pdi.pointUpdate(paramMap);
 			}
-			returnMap = pdi.pointUpdate(paramMap);
+			returnMap = pdi.updateState(paramMap);
 		}else {
 			returnMap.put("result", 0);
 		}
