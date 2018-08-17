@@ -70,6 +70,13 @@
 			<mvc:mapping path="/benefit/data/cm"/>
 			<mvc:mapping path="/point/refund"/>
 			<mvc:mapping path="/point/update"/>
+			<mvc:mapping path="/board"/>
+			<mvc:mapping path="/board/write"/>
+			<mvc:mapping path="/board/writeAction"/>
+			<mvc:mapping path="/board/read"/>
+			<mvc:mapping path="/board/updateAction"/>
+			<mvc:mapping path="/board/delete"/>
+			<mvc:mapping path="/board/deleteCmt"/>
 			<bean class="com.cmt.interceptor.AuthenticationInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>

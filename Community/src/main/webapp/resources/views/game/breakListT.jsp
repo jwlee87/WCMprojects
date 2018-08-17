@@ -89,7 +89,7 @@ $(document).ready(function(){
 	
 // 	console.log("final_min check= "+final_min);
 	
-	var nowTime = date.getFullYear()+"/"+Number(date.getMonth()+1)+"/"+date.getDate()+" "+targetHour+":"+final_min+":25";
+	var nowTime = date.getFullYear()+"/"+Number(date.getMonth()+1)+"/"+date.getDate()+" "+targetHour+":"+final_min+":55";
 // 	console.log(nowTime);
 	
 	$('#clock').countdown(nowTime)

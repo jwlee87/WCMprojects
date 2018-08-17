@@ -25,6 +25,9 @@ public class PointService implements PointServiceInterface {
 		ModelAndView mav = new ModelAndView();
 		HashMap<String, Object> tempMap = pdi.selectList(paramMap);
 		
+		int totalCount = pdi.selectTotalCount(paramMap);
+		System.out.println(totalCount);
+		
 		Gson gson = new Gson();
 		mav.addObject("data", gson.toJson(tempMap));
 		mav.setViewName("resources/views/point/refund");
@@ -38,6 +41,7 @@ public class PointService implements PointServiceInterface {
 
 	@Override
 	public HashMap<String, Object> updatePoint(HttpServletRequest req) {
+		
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
 		HashMap<String, Object> paramMap = HttpUtil.getParamMap(req);
 		HashMap<String, Object> checkMap = pdi.selectOneRefund(paramMap);

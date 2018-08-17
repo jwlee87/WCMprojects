@@ -44,14 +44,19 @@ public class PointDao implements PointDaoInterface {
 		return resultMap;
 	}
 
-	@Override
-	public int updatePoint(HashMap<String, Object> paramMap) {
-		return wsSession.update("point.updatePoint", paramMap);
-	}
+//	@Override
+//	public int updatePoint(HashMap<String, Object> paramMap) {
+//		return wsSession.update("point.updatePoint", paramMap);
+//	}
 
 	@Override
 	public HashMap<String, Object> selectOnePoint(HashMap<String, Object> paramMap) {
 		return wsSession.selectOne("point.selectOneMember", paramMap);
+	}
+
+	@Override
+	public int selectTotalCount(HashMap<String, Object> param) {
+		return wsSession.selectOne("point.totalCount", param);
 	}
 
 }

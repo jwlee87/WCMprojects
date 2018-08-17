@@ -47,7 +47,6 @@ public class PointController {
 		
 //		long end = System.currentTimeMillis();
 //		System.out.println("실행시간: "+(end - start)/1000.0);
-		
 		return psi.getPointAjaxList(req, paramMap);
 	}
 	

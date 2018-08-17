@@ -27,9 +27,10 @@
 		h4 {text-align: center; color: red;}
 		h5 {text-align: center;}
 		.chart_con {width: 100%; min-width: 520px; margin: 0 auto;}
-		.container { max-width: 1400px; min-width: 1200px; margin: 5vh auto;}
+		.container { max-width: 1400px; min-width: 1200px; margin: 5vh auto; padding: 15px;}
 		.btn_con {text-align: center; margin-bottom: 5vh;}
 		.btn_con button {height: 50px; font-size: 2em;}
+		#result {margin: 5vh 0;}
 	</style>
 
 </head>
@@ -78,8 +79,9 @@
 			<tbody>
 			</tbody>
 		</table>
-		
-		
+		<div id="result" style="text-align: center;"></div>
+		<div id="paging_box" style="text-align: center;">
+		</div>
 	</div>
 </c:if>
 <c:if test="${sessionScope.member._class ne 3}">
@@ -153,15 +155,13 @@ $(document).ready(function(){
 	function makeHTML(list){
 		
 		$("tbody > tr").remove();
-		$("body > #result").remove();
+		$("#result > h3").remove();
 		var html = "";
-		
 		console.log(list);
 		
 		if(list.length == 0){
-			html = "<div id='result' style='text-align: center;'>"
-				 + "<h3>데이터가 없습니다.</h3></div>";
-			$("body").append(html);
+			html = "<h3>데이터가 없습니다.</h3>";
+			$("#result").append(html);
 		}else{
 			for(var i = 0; i < list.length; i++){
 				html += "<tr>"
@@ -295,7 +295,7 @@ $(document).ready(function(){
 	});
 	
 	$("#accept_list").on("click", function(){
-		makeAcceptList(list);	
+		makeAcceptList(list);
 	});
 	
 	$("#cancle_list").on("click", function(){
