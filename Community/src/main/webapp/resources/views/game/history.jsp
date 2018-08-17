@@ -76,8 +76,6 @@ $(document).ready(function(){
 		}else{
 			makeHTML(result2);			
 		}
-		
-		
 	}
 	
 	function makeHTML(json){
