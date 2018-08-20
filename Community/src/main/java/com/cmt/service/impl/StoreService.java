@@ -1,4 +1,4 @@
-package com.cmt.appang.store;
+package com.cmt.service.impl;
 
 import java.util.HashMap;
 
@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.cmt.common.HttpUtil;
 import com.cmt.dao.MemberDao;
+import com.cmt.dao.StoreDaoInterface;
 import com.cmt.domain.Member;
+import com.cmt.service.StoreServiceInterface;
 
 @Service
 public class StoreService implements StoreServiceInterface {
@@ -61,11 +63,6 @@ public class StoreService implements StoreServiceInterface {
 				tempMap.put("uniqueID", uui);
 				tempMap.put("priceGap", priceGap);
 				
-				
-				System.out.println("update 전 point: "+memberPoint);
-				System.out.println("차감해야 할  point: "+price);
-				System.out.println("update 할 point: "+priceGap);
-				
 				// 결제 되었음으로 포인트 차감
 				// user generated key 사용하여 parameter object 에 point 값 전달
 				if(mdi.updatePoint(tempMap)==1) {
@@ -82,10 +79,14 @@ public class StoreService implements StoreServiceInterface {
 					// ** 멤버의 현재 포인트 리드 후 포인트 - 하여 로그테이블에 저장
 					// ** use generated key 사용하여 객체에 after point value 저장한 뒤 
 					// ** insert to log table
-					
-					
-					
+					tempMap.put("tradeMark", member.getTradeMark().trim());
+					tempMap.put("pCode", 5);
+					tempMap.put("POINT", -1*(price));
+					tempMap.put("BPOINT", memberPoint);
+					tempMap.put("MEMO", "스토어 구매");
+					tempMap.put("APOINT", memberPoint-price);
 					returnFlag = true;
+					sdi.addHistory(tempMap);
 				}else{
 					paramMap.put("P", memberPoint);
 					mdi.updatePoint(paramMap);
@@ -142,10 +143,6 @@ public class StoreService implements StoreServiceInterface {
 				checkFlag=1;
 			};
 			
-			System.out.println("update 전 point: "+memberPoint);
-			System.out.println("증감해야 할  point: "+price);
-			System.out.println("update 할 point: "+priceGap);
-			
 			if(checkFlag==1) {
 				//환불 정보 저장
 				paramMap.put("US", 3);
@@ -155,7 +152,15 @@ public class StoreService implements StoreServiceInterface {
 					// *
 					// * 멤버의 현재 포인트 리드 후 포인트 + 하여 로그테이블에 저장
 					// *
+					tempMap.put("tradeMark", member.getTradeMark().trim());
+					tempMap.put("pCode", 6);
+					tempMap.put("POINT", price);
+					tempMap.put("BPOINT", memberPoint);
+					tempMap.put("APOINT", memberPoint+price);
+					tempMap.put("MEMO", "스토어 환불");
+					
 					returnFlag = true;
+					sdi.addHistory(tempMap);
 				}else{
 					paramMap.put("P", memberPoint);
 					mdi.updatePoint(paramMap);
@@ -164,6 +169,11 @@ public class StoreService implements StoreServiceInterface {
 		}
 		returnMap.put("returnFlag", returnFlag);
 		return returnMap;
+	}
+
+	@Override
+	public HashMap<String, Object> getHis(HttpServletRequest req) {
+		return sdi.getHistory(HttpUtil.getParamMap(req));
 	}
 
 }

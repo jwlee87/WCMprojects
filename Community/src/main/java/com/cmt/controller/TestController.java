@@ -20,8 +20,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cmt.common.EmailSender;
 import com.cmt.common.HashUtil;
 import com.cmt.common.HttpUtil;
+import com.cmt.dao.MemberDao;
+import com.cmt.dao.StoreDaoInterface;
 import com.cmt.domain.Board;
 import com.cmt.domain.Email;
+import com.cmt.domain.Member;
 import com.cmt.domain.RewardList;
 import com.cmt.service.BoardService;
 import com.cmt.service.MemberService;
@@ -66,6 +69,13 @@ public class TestController {
 	@Autowired
 	@Qualifier("boardServiceImpl")
 	private BoardService boardService;
+	
+	@Autowired
+	private StoreDaoInterface sdi;
+	
+	@Autowired
+	@Qualifier("memberDaoImpl")
+	private MemberDao mdi;
 	
 	///Constructor
 	public TestController() {
@@ -172,5 +182,28 @@ public class TestController {
 		mav.addObject("data", gson.toJson(paramMap));
 		mav.setViewName("resources/views/test/pagingTest");
 		return mav;
+	}
+	
+	@RequestMapping(value="/testLog")
+	public void testAddLog(HttpServletRequest req) throws Exception {
+		System.out.println("/testLog init");
+		HashMap<String, Object> paramMap = HttpUtil.getParamMap(req);
+		HashMap<String, Object> tempMap = new HashMap<String, Object>();
+		
+		String userUniqueId = paramMap.get("UD").toString().trim();
+		int uui = Integer.parseInt(userUniqueId);
+		Member member = mdi.getMemberByUniqueID(uui);
+		
+//		tempMap.put("tradeMark", member.getTradeMark().trim());
+		tempMap.put("uniqueID", -1);
+		tempMap.put("pCode", 5);
+		tempMap.put("POINT", -1000);
+		tempMap.put("priceGap", 4500);
+		tempMap.put("BPOINT", 5500);
+		tempMap.put("MEMO", "테스트");
+		System.out.println(paramMap);
+		System.out.println(tempMap);
+		
+		sdi.addHistory(tempMap);
 	}
 }

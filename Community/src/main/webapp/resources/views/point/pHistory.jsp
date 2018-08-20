@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>게임기록</title>
+<title> 포인트 기록 </title>
 <c:import url="/resources/jsp/defaultSetting.jsp"></c:import>
 <style>
 	html, body {width: 100%; margin: 0; padding: 0;}
@@ -34,8 +34,9 @@ $(document).ready(function(){
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 	
+	
 	var html = "";
-	var t_head = "<tr><th>NO</th><th>일시</th><th>유저번호</th><th>닉네임</th><th>코드</th><th>게임회차</th><th>당첨금</th><th>전</th><th>후</th><th>메모</th></tr>";
+	var t_head = "<tr><th>NO</th><th>일시</th><th>유저번호</th><th>닉네임</th><th>코드</th><th>포인트</th><th>전 포인트</th><th>후 포인트</th><th>메모</th></tr>";
 	
 	function cssSetting(){
 		$(".search_box").css("max-width", "600px").css("width", "60%").css("margin", "0 auto");
@@ -50,7 +51,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 			type: "POST"
-			, url: "/game/getHis"
+			, url: "/history/getHis"
 			, data: data
 			, dataType: "json"
 		}).done(function(data){
@@ -93,10 +94,9 @@ $(document).ready(function(){
 			var userNo = json[i]._UserUniqueID;
 			var nickName = json[i]._Trademark;
 			var pCode = json[i]._ProcessCode;
-			var count = json[i]._GameCount;
-			var money = json[i]._Money;
-			var bMoney = json[i]._BMONEY;
-			var aMoney = json[i]._AMONEY;
+			var money = json[i]._POINT;
+			var bMoney = json[i]._BPOINT;
+			var aMoney = json[i]._APOINT;
 			var memo = json[i].memo;
 			
 			html += "<tr style='border: 1px solid #ccc;'>"
@@ -105,7 +105,6 @@ $(document).ready(function(){
 				 +"<td>"+userNo+"</td>"
 				 +"<td>"+nickName+"</td>"
 				 +"<td>"+pCode+"</td>"
-				 +"<td>"+count+"</td>"
 				 +"<td>"+numberWithCommas(money)+"</td>"
 				 +"<td>"+numberWithCommas(bMoney)+"</td>"
 				 +"<td>"+numberWithCommas(aMoney)+"</td>"

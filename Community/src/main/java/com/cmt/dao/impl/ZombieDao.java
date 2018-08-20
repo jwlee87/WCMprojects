@@ -58,10 +58,13 @@ public class ZombieDao implements ZombieDaoInterface {
 
 	@Override
 	public HashMap<String, Object> getHistory(HashMap<String, Object> paramMap) {
+		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		List<HashMap<String, Object>> resultList = new ArrayList<HashMap<String, Object>>();
 		resultList = historySession.selectList("history.selectList", paramMap);
-		resultMap.put("resultList", resultList);
+		tempMap.put("list", resultList);
+		resultMap = DateUtil.transformateDate(tempMap);
+		resultMap.put("resultList",resultMap.get("list"));
 		return resultMap;
 	}
 

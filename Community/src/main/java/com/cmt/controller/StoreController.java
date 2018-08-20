@@ -1,4 +1,4 @@
-package com.cmt.appang.store;
+package com.cmt.controller;
 
 import java.util.HashMap;
 
@@ -9,6 +9,8 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.cmt.service.StoreServiceInterface;
 
 @Controller
 public class StoreController {

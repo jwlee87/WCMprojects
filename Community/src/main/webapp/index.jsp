@@ -81,7 +81,12 @@
 		<c:if test="${sessionScope.member._class eq 3}">
 		<div class="login-con">
 			<div class="login-btn-box">
-				<a href="game/history" type="button" class="btn btn-default btn-block">게임기록</a>
+				<a href="game/history" type="button" class="btn btn-default btn-block">게임 기록</a>
+			</div>
+		</div>
+		<div class="login-con">
+			<div class="login-btn-box">
+				<a href="/point/history" type="button" class="btn btn-default btn-block">포인트 기록</a>
 			</div>
 		</div>
 		<div class="login-con">
