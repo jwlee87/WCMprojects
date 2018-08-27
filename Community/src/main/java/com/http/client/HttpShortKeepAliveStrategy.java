@@ -40,7 +40,6 @@ public class HttpShortKeepAliveStrategy implements ConnectionKeepAliveStrategy{
 			}
 		}
 
-
 		HttpHost target = (HttpHost) context.getAttribute(HttpClientContext.HTTP_TARGET_HOST);
 		if ("www.worldspon.net".equalsIgnoreCase(target.getHostName())) {
 			// Keep alive for 5 seconds only

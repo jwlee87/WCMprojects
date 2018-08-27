@@ -27,7 +27,7 @@ public class BoardDaoImpl implements BoardDao {
 	private Logger logger = LogManager.getLogger();
 	
 	@Autowired
-	@Qualifier("sqlSessionTemplate")
+	@Qualifier("wsSession")
 	private SqlSession sqlSession;
 	
 	///Constructor

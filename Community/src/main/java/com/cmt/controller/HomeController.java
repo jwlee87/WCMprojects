@@ -693,24 +693,33 @@ public class HomeController {
 			if(member.geteMail() == null || member.geteMail().equals("") || member.geteMail().equals(" ")) {
 				resultMap.put("check", "emailNull");
 			} else {
+				
 				int authKey = emailSender.generateAuthKey();
 				try {
-					int userUniqueID = member.getUniqueID();
-					memberService.deleteCheck(userUniqueID);
-					String uri = "http://worldspon.net/change/"+userUniqueID+"/"+authKey;
-					email.setAuthKey(authKey);
-					email.setContent(emailSender.generateEmailContents(member.getTradeMark(), uri));
-					email.setSubject("[월드스폰] "+member.getTradeMark()+"님의 요청 결과입니다.");
-					email.setReceiver(member.geteMail());
-					email.setUserUniqueID(member.getUniqueID());
-					emailSender.sendEmail(email);
-					memberService.addAuthKey(email);
 					
+					if(emailSender.checkEmailAddr(member.geteMail())) {
+						int userUniqueID = member.getUniqueID();
+						memberService.deleteCheck(userUniqueID);
+						String uri = "http://worldspon.net/change/"+userUniqueID+"/"+authKey;
+						email.setAuthKey(authKey);
+						email.setContent(emailSender.generateEmailContents(member.getTradeMark(), uri));
+						email.setSubject("[월드스폰] "+member.getTradeMark()+"님의 요청 결과입니다.");
+						email.setReceiver(member.geteMail());
+						email.setUserUniqueID(member.getUniqueID());
+						emailSender.sendEmail(email);
+						memberService.addAuthKey(email);
+						resultMap.put("mail", member.geteMail());
+						resultMap.put("check", "validEmail");
+					} else {
+						resultMap.put("mail", member.geteMail());
+						resultMap.put("check", "invalidEmail");
+					}
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
 			}
 		}
+//		System.out.println("final check: "+resultMap);
 		
 		return resultMap;
 	}

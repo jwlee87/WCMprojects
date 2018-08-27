@@ -24,7 +24,7 @@ public class MemberDaoImpl implements MemberDao {
 	private Logger logger = LogManager.getLogger();
 	
 	@Autowired
-	@Qualifier("sqlSessionTemplate")
+	@Qualifier("wsSession")
 	private SqlSession sqlSession;
 	
 	///Constructor

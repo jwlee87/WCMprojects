@@ -1,6 +1,8 @@
 package com.cmt.common;
 
 
+import java.util.regex.Pattern;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -50,11 +52,22 @@ public class EmailSender {
 				+"<a href='"+uri+"'>비밀번호 변경 페이지로 이동합니다.</a><br>"
 				+"===================================<br>"
 				+"<p>도움이 필요하시면 <a href='mailto:worldspon@gmail.com'>worldspon@gmail.com</a>으로 연락해 주세요.</p><br>"
-				+"<p style='font-size: 8px;'>월드코인마켓 / 서비스이용방침 / 개인정보처리방침</p>"
+				+"<p style='font-size: 8px;'>월드스폰 / 서비스이용방침 / 개인정보처리방침</p>"
 				+"</div></meta>";
 	}
 	
 	public int generateAuthKey() throws Exception{
 		return (int)((Math.random() * (999999 - 100000 +1)) + 100000);
+	}
+	
+	public boolean checkEmailAddr(String emailAddr) {
+		boolean check = true;
+		String regex = "^[_a-zA-Z0-9-]+(.[_a-zA-Z0-9-]+)*@(?:\\w+\\.)+\\w+$";
+		check = Pattern.matches(regex, emailAddr);
+		if(check) {
+			return check;
+		} else {
+			return check;
+		}
 	}
 }

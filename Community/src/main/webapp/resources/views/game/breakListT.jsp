@@ -89,7 +89,7 @@ $(document).ready(function(){
 	
 // 	console.log("final_min check= "+final_min);
 	
-	var nowTime = date.getFullYear()+"/"+Number(date.getMonth()+1)+"/"+date.getDate()+" "+targetHour+":"+final_min+":15";
+	var nowTime = date.getFullYear()+"/"+Number(date.getMonth()+1)+"/"+date.getDate()+" "+targetHour+":"+final_min+":55";
 // 	console.log(nowTime);
 	
 	$('#clock').countdown(nowTime)
@@ -105,7 +105,6 @@ $(document).ready(function(){
 	}).on('finish.countdown', function(event) {
 		location.reload();
 	});
-	
 	
 	var w = 610;
 	var h = 800;
