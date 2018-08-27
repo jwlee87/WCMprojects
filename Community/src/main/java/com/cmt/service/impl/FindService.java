@@ -26,7 +26,7 @@ public class FindService implements FindServiceInterface {
 		HashMap<String, Object> httpMap = new HashMap<String, Object>();
 		paramMap = HttpUtil.getParamMap(req);
 		
-		if( paramMap.get("Command") == null ) isRun = false;
+		if( paramMap.get("code") == null ) isRun = false;
 		if( paramMap.get("value") == null ) isRun = false;
 		
 		if(isRun) {

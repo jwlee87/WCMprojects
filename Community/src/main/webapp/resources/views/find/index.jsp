@@ -46,10 +46,10 @@
 	<script>
 $(document).ready(function(){
 	
-	function ajaxSubmit(value, command){
+	function ajaxSubmit(value, code){
 		var data = {};
 		data["value"] = value;
-		data["Command"] = command;
+		data["code"] = code;
 		
 		$.ajax({
 			type: "POST"
@@ -57,37 +57,21 @@ $(document).ready(function(){
 			, data: data
 			, dataType: "json"
 		}).done(function(data){
-			
-			if(data.check == "true"){
-				var resultData = data.result;
-				var beginIndex = resultData.search("PASSWORD:");
-				var endIndex = resultData.search("</body>");
-				var pass = resultData.substring(beginIndex, endIndex);
-				
-				if(pass.length > 10){
-					alert(pass);
-				}else{
-					alert("일치하는 회원이 없습니다.");
-				}
-				
-			}else if(data.check == "false"){
-				alert(data.result);
-			}
-			
+			var returnMap = JSON.parse(data);
+			console.log(returnMap.result);
 		}).fail(function(data){
-			console.log("fail");
 			alert("Timeout Exception! 관리자에게 문의해 주세요.");
 		});
 	}
 	
 	function validCheck(){
 		var value = $("#value").val();
-		var command = $("#checkCondition").val();
+		var code = $("#checkCondition").val();
 		if(value == null || value == ""){
 			alert("폰번호 or 아이디를 입력해주세요.");
 			return false;
 		}else{
-			ajaxSubmit(value, command);
+			ajaxSubmit(value, code);
 		}
 	}
 	

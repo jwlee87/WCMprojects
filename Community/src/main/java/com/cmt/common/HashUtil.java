@@ -353,15 +353,12 @@ public class HashUtil {
 				.build();
 		
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("Command", "10001");
 		params.put("uniqueID", igaReward.getUniqueID());
 		
 		logger.debug(params);
 		
 		HttpPost post = new HttpPost("http://"+url);
 		post.setConfig(defaultRequestConfig);
-		
-		System.out.println(params);
 		
 		String returnStr = "";
 		

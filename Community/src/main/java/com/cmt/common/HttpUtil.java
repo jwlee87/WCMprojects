@@ -101,7 +101,7 @@ public class HttpUtil {
 				.setDefaultRequestConfig(defaultRequestConfig)
 				.build();
 		
-		switch(paramMap.get("Command").toString()){
+		switch(paramMap.get("code").toString()){
 			case "10001": paramKey = "uniqueID";
 				break;
 			case "10101": paramKey = "phone";
@@ -110,7 +110,7 @@ public class HttpUtil {
 				break;
 		}
 		
-		System.out.println(paramMap.get("Command") + " : " + paramKey + " : " + paramMap.get("value"));
+		System.out.println(paramMap.get("code") + " : " + paramKey + " : " + paramMap.get("value"));
 		
 		HttpPost post = new HttpPost("http://"+address);
 		post.setConfig(defaultRequestConfig);
@@ -134,15 +134,11 @@ public class HttpUtil {
 			
 			String body = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8.name());
 			System.out.println(body);
-//			String result = StringUtil.parseResponse(body);
-//			System.out.println("결과: "+result);
 			
 			if(statusCode==200) {
-				System.out.println("성공");
 				returnMap.put("check", "true");
 				returnMap.put("result", body);
 			} else {
-				System.out.println("실패");
 				returnMap.put("check", "false");
 				returnMap.put("result", "response error! 관리자에게 문의해주세요.");
 			}
@@ -155,8 +151,6 @@ public class HttpUtil {
 				e.printStackTrace();
 			}
 		}
-		
-		System.out.println(returnMap);
 		return returnMap;
 	}
 	
