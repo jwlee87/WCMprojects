@@ -49,7 +49,6 @@ public class FindController {
 	@RequestMapping(value="/admin/callFind", method=RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, Object> getHis(HttpServletRequest req) {
-		fsi.getFindAjax(req);
-		return null;
+		return fsi.getFindAjax(req);
 	}
 }	

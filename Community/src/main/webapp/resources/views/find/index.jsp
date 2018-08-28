@@ -46,10 +46,10 @@
 	<script>
 $(document).ready(function(){
 	
-	function ajaxSubmit(value, code){
+	function ajaxSubmit(value, Command){
 		var data = {};
 		data["value"] = value;
-		data["code"] = code;
+		data["Command"] = Command;
 		
 		$.ajax({
 			type: "POST"
@@ -57,8 +57,16 @@ $(document).ready(function(){
 			, data: data
 			, dataType: "json"
 		}).done(function(data){
-			var returnMap = JSON.parse(data);
-			console.log(returnMap.result);
+			var dataStr = data.result;
+			var beginIndex = dataStr.search("PASSWORD:");
+			var endIndex = dataStr.search("</body>");
+			var resultWord = dataStr.substring(beginIndex, endIndex);
+			if(resultWord.length > 11){
+				alert(resultWord);
+			}else{
+				alert("조회된 회원이 없습니다.");
+			}
+			
 		}).fail(function(data){
 			alert("Timeout Exception! 관리자에게 문의해 주세요.");
 		});
@@ -66,12 +74,12 @@ $(document).ready(function(){
 	
 	function validCheck(){
 		var value = $("#value").val();
-		var code = $("#checkCondition").val();
+		var Command = $("#checkCondition").val();
 		if(value == null || value == ""){
 			alert("폰번호 or 아이디를 입력해주세요.");
 			return false;
 		}else{
-			ajaxSubmit(value, code);
+			ajaxSubmit(value, Command);
 		}
 	}
 	

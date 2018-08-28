@@ -101,7 +101,7 @@ public class HttpUtil {
 				.setDefaultRequestConfig(defaultRequestConfig)
 				.build();
 		
-		switch(paramMap.get("code").toString()){
+		switch(paramMap.get("Command").toString()){
 			case "10001": paramKey = "uniqueID";
 				break;
 			case "10101": paramKey = "phone";
@@ -110,7 +110,7 @@ public class HttpUtil {
 				break;
 		}
 		
-		System.out.println(paramMap.get("code") + " : " + paramKey + " : " + paramMap.get("value"));
+		System.out.println(paramMap.get("Command") + " : " + paramKey + " : " + paramMap.get("value"));
 		
 		HttpPost post = new HttpPost("http://"+address);
 		post.setConfig(defaultRequestConfig);
