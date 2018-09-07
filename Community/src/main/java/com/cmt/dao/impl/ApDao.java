@@ -26,6 +26,11 @@ public class ApDao implements ApDaoInterface {
 	}
 	
 	@Override
+	public HashMap<String, Object> getAp(HashMap<String, Object> paramMap) {
+		return mariaSession.selectOne("ap.getAp", paramMap);
+	}
+	
+	@Override
 	public List<HashMap<String, Object>> getApList() {
 		return mariaSession.selectList("ap.getApList");
 	}
@@ -37,14 +42,14 @@ public class ApDao implements ApDaoInterface {
 
 	@Override
 	public int updateAdvertisingProvider(HashMap<String, Object> paramMap) {
-		// TODO Auto-generated method stub
-		return 0;
+		return mariaSession.update("ap.updateAp", paramMap);
 	}
 
 	@Override
-	public int deleteAdvertisingProvider(HashMap<String, Object> paramMap) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateApDelete(HashMap<String, Object> paramMap) {
+		return mariaSession.delete("ap.deleteAp", paramMap);
 	}
+
+	
 
 }

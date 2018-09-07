@@ -26,7 +26,7 @@ public class AdvertisingProviderController {
 	private ApServiceInterface asi;
 	
 	///Method
-	@RequestMapping(value="/mariatest")
+	@RequestMapping(value="/ap")
 	public ModelAndView getApList(HttpSession session, HttpServletRequest request, @ModelAttribute Board board, Model model) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
@@ -48,4 +48,27 @@ public class AdvertisingProviderController {
 		return asi.getAjaxList(req);
 	}
 	
+	@RequestMapping(value="/ap/get/pw", method=RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> ajaxCheckPw(HttpServletRequest req){
+		return asi.getCheckPw(req);
+	}
+	
+	@RequestMapping(value="/ap/get/simplepw", method=RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> ajaxGetPw(HttpServletRequest req){
+		return asi.getSimplePw(req);
+	}
+	
+	@RequestMapping(value="/ap/u", method=RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> ajaxUpadate(HttpServletRequest req){
+		return asi.updateAp(req);
+	}
+	
+	@RequestMapping(value="/ap/d", method=RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> ajaxDelete(HttpServletRequest req){
+		return asi.deleteAp(req);
+	}
 }	

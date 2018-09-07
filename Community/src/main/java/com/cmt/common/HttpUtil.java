@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.nhncorp.lucy.security.xss.XssPreventer;
 
 public class HttpUtil {
 	
@@ -36,18 +38,42 @@ public class HttpUtil {
 		Enumeration<?> enums = req.getParameterNames();
 		while(enums.hasMoreElements()) {
 			String paramName = enums.nextElement().toString();
-			System.out.println(paramName);
-			System.out.println(req.getParameter(paramName));
 //			if("".equals(req.getParameter(paramName))) {
 //				result = null;
 //				break;
 //			}
 			result.put(paramName, req.getParameter(paramName));
 		}
-		
-		System.out.println(result);
-		
 		return result;
+	}
+	
+	public static HashMap<String, Object> unescapeMap(HashMap<String, Object> paramMap) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		Set<String> keys = paramMap.keySet();
+		while(keys.iterator().hasNext()) {
+			String paramName = keys.iterator().next().toString();
+			result.put(paramName, xssUnescape((String)paramMap.get(paramName)));
+		}
+		System.out.println(result);
+		return result;
+	}
+	
+	public static HashMap<String, Object> escapeMap(HashMap<String, Object> paramMap) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		Set<String> keys = paramMap.keySet();
+		while(keys.iterator().hasNext()) {
+			String paramName = keys.iterator().next().toString();
+			result.put(paramName, xssEscape((String)paramMap.get(paramName)));
+		}
+		System.out.println(result);
+		return result;
+	}
+	
+	public static String xssEscape(String dirty) {
+		return XssPreventer.escape(dirty);
+	}
+	public static String xssUnescape(String clean) {
+		return XssPreventer.unescape(clean);
 	}
 	
 	public static ModelAndView makeJsonView(HashMap<String, Object> map) {
@@ -200,12 +226,10 @@ public class HttpUtil {
 		int[] intArray = new int[strArray.length];
 		int i = 0;
 		for(String unit : strArray) {
-			System.out.println("string unit: "+unit);
 			intArray[i] = Integer.parseInt(unit);
 			i ++;
 		}
 		for(int unit : intArray) {
-			System.out.println("int unit: "+unit);
 			result += (char) unit;
 		}
 		return result;
@@ -213,13 +237,9 @@ public class HttpUtil {
 	
 	public static byte[] strToByteArray(String param) throws UnsupportedEncodingException {
 		byte[] byteArray = param.getBytes("UTF-8");
-		System.out.println(byteArray);
 		String abc = new String(byteArray, "UTF-8");
-		System.out.println(abc);
 		return byteArray;
 	}
-	
-	
 	
 	public static String hexToStr(String param) {
 		String result = "";
