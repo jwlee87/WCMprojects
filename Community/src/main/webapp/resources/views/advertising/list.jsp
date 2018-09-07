@@ -318,7 +318,7 @@ $(document).ready(function(){
 				html += "<tr style='height: 2em; font-size: 1.2em; padding: 0.5em;' >"
 					 + "<th scope='row' class='uniqueID align-center'>"+list[i].no+"</th>"
 					 + "<td class='align-center td_company_name'>"+list[i].company_name+"</td>"
-					 + "<td class='align-center td_company_url' style='padding: 0.2em;'><a class='btn btn-primary' href='http://"+addr+"' target='_blank' style='font-size: 1em;'"
+					 + "<td class='align-center td_company_url' style='padding: 0.2em;'><a class='btn btn-primary' href='"+addr+"' target='_blank' style='font-size: 1em;'"
 					 + " data-toggle='tooltip' data-html='true' title='<p style=\"font-size: 2em;\">"+addr+"'>이동</a></td>"
 					 + "<td class='align-center td_login_id'>"+list[i].login_id+"</td>"
 					 + "<td class='align-center td_login_pw' style='padding: 0.2em;'><button class='btn btn-outline-primary btn_pw_check' style='font-size: 1em;'>확인하기</button></td>"
@@ -429,7 +429,7 @@ $(document).ready(function(){
 					}).done(function(d){
 						data.bLoginPw = d.login_pw;
 						
-						var regExUrl = /[0-9a-zA-Z.@\-\_]/;
+						var regExUrl = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
 						var empty_space = /\s/gi;
 						if(data.loginPw.match(empty_space)){
 							alert("공백은 포함될 수 없습니다.");
@@ -445,11 +445,9 @@ $(document).ready(function(){
 							alert("URL은 필수값입니다.");
 							return false;
 						}
-						for(var i=0; i<data.companyUrl.length; i++){
-							if(regExUrl.test(data.companyUrl.charAt(i)) == false ){
-								alert("URL 형식이 올바르지 않습니다.");
-								return false;
-							}
+						if(regExUrl.test(data.companyUrl)){
+							alert("URL 형식이 올바르지 않습니다.");
+							return false;
 						}
 						if(data.loginId.trim().length == 0){
 							alert("아이디는 필수값입니다.");
@@ -522,7 +520,6 @@ $(document).ready(function(){
 /////////////////////////////////////////////////////////////////////////////////////////////
 	// 글쓰기  //
 	$(".in_submit_btn").on("click", function(){
-		
 		var formData = {};
 		formData.companyName = $("#in_company_name").val().trim();
 		formData.companyUrl = $("#in_company_url").val().trim();
@@ -534,7 +531,7 @@ $(document).ready(function(){
 		var loginId = formData.loginId;
 		var loginPw = formData.loginPw;
 		var empty_space = /\s/gi;
-		var regExUrl = /[0-9a-zA-Z.@\-\_]/;
+		var regExUrl = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
 		
 		if( loginId.match(empty_space) || loginPw.match(empty_space) ){
 			alert("공백은 포함될 수 없습니다.");
@@ -548,11 +545,12 @@ $(document).ready(function(){
 			alert("URL은 필수값입니다.");
 			return false;
 		}
-		for(var i=0; i<formData.companyUrl.length; i++){
-			if(regExUrl.test(formData.companyUrl.charAt(i)) == false ){
-				alert("URL 형식이 올바르지 않습니다.");
-				return false;
-			}
+		console.log(formData.companyUrl);
+		console.log(regExUrl.test(formData.companyUrl));
+		
+		if(regExUrl.test(formData.companyUrl)){
+			alert("URL 형식이 올바르지 않습니다.");
+			return false;
 		}
 		
 		if(formData.loginId == "" || formData.loginId.trim().length == 0 ){
