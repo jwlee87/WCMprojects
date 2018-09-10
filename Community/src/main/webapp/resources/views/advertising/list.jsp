@@ -388,7 +388,8 @@ $(document).ready(function(){
 				
 				companyName.html("<input id='modi_companyNm' placeholder='"+companyName.text()+"'></input>");
 				var tempStr = companyUrl.find("a").prop("href");
-				var tempAddr = tempStr.substring(7, tempStr.length-1);
+// 				var tempAddr = tempStr.substring(7, tempStr.length-1);
+				var tempAddr = tempStr
 				companyUrl.html("<input id='modi_companyUrl' placeholder='"+tempAddr+"'></input>").css("padding", "8px");
 				loginId.html("<input id='modi_id' placeholder='"+loginId.text()+"'></input>");
 				loginPw.html("<input id='modi_pw' type='password'></input>").css("padding", "8px");
@@ -403,7 +404,7 @@ $(document).ready(function(){
 				$(".modify_cancle_btn").on("click", function(){
 					location.reload();
 				});
-				///////////////
+				
 				// 업데이트 적용 //
 				$("#update_complete_btn").on("click", function(){
 					data = {};
@@ -491,6 +492,8 @@ $(document).ready(function(){
 				});
 				// end of update //
 				///////////////////
+				
+				
 			});
 			/////////////////////////////////////////////////////////////////////////////////
 			// 삭제 버튼 //
