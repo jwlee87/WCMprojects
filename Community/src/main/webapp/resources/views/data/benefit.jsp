@@ -202,6 +202,38 @@ $(document).ready(function(){
 			dayProfits['day30'] = data[0]._30DAY;
 			dayProfits['day31'] = data[0]._31DAY;
 			
+// 			dayProfits['aDay1'] = data[0]._01DAY_A1;
+// 			dayProfits['aDay2'] = data[0]._02DAY_A1;
+// 			dayProfits['aDay3'] = data[0]._03DAY_A1;
+// 			dayProfits['aDay4'] = data[0]._04DAY_A1;
+// 			dayProfits['aDay5'] = data[0]._05DAY_A1;
+// 			dayProfits['aDay6'] = data[0]._06DAY_A1;
+// 			dayProfits['aDay7'] = data[0]._07DAY_A1;
+// 			dayProfits['aDay8'] = data[0]._08DAY_A1;
+// 			dayProfits['aDay9'] = data[0]._09DAY_A1;
+// 			dayProfits['aDay10'] = data[0]._10DAY_A1;
+// 			dayProfits['aDay11'] = data[0]._11DAY_A1;
+// 			dayProfits['aDay12'] = data[0]._12DAY_A1;
+// 			dayProfits['aDay13'] = data[0]._13DAY_A1;
+// 			dayProfits['aDay14'] = data[0]._14DAY_A1;
+// 			dayProfits['aDay15'] = data[0]._15DAY_A1;
+// 			dayProfits['aDay16'] = data[0]._16DAY_A1;
+// 			dayProfits['aDay17'] = data[0]._17DAY_A1;
+// 			dayProfits['aDay18'] = data[0]._18DAY_A1;
+// 			dayProfits['aDay19'] = data[0]._19DAY_A1;
+// 			dayProfits['aDay20'] = data[0]._20DAY_A1;
+// 			dayProfits['aDay21'] = data[0]._21DAY_A1;
+// 			dayProfits['aDay22'] = data[0]._22DAY_A1;
+// 			dayProfits['aDay23'] = data[0]._23DAY_A1;
+// 			dayProfits['aDay24'] = data[0]._24DAY_A1;
+// 			dayProfits['aDay25'] = data[0]._25DAY_A1;
+// 			dayProfits['aDay26'] = data[0]._26DAY_A1;
+// 			dayProfits['aDay27'] = data[0]._27DAY_A1;
+// 			dayProfits['aDay28'] = data[0]._28DAY_A1;
+// 			dayProfits['aDay29'] = data[0]._29DAY_A1;
+// 			dayProfits['aDay30'] = data[0]._30DAY_A1;
+// 			dayProfits['aDay31'] = data[0]._31DAY_A1;
+			
 			for(var i = 1; i <= 31; i++){
 				totalProfit += dayProfits['day'+i];
 			}

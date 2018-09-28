@@ -102,5 +102,10 @@ public class MemberDaoImpl implements MemberDao {
 		System.out.println(paramMap);
 		return sqlSession.update("MemberMapper.updatePoint", paramMap);
 	}
+
+	@Override
+	public int updateReward(HashMap<String, Object> paramMap) {
+		return sqlSession.update("MemberMapper.updateReward", paramMap);
+	}
 	
 }

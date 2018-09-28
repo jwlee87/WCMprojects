@@ -225,6 +225,7 @@ public class HomeController {
 		if(member == null) {
 			return "redirect:/board/login";
 		}
+		
 		boardService.addBoard(board);
 		
 		List<MultipartFile> fileList = mRequest.getFiles("uploadFile"); 

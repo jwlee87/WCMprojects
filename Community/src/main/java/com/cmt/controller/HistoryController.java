@@ -25,6 +25,22 @@ public class HistoryController {
 		return mav;
 	}
 	
+	// 코인 히스토리
+	@RequestMapping("/coin/history")
+	public ModelAndView coinHistory(HttpServletRequest req) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("resources/views/point/cHistory");
+		return mav;
+	}
+	
+	// 락 코인 히스토리
+	@RequestMapping("/lCoin/history")
+	public ModelAndView lockCoinHistory(HttpServletRequest req) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("resources/views/point/lcHistory");
+		return mav;
+	}
+	
 	@RequestMapping("/history/getHis")
 	@ResponseBody
 	public String getHis(HttpServletRequest req) {

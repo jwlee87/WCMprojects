@@ -119,6 +119,11 @@ public class MemberServiceImpl implements MemberService {
 	public ServerList getServerList() throws Exception {
 		return memberDao.getServerList();
 	}
+
+	@Override
+	public int updateReward(HashMap<String, Object> paramMap) throws Exception {
+		return memberDao.updateReward(paramMap);
+	}
 	
 	
 }

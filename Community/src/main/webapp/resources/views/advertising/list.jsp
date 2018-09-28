@@ -386,15 +386,15 @@ $(document).ready(function(){
 // 				modifyBtn.text("적용").prop("id","update_complete_btn").removeClass("btn-outline-success").addClass("btn-success").removeClass("modify_btn");
 // 				cancleBtn.text("취소").addClass("update_cancle_btn").removeClass("btn-outline-danger").addClass("btn-danger");
 				
-				companyName.html("<input id='modi_companyNm' placeholder='"+companyName.text()+"'></input>");
+				companyName.html("<input id='modi_companyNm' value='"+companyName.text()+"'></input>");
 				var tempStr = companyUrl.find("a").prop("href");
 // 				var tempAddr = tempStr.substring(7, tempStr.length-1);
 				var tempAddr = tempStr
-				companyUrl.html("<input id='modi_companyUrl' placeholder='"+tempAddr+"'></input>").css("padding", "8px");
-				loginId.html("<input id='modi_id' placeholder='"+loginId.text()+"'></input>");
+				companyUrl.html("<input id='modi_companyUrl' value='"+tempAddr+"'></input>").css("padding", "8px");
+				loginId.html("<input id='modi_id' value='"+loginId.text()+"'></input>");
 				loginPw.html("<input id='modi_pw' type='password'></input>").css("padding", "8px");
-				partName.html("<input id='modi_partName' placeholder='"+partName.text()+"'></input>");
-				note.html("<input id='modi_note' placeholder='"+note.text()+"'></input>");
+				partName.html("<input id='modi_partName' value='"+partName.text()+"'></input>");
+				note.html("<input id='modi_note' value='"+note.text()+"'></input>");
 				btnBox.css("padding-top", "6.25px").css("padding-bottom", "6.25px");
 				btnBox.html(text);
 				$("#modi_companyNm").focus();

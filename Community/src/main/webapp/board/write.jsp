@@ -39,6 +39,9 @@
 				<input type="file" id="uploadFile" name="uploadFile" value="" disabled/>
 				<input type="button" id="clearFile" value="초기화">
 				<span> 용량제한 4MB</span>
+				<c:if test="${member._class eq 3}">
+					<input type="checkbox" name="admin" value="1" style="text-algign: left;">
+				</c:if>
 			</td>
 		</tr>
 		<!-- <tr>
@@ -50,6 +53,7 @@
 		</tr> -->
 		<tr>
 			<td class="button-con" colspan="2">
+				
 				<input type="button" id="save" value="저장"/>
 				<input type="button" id="list" value="목록"/>
 				<input type="hidden" id="tradeMark" name="tradeMark" value="${member.tradeMark}">
