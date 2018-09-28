@@ -46,7 +46,14 @@ public class StoreDao implements StoreDaoInterface {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		List<HashMap<String, Object>> resultList = new ArrayList<HashMap<String, Object>>();
-		resultList = historySession.selectList("history.selectPointList", param);
+		if(param.get("type").equals("point")) {
+			resultList = historySession.selectList("history.selectPointList", param);
+		}else if(param.get("type").equals("coin")) {
+			resultList = historySession.selectList("history.selectCoinList", param);
+		}else if(param.get("type").equals("lCoin")) {
+			resultList = historySession.selectList("history.selectLockCoinList", param);
+		}
+		
 		tempMap.put("list", resultList);
 		resultMap = DateUtil.transformateDate(tempMap);
 		resultMap.put("resultList",resultMap.get("list"));

@@ -47,6 +47,7 @@ $(document).ready(function(){
 	
 	function ajaxSubmit(nick){
 		var data = {};
+		data["type"] = 'point';
 		data["nickName"] = nick;
 		
 		$.ajax({

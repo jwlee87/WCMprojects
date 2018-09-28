@@ -1,6 +1,7 @@
 package com.cmt.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cmt.common.EmailSender;
 import com.cmt.common.HashUtil;
 import com.cmt.common.HttpUtil;
+import com.cmt.dao.FindDaoInterface;
 import com.cmt.dao.MemberDao;
 import com.cmt.dao.StoreDaoInterface;
 import com.cmt.domain.Board;
@@ -76,6 +78,9 @@ public class TestController {
 	@Autowired
 	@Qualifier("memberDaoImpl")
 	private MemberDao mdi;
+	
+	@Autowired
+	private FindDaoInterface fdi;
 	
 	///Constructor
 	public TestController() {
@@ -205,5 +210,21 @@ public class TestController {
 		System.out.println(tempMap);
 		
 		sdi.addHistory(tempMap);
+	}
+	
+	@RequestMapping(value="/mbList")
+	public void mbList() {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		List<HashMap<String, Object>> list = fdi.memberList();
+		
+		long sum = 0;
+		
+		for(int i = 0; i < list.size(); i++) {
+			HashMap<String, Object> tempMap = list.get(i);
+			System.out.println(tempMap.get("_Coin"));
+		}
+		
+		
+		System.out.println("total= "+sum);
 	}
 }

@@ -97,7 +97,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		Board b = boardDao.getBoard(boardUniqueID);
 
-		logger.debug(b);
+//		logger.debug(b);
 		
 		//조회수 업데이트
 		int viewCount = b.getViewCount();

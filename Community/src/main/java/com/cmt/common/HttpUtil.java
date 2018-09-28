@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.nhncorp.lucy.security.xss.XssPreventer;
 
 public class HttpUtil {
 	
@@ -36,13 +38,42 @@ public class HttpUtil {
 		Enumeration<?> enums = req.getParameterNames();
 		while(enums.hasMoreElements()) {
 			String paramName = enums.nextElement().toString();
-			if("".equals(req.getParameter(paramName))) {
-				result = null;
-				break;
-			}
+//			if("".equals(req.getParameter(paramName))) {
+//				result = null;
+//				break;
+//			}
 			result.put(paramName, req.getParameter(paramName));
 		}
 		return result;
+	}
+	
+	public static HashMap<String, Object> unescapeMap(HashMap<String, Object> paramMap) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		Set<String> keys = paramMap.keySet();
+		while(keys.iterator().hasNext()) {
+			String paramName = keys.iterator().next().toString();
+			result.put(paramName, xssUnescape((String)paramMap.get(paramName)));
+		}
+		System.out.println(result);
+		return result;
+	}
+	
+	public static HashMap<String, Object> escapeMap(HashMap<String, Object> paramMap) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		Set<String> keys = paramMap.keySet();
+		while(keys.iterator().hasNext()) {
+			String paramName = keys.iterator().next().toString();
+			result.put(paramName, xssEscape((String)paramMap.get(paramName)));
+		}
+		System.out.println(result);
+		return result;
+	}
+	
+	public static String xssEscape(String dirty) {
+		return XssPreventer.escape(dirty);
+	}
+	public static String xssUnescape(String clean) {
+		return XssPreventer.unescape(clean);
 	}
 	
 	public static ModelAndView makeJsonView(HashMap<String, Object> map) {
@@ -101,7 +132,7 @@ public class HttpUtil {
 				.setDefaultRequestConfig(defaultRequestConfig)
 				.build();
 		
-		switch(paramMap.get("code").toString()){
+		switch(paramMap.get("Command").toString()){
 			case "10001": paramKey = "uniqueID";
 				break;
 			case "10101": paramKey = "phone";
@@ -110,7 +141,7 @@ public class HttpUtil {
 				break;
 		}
 		
-		System.out.println(paramMap.get("code") + " : " + paramKey + " : " + paramMap.get("value"));
+		System.out.println(paramMap.get("Command") + " : " + paramKey + " : " + paramMap.get("value"));
 		
 		HttpPost post = new HttpPost("http://"+address);
 		post.setConfig(defaultRequestConfig);
@@ -152,6 +183,113 @@ public class HttpUtil {
 			}
 		}
 		return returnMap;
+	}
+	
+	/**
+	 * 
+	 * string to hex string
+	 * 
+	 * @param string
+	 * @return hex string
+	 */
+	public static String strToHex(String param) {
+		String result = "";
+		for(int i = 0; i < param.length(); i++) {
+			result += String.format("%02X", (int)param.charAt(i));
+		}
+		return result;
+	}
+	
+	/**
+	 * 
+	 * string to ascii-code(10진수)
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public static String encryptionPass(String param) {
+		String result = "";
+		for(int i = 0; i < param.length(); i++) {
+		if(i != param.length() - 1) {
+				result += (int) param.charAt(i) + "x";
+			}else {
+				result += (int) param.charAt(i);
+			}
+		}
+		return result;
+	}
+	
+	public static String restorePass(String param) {
+		String result = "";
+		String[] strArray = param.split("x");
+		
+		int[] intArray = new int[strArray.length];
+		int i = 0;
+		for(String unit : strArray) {
+			intArray[i] = Integer.parseInt(unit);
+			i ++;
+		}
+		for(int unit : intArray) {
+			result += (char) unit;
+		}
+		return result;
+	}
+	
+	public static byte[] strToByteArray(String param) throws UnsupportedEncodingException {
+		byte[] byteArray = param.getBytes("UTF-8");
+		String abc = new String(byteArray, "UTF-8");
+		return byteArray;
+	}
+	
+	public static String hexToStr(String param) {
+		String result = "";
+		String[] strArray = param.split(" ");
+		for(String a : strArray) {
+			System.out.println(a);
+		}
+		
+		char[] charArray = new char[]{};
+//		for(int i = 0; i < hexArray.length; i++) {
+//			charArray[i] = (char)charArray[i];
+//		}
+		return new String(charArray);
+	}
+	/**
+	 * hex string to byte[]
+	 *
+	 * @param hex HEX String
+	 * @return converted byte array from hex string
+	 */
+	public static byte[] hexToByteArray(String hex) {
+		hex = hex.replaceAll("\"", "\\\""); /*" */
+		if (hex == null || hex.length() == 0) {
+			return null;
+		}
+	
+		byte[] ba = new byte[hex.length() / 2];
+		for (int i = 0; i < ba.length; i++) {
+			ba[i] = (byte) Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
+		}
+		return ba;
+	}
+	
+	/**
+	 * byte[] to hex sting
+	 *
+	 * @param byteArray byte array
+	 * @return converted hex string from byte array
+	 */
+	public static String byteArrayToHex(byte[] byteArray) {
+		if (byteArray == null || byteArray.length == 0) {
+			return null;
+		}
+		StringBuilder stringBuffer = new StringBuilder(byteArray.length * 2);
+		String hexNumber;
+		for (byte aBa : byteArray) {
+			hexNumber = "0" + Integer.toHexString(0xff & aBa);
+			stringBuffer.append(hexNumber.substring(hexNumber.length() - 2));
+		}
+		return stringBuffer.toString();
 	}
 	
 }

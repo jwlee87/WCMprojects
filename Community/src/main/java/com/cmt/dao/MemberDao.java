@@ -24,5 +24,6 @@ public interface MemberDao {
 	public void addReward(HashMap<String, Object> paramMap) throws Exception;
 	public ServerList getServerList() throws Exception;
 	public int updatePoint(HashMap<String, Object> paramMap) throws Exception;
+	public int updateReward(HashMap<String, Object> paramMap);
 	
 }

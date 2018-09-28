@@ -26,5 +26,9 @@ public class WorldSponController {
 	public ModelAndView result(HttpServletRequest req, @PathVariable String menu) throws IOException {
 		return bsi.benefit(req, menu);
 	}
-
+	
+	@RequestMapping("/benefit2/data/{menu}")
+	public ModelAndView result2(HttpServletRequest req, @PathVariable String menu) throws IOException {
+		return bsi.benefit2(req, menu);
+	}
 }

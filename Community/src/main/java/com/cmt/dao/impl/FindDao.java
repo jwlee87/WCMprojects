@@ -28,4 +28,11 @@ public class FindDao implements FindDaoInterface {
 		return wsSession.selectList("find.getServerList");
 	}
 
+	@Override
+	public List<HashMap<String, Object>> memberList() {
+		return wsSession.selectList("find.getMemberList");
+	}
+	
+	
+
 }

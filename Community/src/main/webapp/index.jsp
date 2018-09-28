@@ -91,6 +91,17 @@
 		</div>
 		<div class="login-con">
 			<div class="login-btn-box">
+				<a href="/coin/history" type="button" class="btn btn-default btn-block">코인 기록</a>
+			</div>
+		</div>
+		<div class="login-con">
+			<div class="login-btn-box">
+				<a href="/lCoin/history" type="button" class="btn btn-default btn-block">락코인 기록</a>
+			</div>
+		</div>
+		<br><br>
+		<div class="login-con">
+			<div class="login-btn-box">
 				<a href="point/refund" type="button" class="btn btn-default btn-block">포인트 환급</a>
 			</div>
 		</div>
@@ -99,6 +110,12 @@
 				<a href="/admin/find" type="button" class="btn btn-default btn-block">관리자용 비밀번호 찾기</a>
 			</div>
 		</div>
+		<div class="login-con">
+			<div class="login-btn-box">
+				<a href="/ap" type="button" class="btn btn-default btn-block">광고 공급자 관리</a>
+			</div>
+		</div>
+		<br><br>
 		</c:if>
 	</div>
 	

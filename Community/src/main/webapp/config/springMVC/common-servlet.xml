@@ -91,6 +91,7 @@
 	<mvc:resources mapping="/line/**"		location="/line/"/>
 	<mvc:resources mapping="/account/**"	location="/account/"/>
 	<mvc:resources mapping="/SE2/**"		location="/SE2/"/>
+	<mvc:resources mapping="/info/**"		location="/info/"/>
 	
 	<mvc:default-servlet-handler/>
 	
