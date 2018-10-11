@@ -313,10 +313,9 @@ $(document).ready(function(){
 			$("#result").append(html);
 		}else{
 			for(var i = 0; i < list.length; i++){
-				
 				var addr = list[i].site_address;
 				html += "<tr style='height: 2em; font-size: 1.2em; padding: 0.5em;' >"
-					 + "<th scope='row' class='uniqueID align-center'>"+list[i].no+"</th>"
+					 + "<th scope='row' class='uniqueID align-center'>"+(i + 1)+"</th>"
 					 + "<td class='align-center td_company_name'>"+list[i].company_name+"</td>"
 					 + "<td class='align-center td_company_url' style='padding: 0.2em;'><a class='btn btn-primary' href='"+addr+"' target='_blank' style='font-size: 1em;'"
 					 + " data-toggle='tooltip' data-html='true' title='<p style=\"font-size: 2em;\">"+addr+"'>이동</a></td>"

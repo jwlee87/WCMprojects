@@ -110,9 +110,15 @@
 				<a href="/admin/find" type="button" class="btn btn-default btn-block">관리자용 비밀번호 찾기</a>
 			</div>
 		</div>
+		<br><br>
 		<div class="login-con">
 			<div class="login-btn-box">
 				<a href="/ap" type="button" class="btn btn-default btn-block">광고 공급자 관리</a>
+			</div>
+		</div>
+		<div class="login-con">
+			<div class="login-btn-box">
+				<a href="/server" type="button" class="btn btn-default btn-block">서버 관리</a>
 			</div>
 		</div>
 		<br><br>

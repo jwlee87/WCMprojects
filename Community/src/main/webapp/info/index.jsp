@@ -42,6 +42,22 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 
+	<style>
+		#main_popup {
+			background-color: white;
+			border: 2px solid black;
+		}
+		.popup_bottom {
+			font-weight: bold;
+		}
+		.popup_bottom > a {
+			color: black;
+			margin: 2px;
+		}
+	
+	</style>
+	
+	
 	</head>
 	<body>
 	<header role="banner" id="yizi-header">
@@ -319,6 +335,16 @@
 		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
 	</div>
 	
+	
+	<!-- MAIN POPUP -->
+	<div id="main_popup" class="main_popup" style="position: absolute; z-index:10000; top:0px; left:0; display: none;">
+		<a href="#" ><img src="/info/pop/pop_cashbee.png" style="width:100%;height:400px;"/></a>
+		<div class="popup_bottom">
+			<a href="javascript:closePopupNotToday()">오늘하루 그만보기</a>
+			<a class="pull-right white" href="javascript:closePopup();">닫기</a>
+		</div>
+	</div>
+	
 	<!-- jQuery -->
 	<script src="/info/js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
@@ -333,10 +359,48 @@
 	<script src="/info/js/main.js"></script>
 	
 	<script>
-		$(document).ready(function(){
-			var winWidth = $("body").width();
-			$("html, body").css("overflow-x", "hidden").css("position", "relative");
-		});
+	
+	function setCookie(name, value, expiredays) {
+		var today = new Date();
+		    today.setDate(today.getDate() + expiredays);
+		    document.cookie = name + '=' + escape(value) + '; path=/; expires=' + today.toGMTString() + ';'
+	}
+	
+	function getCookie(name) 
+	{ 
+	    var cName = name + "="; 
+	    var x = 0; 
+	    while ( x <= document.cookie.length ) 
+	    { 
+	        var y = (x+cName.length); 
+	        if ( document.cookie.substring( x, y ) == cName ) 
+	        { 
+	            if ( (endOfCookie=document.cookie.indexOf( ";", y )) == -1 ) 
+	                endOfCookie = document.cookie.length;
+	            return unescape( document.cookie.substring( y, endOfCookie ) ); 
+	        } 
+	        x = document.cookie.indexOf( " ", x ) + 1; 
+	        if ( x == 0 ) 
+	            break; 
+	    } 
+	    return ""; 
+	}
+	
+	function closePopupNotToday(){
+		setCookie('notToday','Y', 1);
+		$("#main_popup").hide('fade');
+	}
+	function closePopup(){
+		$("#main_popup").hide('fade');
+	}
+	
+	$(document).ready(function(){
+		if(getCookie("notToday")!="Y"){
+			$("#main_popup").show('fade');
+		}
+		var winWidth = $("body").width();
+		$("html, body").css("overflow-x", "hidden").css("position", "relative");
+	});
 	</script>
 
 	</body>
