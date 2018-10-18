@@ -36,11 +36,7 @@ public class HashUtil {
 	int DEFAULT_TIMEOUT = 5000;
 	
 	Logger logger = LogManager.getLogger();
-	
-	// default constructor
-	public HashUtil() {
-	}
-	
+
 	// method
 	public String stringToHMACMD5(String keyStr, String plainText) {
 		String encodedString = "";

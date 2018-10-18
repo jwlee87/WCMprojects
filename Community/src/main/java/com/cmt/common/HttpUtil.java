@@ -23,6 +23,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,6 +34,10 @@ import com.google.gson.JsonObject;
 import com.nhncorp.lucy.security.xss.XssPreventer;
 
 public class HttpUtil {
+	
+	// field
+	private int DEFAULT_TIMEOUT = 5000;
+	private Logger logger = LogManager.getLogger();
 	
 	public static HashMap<String, Object> getParamMap(HttpServletRequest req) {
 		HashMap<String, Object> result = new HashMap<String, Object>();
@@ -290,6 +296,63 @@ public class HttpUtil {
 			stringBuffer.append(hexNumber.substring(hexNumber.length() - 2));
 		}
 		return stringBuffer.toString();
+	}
+	
+	
+	
+	public String httpClient(String address, HashMap<String, Object> paramMap) {
+		
+		RequestConfig defaultRequestConfig = RequestConfig.custom()
+				.setConnectTimeout(DEFAULT_TIMEOUT)
+				.setSocketTimeout(DEFAULT_TIMEOUT)
+				.setConnectionRequestTimeout(DEFAULT_TIMEOUT)
+				.build();
+		
+		CloseableHttpClient hc = HttpClients.custom()
+				.setDefaultRequestConfig(defaultRequestConfig)
+				.build();
+		
+		HttpPost post = new HttpPost("http://"+address);
+		post.setConfig(defaultRequestConfig);
+		
+		String returnStr = "";
+		
+		List<NameValuePair> paramList = convertParam(paramMap);
+		try {
+			post.setEntity(new UrlEncodedFormEntity(paramList, "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		post.addHeader("User-Agent", "Mozila/5.0");
+		
+		logger.debug(" 이사님 서버로 보내기 전 ");
+		logger.debug("paramList= "+paramList);
+		
+		HttpResponse httpResponse;
+		try {
+			httpResponse = hc.execute(post);
+			
+			int statusCode = httpResponse.getStatusLine().getStatusCode();
+			logger.debug("===== statusCode ===== "+statusCode);
+			
+			if(statusCode==200) {
+				returnStr = "true";
+			} else {
+				returnStr = "false";
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				hc.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		logger.debug(" 이사님 서버로 보내기 후");
+		return returnStr;
+		
 	}
 	
 }
