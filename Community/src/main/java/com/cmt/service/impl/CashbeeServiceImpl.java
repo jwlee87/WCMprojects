@@ -12,6 +12,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,7 +41,7 @@ public class CashbeeServiceImpl implements CashbeeService {
 	private HttpClientUtil httpClientUtil;
 	
 	@Autowired
-	private HttpClient httpClientCashbee;
+	private HttpClient httpClientPooling;
 	
 	@Value("#{cashbeeProperties['coinbox.ipAddr1']}")
 	private String coinboxIp1;
@@ -77,9 +78,9 @@ public class CashbeeServiceImpl implements CashbeeService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		Gson gson = new Gson();
 		BufferedReader br = request.getReader();
+		System.out.println(br.readLine());
 		map = (HashMap<String, Object>) gson.fromJson(br.readLine(), map.getClass());
 		logger.debug("ReaderMap: "+map);
-//		System.out.println("카드넘버 체크: "+map.get("cardno"));
 		return map;
 	}
 	
@@ -101,34 +102,48 @@ public class CashbeeServiceImpl implements CashbeeService {
 		
 		if(!serverIP.equals("EXCEPTION")) {
 			paramMap.put("Command", "60001");
+			
 			HttpPost post = new HttpPost("http://"+testServerIpAddr);
+			post.setConfig(httpClientUtil.reqeustConfig(100));
+			
 //			String jsonStr = gson.toJson(paramMap);
 //			StringEntity entity = new StringEntity(jsonStr, "UTF-8");
 			List<NameValuePair> paramList = httpClientUtil.convertParam(paramMap);
 			post.setEntity(new UrlEncodedFormEntity(paramList, "UTF-8"));
-			HttpResponse httpResponse = httpClientCashbee.execute(post);
-			int statusCode = httpResponse.getStatusLine().getStatusCode();
-			String body = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8.name());
 			
-			System.out.println("[statusCode] "+statusCode+" , [이사님이 보내주신 값]: "+body);
-			returnMap = httpClientUtil.stringToHashMap(body, "&");
-			
-			String code = (String) returnMap.get("code");
-			
-			Gson gson = new Gson();
-			JsonObject jso = new JsonObject();
-			jso.addProperty("code", code);
-			
-			if( code.equals("100") ) {
-				jso.addProperty("message", "ok");
-				jso.addProperty("available_point", (String) returnMap.get("ap"));
-			}else if( code.equals("200") ) {
-				jso.addProperty("message", "미등록 카드입니다.");
-			}else if( code.equals("300") ) {
-				jso.addProperty("message", "사용중지된 카드입니다.");
-			};
-			
-			returnMap.put("jsonStr", gson.toJson(jso));
+			boolean reachable = true;
+			try {
+				HttpResponse httpResponse = httpClientPooling.execute(post);
+				int statusCode = httpResponse.getStatusLine().getStatusCode();
+				String body = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8.name());
+				HttpClientUtils.closeQuietly(httpResponse);
+				logger.debug("[statusCode] "+statusCode+" , [이사님이 보내주신 값]: "+body);
+				returnMap = httpClientUtil.stringToHashMap(body, "&");
+			} catch (Exception e) {
+				reachable = false;
+			} finally {
+				JsonObject jso = new JsonObject();
+				if(reachable)
+				{
+					String code = (String) returnMap.get("code");
+					jso.addProperty("code", code);
+					if( code.equals("100") ) {
+						jso.addProperty("message", "ok");
+						jso.addProperty("available_point", (String) returnMap.get("ap"));
+					}else if( code.equals("200") ) {
+						jso.addProperty("message", "미등록 카드입니다.");
+					}else if( code.equals("300") ) {
+						jso.addProperty("message", "사용중지된 카드입니다.");
+					};
+					returnMap.put("jsonStr", jso.toString());
+				}
+				else
+				{
+					jso.addProperty("code", "-nnn");
+					jso.addProperty("message", "서버점검 중입니다.");
+					returnMap.put("jsonStr", jso.toString());
+				}
+			}
 		}
 		return returnMap;
 	}
@@ -186,6 +201,7 @@ public class CashbeeServiceImpl implements CashbeeService {
 			HttpResponse httpResponse = (HttpResponse) timerReturnMap.get("httpResponse");
 			int statusCode = httpResponse.getStatusLine().getStatusCode();
 			String body = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8.name());
+			HttpClientUtils.closeQuietly(httpResponse);
 			
 			System.out.println("[statusCode] "+statusCode+" , [이사님이 보내주신 값]: "+body);
 			returnMap = httpClientUtil.stringToHashMap(body, "&");
@@ -209,21 +225,5 @@ public class CashbeeServiceImpl implements CashbeeService {
 		}
 		return returnMap;
 	}
-
-	@Override
-	public HashMap<String, Object> communication(HashMap<String, Object> paramMap) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public HashMap<String, Object> completeCharge(HashMap<String, Object> paramMap) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
-
-	
 
 }

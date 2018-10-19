@@ -23,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.cmt.common.HttpClientUtil;
 import com.cmt.service.CashbeeService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -38,8 +39,11 @@ public class CashbeeController {
 	private CashbeeService cashbeeService;
 	
 	@Autowired
-	private HttpClient httpClientCashbee;
-	private int DEFAULT_TIMEOUT = 500;
+	private HttpClient httpClientPooling;
+	private int DEFAULT_TIMEOUT = 3000;
+	
+	@Autowired
+	private HttpClientUtil httpClientUtil;
 	
 	///Constructor
 	public CashbeeController() {
@@ -48,6 +52,7 @@ public class CashbeeController {
 	@RequestMapping(value="/verify", method=RequestMethod.GET)
 	public void testClientVerify(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		RequestConfig defaultRequestConfig = RequestConfig.custom()
+				.setConnectTimeout(DEFAULT_TIMEOUT)
 				.setConnectTimeout(DEFAULT_TIMEOUT)
 				.setSocketTimeout(DEFAULT_TIMEOUT)
 				.setConnectionRequestTimeout(DEFAULT_TIMEOUT)
@@ -66,7 +71,7 @@ public class CashbeeController {
 		post.setEntity(entity);
 		
 		System.out.println("local 1");
-		HttpResponse httpResponse = httpClientCashbee.execute(post);
+		HttpResponse httpResponse = httpClientPooling.execute(post);
 		System.out.println("local 2");
 		
 		int statusCode = httpResponse.getStatusLine().getStatusCode();
@@ -84,6 +89,7 @@ public class CashbeeController {
 	public void testClientComplete(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			
 			RequestConfig defaultRequestConfig = RequestConfig.custom()
+					.setConnectTimeout(DEFAULT_TIMEOUT)
 					.setConnectTimeout(DEFAULT_TIMEOUT)
 					.setSocketTimeout(DEFAULT_TIMEOUT)
 					.setConnectionRequestTimeout(DEFAULT_TIMEOUT)
@@ -105,7 +111,7 @@ public class CashbeeController {
 			post.setEntity(entity);
 			
 			System.out.println("local 1");
-			HttpResponse httpResponse = httpClientCashbee.execute(post);
+			HttpResponse httpResponse = httpClientPooling.execute(post);
 			System.out.println("local 2");
 			
 			int statusCode = httpResponse.getStatusLine().getStatusCode();
@@ -124,19 +130,27 @@ public class CashbeeController {
 		String inAddress = request.getRemoteAddr();
 		logger.debug(inAddress+" : "+request.getRequestURL());
 		
-		boolean ipCheck = cashbeeService.validationCheck(inAddress);	// 보안상 인입 ip 체크
-		HashMap<String, Object> paramMap = cashbeeService.requestReader(request);
+		boolean ipCheck = cashbeeService.validationCheck(inAddress);
+		HashMap<String, Object> paramMap = httpClientUtil.getParamMap(request);
+		System.out.println("request ParamMap: "+paramMap);
 		
 		String jsonStr = "";
-		if(ipCheck) {
+		if(ipCheck)
+		{
 			HashMap<String, Object> responseMap = cashbeeService.requestSelectSender(paramMap);
-			jsonStr = (String) responseMap.get("jsonStr");
+			System.out.println("responseMap: "+responseMap);
+//			jsonStr = (String) responseMap.get("jsonStr");
+			
+			JsonObject jso = new JsonObject();
+			jso.addProperty("code", "100");
+			jso.addProperty("message", "ok");
+			jso.addProperty("available_point", "10000");
+			jsonStr = jso.toString();
 			logger.debug("jsonStr: "+jsonStr);
 		}
-		Gson gson = new Gson();
-		response.setContentType("application/json");
+		response.setContentType("text/x-json;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(gson.toJson(jsonStr));
+		response.getWriter().write(jsonStr);
 	}
 	
 	@RequestMapping(value="/api/callback-commit-point")
@@ -145,17 +159,20 @@ public class CashbeeController {
 		logger.debug(inAddress+" : "+request.getRequestURL());
 		
 		boolean ipCheck = cashbeeService.validationCheck(inAddress);	// 보안상 인입 ip 체크
-		HashMap<String, Object> paramMap = cashbeeService.requestReader(request);
-		HashMap<String, Object> jsonMap = new HashMap<String, Object>();
-		if(ipCheck) jsonMap = cashbeeService.requestCommitSender(paramMap);
-
-		Gson gson = new Gson();
+		HashMap<String, Object> paramMap = httpClientUtil.getParamMap(request);
+		System.out.println(paramMap);
 		
-//		response.setHeader("Content-Type", "text/html");
+		String jsonStr = "";
+		if(ipCheck)
+		{
+			HashMap<String, Object> responseMap = cashbeeService.requestCommitSender(paramMap);
+			System.out.println("responseMap: "+responseMap);
+			jsonStr = (String) responseMap.get("jsonStr");
+			logger.debug("jsonStr: "+jsonStr);
+		}
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(gson.toJson(jsonMap));
-		
+		response.getWriter().write(jsonStr);
 	}
 	
 }

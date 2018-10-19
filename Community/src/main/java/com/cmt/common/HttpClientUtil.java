@@ -1,6 +1,7 @@
 package com.cmt.common;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -8,8 +9,11 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
@@ -20,11 +24,47 @@ import org.springframework.stereotype.Component;
 public class HttpClientUtil {
 
 	@Bean
-	public HttpClient httpClientCashbee() {
+	public HttpClient httpClientPooling() {
 		PoolingHttpClientConnectionManager pcm = new PoolingHttpClientConnectionManager();
 		pcm.setMaxTotal(300);
 		pcm.setDefaultMaxPerRoute(50);
 		return HttpClients.custom().setConnectionManager(pcm).build();
+	}
+	
+	@Bean
+	public HttpClient httpClientTimeOut() {
+		int DEFAULT_TIMEOUT = 3000;
+		RequestConfig defaultRequestConfig = RequestConfig.custom()
+				.setConnectTimeout(DEFAULT_TIMEOUT)
+				.setConnectTimeout(DEFAULT_TIMEOUT)
+				.setSocketTimeout(DEFAULT_TIMEOUT)
+				.setConnectionRequestTimeout(DEFAULT_TIMEOUT)
+				.build();
+		return HttpClients.custom().setDefaultRequestConfig(defaultRequestConfig).build();
+	}
+	
+	public RequestConfig reqeustConfig(int DEFAULT_TIMEOUT) {
+		RequestConfig defaultRequestConfig = RequestConfig.custom()
+				.setConnectTimeout(DEFAULT_TIMEOUT)
+				.setConnectTimeout(DEFAULT_TIMEOUT)
+				.setSocketTimeout(DEFAULT_TIMEOUT)
+				.setConnectionRequestTimeout(DEFAULT_TIMEOUT)
+				.build();
+		return defaultRequestConfig;
+	}
+	
+	public HashMap<String, Object> getParamMap(HttpServletRequest req) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		Enumeration<?> enums = req.getParameterNames();
+		while(enums.hasMoreElements()) {
+			String paramName = enums.nextElement().toString();
+//			if("".equals(req.getParameter(paramName))) {
+//				result = null;
+//				break;
+//			}
+			result.put(paramName, req.getParameter(paramName));
+		}
+		return result;
 	}
 	
 	public List<NameValuePair> convertParam(Map<String, Object> params){
@@ -55,7 +95,7 @@ public class HttpClientUtil {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
 
 		HttpClientUtil hcu = new HttpClientUtil();
-		HttpClient httpClient = hcu.httpClientCashbee();
+		HttpClient httpClient = hcu.httpClientTimeOut();
 		
 		System.out.println("periodCaller START");
 		
