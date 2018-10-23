@@ -1,5 +1,7 @@
 package com.cmt.common;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -11,17 +13,26 @@ import java.util.TimerTask;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
 public class HttpClientUtil {
+	
+	private Logger logger = LogManager.getLogger();
 
 	@Bean
 	public HttpClient httpClientPooling() {
@@ -96,6 +107,7 @@ public class HttpClientUtil {
 
 		HttpClientUtil hcu = new HttpClientUtil();
 		HttpClient httpClient = hcu.httpClientTimeOut();
+		HttpPost post = (HttpPost)paramMap.get("httpPost");
 		
 		System.out.println("periodCaller START");
 		
@@ -108,6 +120,21 @@ public class HttpClientUtil {
 				
 				if(isRun)
 				{
+					
+					try {
+						HttpResponse httpResponse = httpClient.execute(post);
+						int statusCode = httpResponse.getStatusLine().getStatusCode();
+						String body = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8.name());
+						HttpClientUtils.closeQuietly(httpResponse);
+						logger.debug("[statusCode] "+statusCode+" , [이사님이 보내주신 값]: "+body);
+						returnMap.put("body", body);
+					} catch (ClientProtocolException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					System.out.println("5초마다 재실행");
 				}
 				else

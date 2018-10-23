@@ -124,8 +124,7 @@ public class CashbeeController {
 			HttpClientUtils.closeQuietly(httpResponse);
 	}
 	
-//	@RequestMapping(value="/api/verify-card-no", method=RequestMethod.POST)
-	@RequestMapping(value="/api/verify-card-no")
+	@RequestMapping(value="/api/verify-card-no", method=RequestMethod.POST)
 	public void verifyCardNo(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String inAddress = request.getRemoteAddr();
 		logger.debug(inAddress+" : "+request.getRequestURL());
@@ -139,13 +138,14 @@ public class CashbeeController {
 		{
 			HashMap<String, Object> responseMap = cashbeeService.requestSelectSender(paramMap);
 			System.out.println("responseMap: "+responseMap);
-//			jsonStr = (String) responseMap.get("jsonStr");
+			jsonStr = (String) responseMap.get("jsonStr");
 			
-			JsonObject jso = new JsonObject();
-			jso.addProperty("code", "100");
-			jso.addProperty("message", "ok");
-			jso.addProperty("available_point", "10000");
-			jsonStr = jso.toString();
+			//임의 설정 부분
+//			JsonObject jso = new JsonObject();
+//			jso.addProperty("code", "100");
+//			jso.addProperty("message", "ok");
+//			jso.addProperty("available_point", "10000");
+//			jsonStr = jso.toString();
 			logger.debug("jsonStr: "+jsonStr);
 		}
 		response.setContentType("text/x-json;charset=UTF-8");

@@ -15,10 +15,20 @@ public class CashbeeDaoImpl implements CashbeeDao {
 	@Autowired
 	@Qualifier("mariaSession")
 	private SqlSession mariaSession;
+	
+	@Autowired
+	@Qualifier("wsSession")
+	private SqlSession wsSession;
 
 	@Override
 	public int addCompleteCharge(HashMap<String, Object> paramMap) {
 		return mariaSession.insert("cashbee.addCompleteCharge", paramMap);
+	}
+
+	@Override
+	public int addCompleteCashbee(HashMap<String, Object> paramMap) {
+		System.out.println("Dao Layer: "+paramMap);
+		return wsSession.insert("cashbee.addCompleteCashbee", paramMap);
 	}
 
 }
