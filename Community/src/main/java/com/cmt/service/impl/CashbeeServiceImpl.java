@@ -23,7 +23,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.cmt.common.DateUtil;
 import com.cmt.common.HttpClientUtil;
+import com.cmt.common.HttpUtil;
 import com.cmt.dao.CashbeeDao;
 import com.cmt.domain.ServerList;
 import com.cmt.service.CashbeeService;
@@ -224,6 +226,21 @@ public class CashbeeServiceImpl implements CashbeeService {
 			}
 		}
 		return returnMap;
+	}
+
+	@Override
+	public HashMap<String, Object> getLockLog(HttpServletRequest request) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		Gson gson = new Gson();
+		resultMap.put("list", gson.toJson(cashbeeDao.getLockLog()));
+		return resultMap;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public HashMap<String, Object> getChargeLog(HttpServletRequest request) throws Exception {
+		HashMap<String, Object> paramMap = HttpUtil.getParamMap(request);
+		return DateUtil.transformateDate((HashMap<String, Object>)cashbeeDao.getChargeLog(paramMap));
 	}
 
 }

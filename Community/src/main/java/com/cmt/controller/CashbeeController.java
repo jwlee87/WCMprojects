@@ -2,13 +2,11 @@ package com.cmt.controller;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
@@ -22,6 +20,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.cmt.common.HttpClientUtil;
 import com.cmt.service.CashbeeService;
@@ -175,4 +175,31 @@ public class CashbeeController {
 		response.getWriter().write(jsonStr);
 	}
 	
+	@RequestMapping(value="/log/charge")
+	public ModelAndView chargeLog() throws Exception {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("WEB-INF/view/cashbee/chargeLog");
+		return mav;
+	}
+	
+	@RequestMapping(value="/log/lock")
+	public ModelAndView lockLog() throws Exception {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("WEB-INF/view/cashbee/lockLog");
+		return mav;
+	}
+	
+	@RequestMapping(value="/log/a/lock")
+	@ResponseBody
+	public String getLockLog(HttpServletRequest request) throws Exception {
+		HashMap<String, Object> resultMap = cashbeeService.getLockLog(request);
+		Gson gson = new Gson();
+		return gson.toJson(resultMap);
+	}
+	
+	@RequestMapping(value="/log/a/charge")
+	@ResponseBody
+	public HashMap<String, Object> getChargeLog(HttpServletRequest request) throws Exception {
+		return cashbeeService.getChargeLog(request);
+	}
 }

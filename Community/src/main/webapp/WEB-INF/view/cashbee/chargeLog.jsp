@@ -4,19 +4,34 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE>
-<html>
+<html id="up">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title> 포인트 기록 </title>
-<c:import url="/resources/jsp/defaultSetting.jsp"></c:import>
-<style>
-	html, body {width: 100%; margin: 0; padding: 0;}
-</style>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>광고 관리</title>
+	
+	<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+	<style type="text/css">
+		.search_box {
+			max-width: 600px;
+			width: 60%;
+			margin: 0 auto;
+		}
+		#nickName {	width: 80%;	}
+		#search { width: 15%; }
+	</style>
+
 </head>
-<body>
-<c:if test="${sessionScope.member._class ne 3}">
-	<h1>접근권한이 없습니다.</h1>
-</c:if>
+	<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 <c:if test="${sessionScope.member._class eq 3}">
 	<br><br>
 	<div class="search_box">
@@ -27,31 +42,34 @@
 	<div class="table_con"></div>
 	<br><br>
 </c:if>
-<script>
+
+<c:if test="${sessionScope.member._class ne 3}">
+	<div class="container">
+		<h1>경고! 비정상적인 접근입니다.</h1>
+	</div>
+</c:if>
+		<script id="scriptSrc" type="text/javascript">
+
 $(document).ready(function(){
+	
+	$(document).on('click', 'a[href="#"]', function(e){
+		e.preventDefault();
+	});
 	
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 	
 	var html = "";
-	var t_head = "<tr><th>NO</th><th>일시</th><th>유저번호</th><th>닉네임</th><th>코드</th><th>포인트</th><th>전 포인트</th><th>후 포인트</th><th>메모</th></tr>";
-	
-	function cssSetting(){
-		$(".search_box").css("max-width", "600px").css("width", "60%").css("margin", "0 auto");
-		$("#nickName").css("width", "80%");
-		$("#search").css("width", "15%");
-	}
-	cssSetting();
+	var t_head = "<tr><th>NO</th><th>일시</th><th>유저번호</th><th>닉네임</th><th>카드 No.</th><th>TID</th><th>포인트</th><th>상태</th></tr>";
 	
 	function ajaxSubmit(nick){
 		var data = {};
-		data["type"] = 'point';
 		data["nickName"] = nick;
 		
 		$.ajax({
 			type: "POST"
-			, url: "/history/getHis"
+			, url: "/log/a/charge"
 			, data: data
 			, dataType: "json"
 		}).done(function(data){
@@ -71,16 +89,17 @@ $(document).ready(function(){
 	}
 	
 	function makeJson(data){
-		var result = data;
-		var result2 = result.resultList;
+		var result = data.list;
 		
-		console.log(result2.length);
-		if(result2.length == 0){
+		console.log(result);
+		console.log(result.length);
+		
+		if(result.length == 0){
 			$("#his_table").remove();
 			alert("기록이 없습니다.");
 			return false;
 		}else{
-			makeHTML(result2);			
+			makeHTML(result);	
 		}
 	}
 	
@@ -93,22 +112,20 @@ $(document).ready(function(){
 			var date = json[i]._DateTime;
 			var userNo = json[i]._UserUniqueID;
 			var nickName = json[i]._Trademark;
-			var pCode = json[i]._ProcessCode;
-			var money = json[i]._POINT;
-			var bMoney = json[i]._BPOINT;
-			var aMoney = json[i]._APOINT;
-			var memo = json[i].memo;
+			var cardNo = json[i]._CardNo;
+			var tid = json[i]._Tid;
+			var point = json[i]._Point;
+			var state = json[i]._State;
 			
 			html += "<tr style='border: 1px solid #ccc;'>"
 				 +"<td>"+Number(i+1)+"</td>"
 				 +"<td>"+date+"</td>"
 				 +"<td>"+userNo+"</td>"
 				 +"<td>"+nickName+"</td>"
-				 +"<td>"+pCode+"</td>"
-				 +"<td>"+numberWithCommas(money)+"</td>"
-				 +"<td>"+numberWithCommas(bMoney)+"</td>"
-				 +"<td>"+numberWithCommas(aMoney)+"</td>"
-				 +"<td>"+memo+"</td>"
+				 +"<td>"+cardNo+"</td>"
+				 +"<td>"+tid+"</td>"
+				 +"<td>"+numberWithCommas(point)+"</td>"
+				 +"<td>"+state+"</td>"
 				 +"</tr>";
 		}
 		
@@ -135,7 +152,8 @@ $(document).ready(function(){
 		validCheck();
 	});
 	
-});	
-</script>
-</body>
+});
+
+		</script>
+	</body>
 </html>

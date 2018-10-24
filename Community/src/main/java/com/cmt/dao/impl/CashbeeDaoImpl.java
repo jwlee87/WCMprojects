@@ -1,6 +1,7 @@
 package com.cmt.dao.impl;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,19 @@ public class CashbeeDaoImpl implements CashbeeDao {
 
 	@Override
 	public int addCompleteCashbee(HashMap<String, Object> paramMap) {
-		System.out.println("Dao Layer: "+paramMap);
 		return wsSession.insert("cashbee.addCompleteCashbee", paramMap);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getLockLog() {
+		return wsSession.selectList("cashbee.getLockLog");
+	}
+
+	@Override
+	public HashMap<String, Object> getChargeLog(HashMap<String, Object> paramMap) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", wsSession.selectList("cashbee.getChargeLog", paramMap));
+		return resultMap;
 	}
 
 }
