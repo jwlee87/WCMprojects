@@ -8,6 +8,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+	<style>
+		.btn btn-default btn-block {
+			
+		}
+	</style>
 <c:import url="/resources/jsp/defaultSetting.jsp"></c:import>
 <link rel="stylesheet" href="/resources/css/index.css?ver=1.0"/>
 
@@ -99,10 +104,20 @@
 				<a href="/lCoin/history" type="button" class="btn btn-default btn-block">락코인 기록</a>
 			</div>
 		</div>
+		<div class="login-con">
+			<div class="login-btn-box">
+				<a href="/log/charge" type="button" class="btn btn-default btn-block">캐시비 충전 기록</a>
+			</div>
+		</div>
+		<div class="login-con">
+			<div class="login-btn-box">
+				<a href="/log/lock" type="button" class="btn btn-danger btn-block">캐시비 락포인트 기록</a>
+			</div>
+		</div>
 		<br><br>
 		<div class="login-con">
 			<div class="login-btn-box">
-				<a href="point/refund" type="button" class="btn btn-default btn-block">포인트 환급</a>
+				<a href="point/refund" type="button" class="btn btn-info btn-block">포인트 환급</a>
 			</div>
 		</div>
 		<div class="login-con">

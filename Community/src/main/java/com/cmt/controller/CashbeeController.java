@@ -191,10 +191,8 @@ public class CashbeeController {
 	
 	@RequestMapping(value="/log/a/lock")
 	@ResponseBody
-	public String getLockLog(HttpServletRequest request) throws Exception {
-		HashMap<String, Object> resultMap = cashbeeService.getLockLog(request);
-		Gson gson = new Gson();
-		return gson.toJson(resultMap);
+	public HashMap<String, Object> getLockLog(HttpServletRequest request) throws Exception {
+		return cashbeeService.getLockLog(request);
 	}
 	
 	@RequestMapping(value="/log/a/charge")

@@ -228,15 +228,12 @@ public class CashbeeServiceImpl implements CashbeeService {
 		return returnMap;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public HashMap<String, Object> getLockLog(HttpServletRequest request) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		Gson gson = new Gson();
-		resultMap.put("list", gson.toJson(cashbeeDao.getLockLog()));
-		return resultMap;
+		return DateUtil.transformateDate((HashMap<String, Object>)cashbeeDao.getLockLog());
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public HashMap<String, Object> getChargeLog(HttpServletRequest request) throws Exception {
 		HashMap<String, Object> paramMap = HttpUtil.getParamMap(request);

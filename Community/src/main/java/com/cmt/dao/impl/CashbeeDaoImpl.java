@@ -32,8 +32,10 @@ public class CashbeeDaoImpl implements CashbeeDao {
 	}
 
 	@Override
-	public List<HashMap<String, Object>> getLockLog() {
-		return wsSession.selectList("cashbee.getLockLog");
+	public HashMap<String, Object> getLockLog() {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", wsSession.selectList("cashbee.getLockLog"));
+		return resultMap;
 	}
 
 	@Override

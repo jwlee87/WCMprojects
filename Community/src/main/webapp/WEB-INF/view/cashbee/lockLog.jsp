@@ -8,15 +8,12 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>광고 관리</title>
+	<title>캐시비 포인트락 로그</title>
 	
 	<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	
-	<style type="text/css">
-	</style>
 
 </head>
 	<body>
@@ -26,7 +23,18 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <c:if test="${sessionScope.member._class eq 3}">
-<h1>안녕하십니까 저는 락 로그입니다.</h1>
+	<br><br>
+	<div class="row">
+		<h1 class="col-lg-10 col-sm-12" style="text-align: center; margin: 0 auto;">캐시비 포인트 락 목록</h1>
+	</div>
+	<div class="row">
+		<hr class="col-lg-10 col-sm-12"/>
+	</div>
+	<br><br>
+	<div class="row">
+	<div class="table_con col-lg-10 col-sm-12"></div>
+	</div>
+	<br><br>
 </c:if>
 
 <c:if test="${sessionScope.member._class ne 3}">
@@ -46,193 +54,78 @@ $(document).ready(function(){
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 	
-	function getAjaxList(){
+	var html = "";
+	var t_head = "<tr><th>NO</th><th>유니크ID</th><th>일시</th><th>유저번호</th><th>닉네임</th><th>카드 No.</th><th>TID</th><th>포인트</th></tr>";
+	
+	function getLockLog(){
 		$.ajax({
-			url: "/server/get/a",
 			type: "POST"
+			, url: "/log/a/lock"
+			, dataType: "json"
 		}).done(function(data){
-			makeHTML(data);
-		}).fail(function(){
-			alert("데이터를 불러오는데 실패했습니다.");
-			return false;
+			makeJson(data);
 		});
 	}
+	function makeJson(data){
+		var result = data.list;
+		
+		console.log(result);
+		console.log(result.length);
+		makeHTML(result);	
+	}
 	
-	///////////////
-	// make HTML //
-	///////////////
-	function makeHTML(data){
+	function makeHTML(json){
+		html = "";
+		html += t_head;
 		
-		var list = data.list;
-		
-		$("tbody > tr").remove();
-		$("#result > h3").remove();
-		var html = "";
-		if(list.length == 0){
-			html = "<h3>데이터가 없습니다.</h3>";
-			$("#result").append(html);
+		$("#his_table").remove();
+		if(json.length ==0){
+			var html = "조회 결과가 없습니다.";
+			$(".table_con").append(html);
+			$(".table_con").addClass("col-lg-10").addClass("col-sm-12")
+			.css("margin","0 auto");
+			$(".table_con").css("text-align", "center");
 		}else{
-			for(var i = 0; i < list.length; i++){
+			for(var i=0; i < json.length; i++){
 				
-				console.log(list[i]);
+				var date = json[i]._DateTime;
+				var uniqueID = json[i]._UniqueID;
+				var userNo = json[i]._UserUniqueID;
+				var nickName = json[i]._Trademark;
+				var cardNo = json[i]._CardNo;
+				var tid = json[i]._Tid;
+				var point = json[i]._Point;
+				var state = json[i]._State;
 				
-				html += "<tr style='height: 2em; font-size: 1.2em; padding: 0.5em;' >"
-					 + "<th scope='row' class='align-center'>"+ (i + 1) +"</th>"
-					 + "<input class='uniqueID' type='hidden' value='"+list[i].no+"'></input>"
-					 + "<td class='align-center td_ip'>"+list[i].ip+"</td>"
-					 + "<td class='align-center td_port'>"+list[i].port+"</td>"
-					 + "<td class='align-center td_location'>"+list[i].location+"</td>"
-					 + "<td class='align-center td_login_id'>"+list[i].login_id+"</td>"
-					 + "<td class='align-center td_note'>"+list[i].note+"</td>"
-					 + "<td class='align-center td_payment'>"+list[i].payment+"</td>"
-					 + "<td class='align-center td_btn_box' style='padding: 0.2em 0.1em 0.2em 0.1em;'>"
-					 + "<button class='btn btn-outline-success modify_btn' style='font-size: 1em; margin-right: 0.1em;'>수정</button>"
-					 + "<button class='btn btn-outline-danger modify_delete_btn' style='font-size: 1em;margin-left: 0.1em;'>삭제</button>"
-					 + "</td></tr>";
+				html += "<tr style='border: 1px solid #ccc;'>"
+					 +"<td>"+Number(i+1)+"</td>"
+					 +"<td>"+uniqueID+"</td>"
+					 +"<td>"+date+"</td>"
+					 +"<td>"+userNo+"</td>"
+					 +"<td>"+nickName+"</td>"
+					 +"<td>"+cardNo+"</td>"
+					 +"<td>"+tid+"</td>"
+					 +"<td>"+numberWithCommas(point)+"</td>"
+					 +"</tr>";
 			}
-			$("tbody").append(html);
-			$(".align-center").css("text-align", "center");
-			$("td > a").css("text-decoration", "none");
-			$(function () {
-				  $('[data-toggle="tooltip"]').tooltip();
+			
+			$(".table_con").addClass("col-lg-10").addClass("col-sm-12")
+			.css("margin","0 auto");
+			$(".table_con").append('<table id="his_table"></table>');
+			$("#his_table").append(html);
+			$("#his_table").css("max-width", "1200px").css("width", "100%").css("border", "1px solid #ccc").css("margin", "0 auto");
+			$("#his_table > tr > th").css("border", "1px solid #ccc").css("text-align", "center");
+			$("#his_table > tr > td").css("border", "1px solid #ccc").css("text-align", "right");
+			$("#his_table > tr").mouseenter(function(){
+				$(this).css("background-color", "#ccc").css("font-weight", "bold");
+			}).mouseleave(function(){
+				$(this).css("background-color", "white").css("font-weight", "normal");
 			});
 		}
 	}
+
+	getLockLog();
 	
-	$(document).on("click", ".first_box", function(){ inInputBox(); });
-	$(document).on("click", ".cover_1", function(){ outInputBox(); });
-	$(document).on("click", ".in_cancle_btn", function(){ outInputBox(); });
-	
-	// 취소 버튼 //
-	$(document).on("click", ".modify_cancle_btn", function(){
-		getAjaxList();
-	});
-	
-	// 수정 버튼 //
-	$(document).on("click", ".modify_btn", function(){
-		var thisElement = $(this).parent().parent();
-		no = thisElement.find(".uniqueID").val();
-		var ip = thisElement.find(".td_ip");
-		var port = thisElement.find(".td_port");
-		var location = thisElement.find(".td_location");
-		var loginId = thisElement.find(".td_login_id");
-		var note = thisElement.find(".td_note");
-		var payment = thisElement.find(".td_payment");
-		var btnBox = thisElement.find(".td_btn_box");
-		
-		var text = "<button id='update_complete_btn' class='btn btn-success' style='font-size: 1em; margin-right: 0.1em;'>적용</button>"
-				 + "<button class='btn btn-danger modify_cancle_btn' style='font-size: 1em;margin-left: 0.1em;'>취소</button>";
-		ip.html("<input id='modi_ip' value='"+ip.text()+"'></input>");
-		port.html("<input id='modi_port' value='"+port.text()+"'></input>").css("padding", "8px");
-		location.html("<input id='modi_location' value='"+location.text()+"'></input>").css("padding", "8px");
-		loginId.html("<input id='modi_id' value='"+loginId.text()+"'></input>");
-		note.html("<input id='modi_note' value='"+note.text()+"'></input>");
-		payment.html("<input id='modi_payment' value='"+payment.text()+"'></input>");
-		btnBox.css("padding-top", "6.25px").css("padding-bottom", "6.25px");
-		btnBox.html(text);
-		$("#modi_ip").focus();
-	});
-	
-	// 업데이트 적용 //
-	$(document).on("click", "#update_complete_btn", function(){
-		var isRun = false;
-		isRun = true;
-		
-		var thisElement = $(this).parent().parent();
-		no = thisElement.find(".uniqueID").val();
-		data = {};
-		data.no = no;
-		data.ip = $("#modi_ip").val().trim();
-		data.port = $("#modi_port").val().trim();
-		data.location = $("#modi_location").val().trim();
-		data.loginId = $("#modi_id").val().trim();
-		data.note = $("#modi_note").val().trim();
-		data.modifier = "${sessionScope.member.tradeMark}";
-		data.payment = $("#modi_payment").val().trim();
-		
-		if(isRun){
-			if(validCheck(data)){
-				updateAjaxServer(data);
-			}else{
-				return false;
-			};
-		}else{
-			alert("천천히 한번만 시도해주세요.");
-		};
-	});
-	// end of update //
-	
-	// 삭제 버튼 //
-	$(document).on("click", ".modify_delete_btn", function(){
-		var thisElement = $(this).parent().parent();
-		no = thisElement.find(".uniqueID").val();
-		
-		var isRun = false;
-		isRun = true;
-		
-		if(isRun){
-			$.ajax({
-				url: "/server/d",
-				type: "POST",
-				data: {"no": no}
-			}).done(function(d){
-				
-				console.log(d.result);
-				
-				if(d.result == "success"){
-					alert("삭제되었습니다.");
-				}else{
-					alert("삭제할 수 없습니다.");
-				}
-				getAjaxList();
-			});	
-		}else{
-			alert("천천히 한번만 시도해주세요.");
-		}
-	});
-	
-	// 글쓰기  //
-	$(document).on("click", ".in_submit_btn", function(){
-		var isRun = false;
-		isRun = true;
-		
-		var formData = {};
-		formData.ip = $("#in_server_ip").val();
-		formData.port = $("#in_server_port").val();
-		formData.location = $("#in_server_location").val();
-		formData.loginId = $("#in_login_id").val();
-		formData.note = $("#in_note").val().trim();
-		formData.payment = $("#in_payment").val().trim();
-		formData.writer = "${sessionScope.member.tradeMark}";
-		
-		if(isRun){
-			if(validCheck(formData)){
-				addAjaxServer(formData);
-			}else{
-				return false;
-			}
-		}else{
-			alert("천천히 한번만 시도해주세요.");
-		}
-		
-	});
-/////////////////////////////////////////////////////////////////////////////////////////////
-	
-	
-	///////////////////
-	// esc key event //
-	///////////////////
-	$(document).on("keydown", "body", function(){
-		if( $(".cover_1").css("display") == "block" ){
-			if( event.keyCode == 27 ){
-				outInputBox();
-			}
-		}
-	});
-	//////////////////
-	// 시작 리스트 받아오기
-	//////////////////
-	getAjaxList();
 });
 
 		</script>
