@@ -105,9 +105,7 @@ public class CashbeeServiceImpl implements CashbeeService {
 		}else {
 			serverIP = serverURL.getAddress();
 		}
-//		System.out.println("target IP: "+serverIP);
-		String testServerIpAddr = "175.196.77.185";
-		System.out.println("target IP: "+testServerIpAddr);
+		logger.debug("target IP: "+serverIP);
 		
 		if(!serverIP.equals("EXCEPTION")) {
 			
@@ -117,7 +115,7 @@ public class CashbeeServiceImpl implements CashbeeService {
 				paramMap.put("Command", "60001");
 			}
 			
-			HttpPost post = new HttpPost("http://"+testServerIpAddr);
+			HttpPost post = new HttpPost("http://"+serverIP);
 			post.setConfig(httpClientUtil.reqeustConfig(3500));
 			List<NameValuePair> paramList = httpClientUtil.convertParam(paramMap);
 			post.setEntity(new UrlEncodedFormEntity(paramList, "UTF-8"));
@@ -145,6 +143,9 @@ public class CashbeeServiceImpl implements CashbeeService {
 						jso.addProperty("message", "미등록 카드입니다.");
 					}else if( code.equals("300") ) {
 						jso.addProperty("message", "사용중지된 카드입니다.");
+					}else{
+						jso.addProperty("code", "-nnn");
+						jso.addProperty("message", "서버 점검중입니다.");
 					};
 					returnMap.put("jsonStr", jso.toString());
 				}
@@ -164,24 +165,23 @@ public class CashbeeServiceImpl implements CashbeeService {
 
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
 		ServerList serverURL = memberService.getServerList();
-		String serverIP = "";
+		String serverIP = serverURL.getAddress();
 		
-		if(serverURL == null) {
+		if(serverIP == null) {
 			serverIP = "EXCEPTION";
 		}else {
 			serverIP = serverURL.getAddress();
 		}
-//		System.out.println("target IP: "+serverIP);
-		String testServerIpAddr = "175.196.77.185";
+		logger.debug("target IP: "+serverIP);
 		URIBuilder builder = new URIBuilder();
-		builder.setScheme("http").setHost(testServerIpAddr)
+		builder.setScheme("http").setHost(serverIP)
 			.setParameter("Command", "60003")
 			.setParameter("cardno", (String)paramMap.get("cardno"))
 			.setParameter("tid", (String)paramMap.get("tid"))
 			.setParameter("amount", (String)paramMap.get("amount"));
 
 		URI uri = builder.build();
-		System.out.println("target IP: "+testServerIpAddr);
+		logger.debug("target URI: "+uri);
 		
 		if(!serverIP.equals("EXCEPTION")) {
 			
@@ -228,7 +228,6 @@ public class CashbeeServiceImpl implements CashbeeService {
 		return returnMap;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public HashMap<String, Object> getLockLog(HttpServletRequest request) throws Exception {
 		return DateUtil.transformateDate((HashMap<String, Object>)cashbeeDao.getLockLog());
