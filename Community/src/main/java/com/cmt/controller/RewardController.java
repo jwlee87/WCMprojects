@@ -219,21 +219,17 @@ public class RewardController {
 			}else {
 				serverIP = serverURL.getAddress();
 			}
-			
 			logger.debug("=========================================================");
 			logger.debug("  ip addr  "+serverIP.trim());
 			logger.debug("=========================================================");
 			
 			String returnValue = hashUtil.returnCheckForAppang( ud.trim(), s.trim(), ai.trim(), member, memberService, rewardList, serverIP);
 			logger.debug(returnValue);
-			
 			response.setStatus(200);
 		} else {
 			logger.debug("!!! Appang 이외의 곳에서 callback이 날아옴 에러처리 !!!");
 			response.setStatus(500);
 		}
-		
-		
 	}
 	
 	////////////////////////////////////////////

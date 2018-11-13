@@ -8,6 +8,14 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free Reward App, Free Android App" />
+	<meta name="keywords" content="worldspon, WorldSpon, 월드스폰" />
+	<meta name="author" content="WorldSpon, Inc." />
+	
+	<link rel='shortcut icon' href='/info/img/favicon/ws_p32.png'>
+	<link rel="icon" href="/info/img/favicon/ws_p16.png" sizes="16x16">
+	<link rel="icon" href="/info/img/favicon/ws_p32.png" sizes="32x32">
+	
 	<title>캐시비 포인트락 로그</title>
 	
 	<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
@@ -55,7 +63,7 @@ $(document).ready(function(){
 	}
 	
 	var html = "";
-	var t_head = "<tr><th>NO</th><th>유니크ID</th><th>일시</th><th>유저번호</th><th>닉네임</th><th>카드 No.</th><th>TID</th><th>포인트</th></tr>";
+	var t_head = "<tr><th>NO</th><th>유니크ID</th><th>일시</th><th>유저번호</th><th>닉네임</th><th>카드 No.</th><th>TID</th><th>포인트</th><th>상태</th></tr>";
 	
 	function getLockLog(){
 		$.ajax({
@@ -99,14 +107,19 @@ $(document).ready(function(){
 				
 				html += "<tr style='border: 1px solid #ccc;'>"
 					 +"<td>"+Number(i+1)+"</td>"
-					 +"<td>"+uniqueID+"</td>"
+					 +"<td class='uniqueID'>"+uniqueID+"</td>"
 					 +"<td>"+date+"</td>"
 					 +"<td>"+userNo+"</td>"
 					 +"<td>"+nickName+"</td>"
 					 +"<td>"+cardNo+"</td>"
 					 +"<td>"+tid+"</td>"
-					 +"<td>"+numberWithCommas(point)+"</td>"
-					 +"</tr>";
+					 +"<td>"+numberWithCommas(point)+"</td>";
+				
+				if(state == 0 ){
+					html += "<td><button class='checking'>확인</button></td></tr>"
+				}else if(state == 1){
+					html += "<td>확인완료</td></tr>";
+				}
 			}
 			
 			$(".table_con").addClass("col-lg-10").addClass("col-sm-12")
@@ -125,6 +138,29 @@ $(document).ready(function(){
 	}
 
 	getLockLog();
+	
+	$(document).on('click', '.checking', function(){
+		
+		var trNode = $(this).parent().parent();
+		var data = {};
+		data['uniqueID'] = $(($(trNode[0]).children())[1]).html().trim();
+		
+		$.ajax({
+			type: "POST",
+			url: "/cashbee/update/state",
+			data: data,
+			dataType: "json"
+		}).done(function(data){
+			if(data.check == 1){
+				alert("정상적으로 확인되었습니다.");
+			}else{
+				alert("에러! 관리자에게 문의해주세요.");
+			}
+			getLockLog();
+		})
+		console.log( data['uniqueID'] );
+		
+	});
 	
 });
 

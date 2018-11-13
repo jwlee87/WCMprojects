@@ -57,7 +57,7 @@ public class CashbeeController {
 		response.getWriter().write(jsonStr);
 	}
 	
-	@RequestMapping(value="/api/callback-commit-point")
+	@RequestMapping(value="/api/callback-commit-point", method=RequestMethod.POST)
 	public void commitPoint(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String inAddress = request.getRemoteAddr();
 		logger.debug(inAddress+" : "+request.getRequestURL());
@@ -103,5 +103,11 @@ public class CashbeeController {
 	@ResponseBody
 	public HashMap<String, Object> getChargeLog(HttpServletRequest request) throws Exception {
 		return cashbeeService.getChargeLog(request);
+	}
+	
+	@RequestMapping(value="/cashbee/update/state")
+	@ResponseBody
+	public HashMap<String, Object> updateLockState(HttpServletRequest request) throws Exception {
+		return cashbeeService.updateLockState(request);
 	}
 }

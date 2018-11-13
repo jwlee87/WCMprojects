@@ -8,6 +8,14 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free Reward App, Free Android App" />
+	<meta name="keywords" content="worldspon, WorldSpon, 월드스폰" />
+	<meta name="author" content="WorldSpon, Inc." />
+	
+	<link rel='shortcut icon' href='/info/img/favicon/ws_p32.png'>
+	<link rel="icon" href="/info/img/favicon/ws_p16.png" sizes="16x16">
+	<link rel="icon" href="/info/img/favicon/ws_p32.png" sizes="32x32">
+	
 	<title>캐시비 충전 기록</title>
 	
 	<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">

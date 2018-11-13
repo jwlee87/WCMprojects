@@ -12,4 +12,5 @@ public interface CashbeeService {
 	public HashMap<String, Object> requestCommitSender(HashMap<String, Object> paramMap) throws Exception;
 	public HashMap<String, Object> getLockLog(HttpServletRequest request) throws Exception;
 	public HashMap<String, Object> getChargeLog(HttpServletRequest request) throws Exception;
+	public HashMap<String, Object> updateLockState(HttpServletRequest request) throws Exception;
 }

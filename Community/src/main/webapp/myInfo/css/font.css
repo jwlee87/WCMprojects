@@ -1,0 +1,49 @@
+/* style.css */
+@font-face {
+ font-family: NanumSquareL;
+ src: url("/MyInfo/font/NanumSqaure-master/NanumSquareL.eot");
+ src: url("/MyInfo/font/NanumSqaure-master/NanumSquareL.eot?#iefix") format('embedded-opentype'),
+      url("/MyInfo/font/NanumSquare-master/NanumSquareL.woff") format('woff'),
+      url("/MyInfo/font/NanumSquare-master/NanumSquareL.ttf") format('truetype');
+}
+@font-face {
+ font-family: NanumSquareR;
+ src: url("/MyInfo/font/NanumSqaure-master/NanumSquareR.eot");
+ src: url("/MyInfo/font/NanumSqaure-master/NanumSquareR.eot?#iefix") format('embedded-opentype'),
+      url("/MyInfo/font/NanumSquare-master/NanumSquareR.woff") format('woff'),
+      url("/MyInfo/font/NanumSquare-master/NanumSquareR.ttf") format('truetype');
+}
+@font-face {
+ font-family: NanumSquareB;
+ src: url("/MyInfo/font/NanumSqaure-master/NanumSquareB.eot");
+ src: url("/MyInfo/font/NanumSqaure-master/NanumSquareB.eot?#iefix") format('embedded-opentype'),
+      url("/MyInfo/font/NanumSquare-master/NanumSquareB.woff") format('woff'),
+      url("/MyInfo/font/NanumSquare-master/NanumSquareB.ttf") format('truetype');
+}
+@font-face {
+ font-family: NanumSquareEB;
+ src: url("/MyInfo/font/NanumSqaure-master/NanumSquareEB.eot");
+ src: url("/MyInfo/font/NanumSqaure-master/NanumSquareEB.eot?#iefix") format('embedded-opentype'),
+      url("/MyInfo/font/NanumSquare-master/NanumSquareEB.woff") format('woff'),
+      url("/MyInfo/font/NanumSquare-master/NanumSquareEB.ttf") format('truetype');
+}
+@font-face {
+ font-family: NotoSans;
+ src: url("/MyInfo/font/Noto_Sans_KR/NotoSansKR-Medium.otf");
+}
+@font-face {
+ font-family: PoorStroy;
+ src: url("/MyInfo/font/Poor_Story/PoorStory-Regular.ttf");
+}
+.normal { font-family: NanumSquareR, sans-serif; }
+.bold { font-family: NanumSquareB, sans-serif; }
+.bolder { font-family: NanumSquareEB, sans-serif; }
+.light { font-family: NanumSquareL, sans-serif; }
+.large_font_size { font-size: 15vw; }
+.middle_font_size { font-size: 10vw; }
+.more_bigger_normal_font_size { font-size: 7vw; }
+.normal_font_size { font-size: 4.5vw; }
+.micro_font_size { font-size: 3vw; }
+.font-color-gray { color: #666666; }
+.align-right {text-align: right;}
+.align-left {text-align: left;}

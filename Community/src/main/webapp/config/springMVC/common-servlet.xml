@@ -43,6 +43,9 @@
 <!-- 				</property> -->
 <!-- 			</bean> -->
 		</mvc:message-converters>
+		<mvc:argument-resolvers>
+			<bean class="org.springframework.mobile.device.DeviceWebArgumentResolver"/>
+		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 	
 	<!-- ========= -->
@@ -79,6 +82,10 @@
 			<mvc:mapping path="/board/deleteCmt"/>
 			<bean class="com.cmt.interceptor.AuthenticationInterceptor"/>
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/myAssets/detail**"/>
+			<bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor"/>
+		</mvc:interceptor>
 	</mvc:interceptors>
 
 	<!-- ============================= -->
@@ -92,6 +99,8 @@
 	<mvc:resources mapping="/account/**"	location="/account/"/>
 	<mvc:resources mapping="/SE2/**"		location="/SE2/"/>
 	<mvc:resources mapping="/info/**"		location="/info/"/>
+	<mvc:resources mapping="/myInfo/**"		location="/myInfo/"/>
+	<mvc:resources mapping="/myAssets/**"		location="/myAssets/"/>
 	
 	<mvc:default-servlet-handler/>
 	

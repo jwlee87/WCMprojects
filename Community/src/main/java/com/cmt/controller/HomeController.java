@@ -724,44 +724,9 @@ public class HomeController {
 		
 		return resultMap;
 	}
-	
 	@RequestMapping(value="/msg", method=RequestMethod.GET)
 	public String goMsg(HttpServletRequest request) throws Exception {
 		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
 		return "account/msg";
 	}
-	
-	///////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////
-	// HTTP TEST //
-	///////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////
-	@RequestMapping(value="/test")
-	public String goTestPage(HttpServletRequest request) throws Exception{
-		
-		logger.debug(request.getRemoteAddr()+" : "+request.getRequestURL());
-		
-		RewardList rewardList = new RewardList();
-		rewardList.setAdid("TEST");
-		rewardList.setAppKey("TEST");
-		rewardList.setAppName("TEST");
-		rewardList.setCampaignKey("TEST");
-		rewardList.setCampaignName("TEST");
-		rewardList.setCampaignType("TEST");
-		rewardList.setMemberUniqueID(33);
-		rewardList.setQuantity(1);
-		rewardList.setRewardKey("TEST");
-		rewardList.setTimeStamp("TEST");
-		HashMap<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("rewardList", rewardList);
-		
-//		logger.debug("before="+rewardList);
-		memberService.addReward(paramMap);
-//		logger.debug("after="+rewardList);
-		
-		return "test/index";
-	}
-	
 }

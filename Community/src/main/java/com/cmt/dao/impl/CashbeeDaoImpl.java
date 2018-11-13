@@ -45,4 +45,9 @@ public class CashbeeDaoImpl implements CashbeeDao {
 		return resultMap;
 	}
 
+	@Override
+	public int updateLockState(HashMap<String, Object> paramMap) {
+		return wsSession.update("cashbee.updateLockState", paramMap);
+	}
+
 }

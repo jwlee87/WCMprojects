@@ -239,4 +239,17 @@ public class CashbeeServiceImpl implements CashbeeService {
 		return DateUtil.transformateDate((HashMap<String, Object>)cashbeeDao.getChargeLog(paramMap));
 	}
 
+	@Override
+	public HashMap<String, Object> updateLockState(HttpServletRequest request) throws Exception {
+		
+		HashMap<String, Object> paramMap = HttpUtil.getParamMap(request);
+		
+		System.out.println(paramMap);
+		
+		int returnValue = cashbeeDao.updateLockState(paramMap);
+		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("check", returnValue);
+		return returnMap;
+	}
+
 }

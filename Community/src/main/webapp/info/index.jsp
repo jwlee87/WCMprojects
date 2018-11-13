@@ -14,7 +14,7 @@
 	<meta name="keywords" content="worldspon, WorldSpon, 월드스폰" />
 	<meta name="author" content="WorldSpon, Inc." />
 	
-	<link rel='shortcut icon' href='/info/img/pavicon/ws_p32.png'>
+	<link rel='shortcut icon' href='/info/img/favicon/ws_p32.png'>
 	<link rel="icon" href="/info/img/favicon/ws_p16.png" sizes="16x16">
 	<link rel="icon" href="/info/img/favicon/ws_p32.png" sizes="32x32">
 	
