@@ -49,7 +49,7 @@
                 margin: 0;
             }
             
-            .top-box {
+            .detail-top-box {
                 background-color: #ffffff;
                 margin: 0;
                 padding: 4%;
@@ -86,7 +86,7 @@
                 border-top: 1px solid #dddddd;
                 border-bottom: 1px solid #dddddd;
             }
-            .info-box {
+            .detail-info-box {
                 width: calc(100% - 2vw);
                 margin: 1vw;
                 padding-top: 3vw;
@@ -186,7 +186,7 @@
 <body>
     <div class="view-box container-fluid no-double">
        
-        <div class="top-box container-fluid">
+        <div class="detail-top-box container-fluid">
             <div>
                 <div class="row assets-menu">   
                     <div class="col-1 no-double">
@@ -223,7 +223,7 @@
         <div id="contents-box" class="contents-box container-fluid">
             
             <!-- plus income -->
-            <div class="info-box">
+            <div class="detail-info-box">
                 <div class="row">
                     <div class="col-3 left-info">
                         <div class="i-box">
@@ -247,7 +247,7 @@
             </div>
             
             <!-- minus withdraw -->
-            <div class="info-box">
+            <div class="detail-info-box">
                 <div class="row">
                     <div class="col-3 left-info">
                         <div class="i-box">
@@ -271,7 +271,7 @@
             </div>
             
             <!-- plus income -->
-            <div class="info-box">
+            <div class="detail-info-box">
                 <div class="row">
                     <div class="col-3 left-info">
                         <div class="i-box">
@@ -295,7 +295,7 @@
             </div>
             
             <!-- minus withdraw -->
-            <div class="info-box">
+            <div class="detail-info-box">
                 <div class="row">
                     <div class="col-3 left-info">
                         <div class="i-box">
@@ -319,7 +319,7 @@
             </div>
             
             <!-- plus income -->
-            <div class="info-box">
+            <div class="detail-info-box">
                 <div class="row">
                     <div class="col-3 left-info">
                         <div class="i-box">
@@ -343,7 +343,7 @@
             </div>
             
             <!-- minus withdraw -->
-            <div class="info-box">
+            <div class="detail-info-box">
                 <div class="row">
                     <div class="col-3 left-info">
                         <div class="i-box">
@@ -367,7 +367,7 @@
             </div>
             
             <!-- plus income -->
-            <div class="info-box">
+            <div class="detail-info-box">
                 <div class="row">
                     <div class="col-3 left-info">
                         <div class="i-box">
@@ -391,7 +391,7 @@
             </div>
             
             <!-- minus withdraw -->
-            <div class="info-box">
+            <div class="detail-info-box">
                 <div class="row">
                     <div class="col-3 left-info">
                         <div class="i-box">
@@ -415,7 +415,7 @@
             </div>
             
             <!-- plus income -->
-            <div class="info-box">
+            <div class="detail-info-box">
                 <div class="row">
                     <div class="col-3 left-info">
                         <div class="i-box">
@@ -439,7 +439,7 @@
             </div>
             
             <!-- minus withdraw -->
-            <div class="info-box">
+            <div class="detail-info-box">
                 <div class="row">
                     <div class="col-3 left-info">
                         <div class="i-box">
@@ -484,7 +484,7 @@
 	<script type="text/javascript">
         
     function getTopBoxHeight(){
-        var aaaa = $(".top-box");
+        var aaaa = $(".detail-top-box");
         return aaaa[0].clientHeight;
     }
         

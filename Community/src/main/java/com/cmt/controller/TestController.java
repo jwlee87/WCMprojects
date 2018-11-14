@@ -232,4 +232,5 @@ public class TestController {
 	public String myInfo() {
 		return "redirect:/myInfo/index.html";
 	}
+	
 }

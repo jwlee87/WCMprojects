@@ -26,46 +26,11 @@
         <link rel="stylesheet" href="/myAssets/css/bootstrap.min.css">
         
         <link rel="stylesheet" href="/myAssets/css/loader.css">
-        
-        <style>
-            
-            body { font-family: NanumSquareR sans-serif; }            
-            a { color: #000000;}
-            a:hover {text-decoration: none;}
-            .row {
-                margin: 0;
-            }
-            
-            .container-fluid {
-                background-color: #4833a4;
-                margin: 0;
-                padding: 4%;
-            }
-            .info-box {
-                padding-top: 5vw;
-                padding-bottom: 5vw;
-                border-bottom: 1px solid #cccccc;
-            }
-            .assets-name {
-                font-size: 4vw;
-            }
-            .assets-amount {
-                font-size: 4.3vw;
-            }
-            .top-box-title {
-                font-size: 4vw;
-            }
-            .title-amount {
-            	margin-bottom: 2vw;
-            }
-            .title_nick {
-            	margin-top: 4vw;
-            }
-            
-        </style>
+        <link rel="stylesheet" href="/myAssets/css/main.css">
         
     </head>
     <body>
+    	<div id="data-set"></div>
     	<div class="lds-back"></div>
         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
         
@@ -77,7 +42,45 @@
 	<script src="/myAssets/js/main.js"></script>
 	
 	<script>
-	function makeHTML(data){
+	
+	function getDataSet(){
+		var no = $("#data-set").data("no");
+		var uNo = $("#data-set").data("uNo");
+		var data = {};
+		data.no = no;
+		data.uNo = uNo;
+		return data;
+	}
+
+	function getAjaxMain(data){
+		$.ajax({
+			type: "POST"
+			, url: "/myAssets/get"
+			, data: data
+			, dataType: "json"
+			, beforeSend : function(){
+				showLoader();
+			}
+		}).done(function(data){
+			makeMain(data);
+		});
+	}
+	
+	function getAjaxDetail(data){
+		$.ajax({
+			type: "POST"
+			, url: "/myAssets/detail"
+			, data: data
+			, dataType: "json"
+			, beforeSend : function(){
+				showLoader();
+			}
+		}).done(function(data){
+			makeDetail(data);
+		});
+	}
+	
+	function makeMain(data){
 		
 		console.log(data.list);
 		
@@ -89,9 +92,13 @@
 		var l_coin = data.list[0]._LockCoin;
 		var l_point = data.list[0]._LockPoint;
 		
-		var html = "<input id='no' type='hidden' value='"+no+"'/>";
-		html += "<input id='uNo' type='hidden' value='"+uNo+"'/>";
-		html += "<div class='container-fluid'>"
+		if(nick == null){
+			alert("정보를 불러올 수 없습니다.");
+			return false;
+		}
+		
+		var html = ""; 
+		html += "<div id='main-page' class='main-page-top container-fluid'>"
 				  + "<div class='contents_1'>"
                        + "<div class='row main-title font-color-white'>"
                          + "<div class='title_nick more_bigger_normal_font_size bold'>"+nick
@@ -116,51 +123,95 @@
 //                        + "</div>"
 				  + "</div>"
 				+ "</div>"
-				+ "<div class='info-box container-fluid bg-white'>"
+				+ "<div class='info-box container-fluid bg-white go-detail' data-type='s'>"
 				  + "<div class='assets-name font-color-gray bold'>스폰</div>"
-				  + "<div class='assets-amount con-spon bold'><a href='/myAssets/detail?t=s&no"+no+"&uNo="+uNo+"'>" +numberWithCommas(coin)+ " &nbsp;&nbsp;></a></div>"
+				  + "<div class='assets-amount con-spon bold'><a href='#'>" +numberWithCommas(coin)+ " &nbsp;&nbsp;></a></div>"
 				+ "</div>"
-				+ "<div class='info-box container-fluid bg-white'>"
+				+ "<div class='info-box container-fluid bg-white go-detail' data-type='p'>"
 				  +"<div class='assets-name font-color-gray bold'>포인트</div>"
-				  + "<div class='assets-amount con-spon bold'><a href='/myAssets/detail?t=p&no"+no+"&uNo="+uNo+"'> "+numberWithCommas(point)+" &nbsp;&nbsp;></a></div>"
-				+ "</div>"
-				+ "<div class='info-box container-fluid bg-white'>"
-				  + "<div class='assets-name font-color-gray bold'>락스폰</div>"
-				  + "<div class='assets-amount con-spon bold'><a href='/myAssets/detail?t=ls&no"+no+"&uNo="+uNo+"'>" +numberWithCommas(l_coin)+ " &nbsp;&nbsp;></a></div>"
+				  + "<div class='assets-amount con-spon bold'><a href='#'> "+numberWithCommas(point)+" &nbsp;&nbsp;></a></div>"
 				+ "</div>";
+				if(l_coin != 0){
+					html += "<div class='info-box container-fluid bg-white go-detail' data-type='ls'>"
+					  + "<div class='assets-name font-color-gray bold'>락스폰</div>"
+					  + "<div class='assets-amount con-spon bold'><a href='#'>" +numberWithCommas(l_coin)+ " &nbsp;&nbsp;></a></div>"
+					+ "</div>";
+				}
 				if(l_point != 0){
-					html += "<div class='info-box container-fluid bg-white'>"
+					html += "<div class='info-box container-fluid bg-white go-detail' data-type='lp'>"
 					  + "<div class='assets-name font-color-gray bold'>락포인트</div>"
-					  + "<div class='assets-amount con-spon bold'><a href='/myAssets/detail?t=lp&no"+no+"&uNo="+uNo+"'>" +l_point+ " &nbsp;&nbsp;></a></div>"
+					  + "<div class='assets-amount con-spon bold'><a href='#'>" +l_point+ " &nbsp;&nbsp;></a></div>"
 					+ "</div>";
 				}
 				
-		$("html").append(html);
+		$("body").append(html);
 		hideLoader();
 	}
+	
+	function makeDetail(data){
+		console.log(data);
+		
+		var no = data.no;
+		var uNo = data.uNo;
+		var l_coin = data.type;
+		
+		var html = "<div id='detail-page'><h1>hello world!</h1><button class='goBack'>뒤로</button><button class='more-see'>더보기</button></div>";
+		
+		$(".container-fluid").remove();
+		$("body").append(html);
+		hideLoader();
+	}
+	
+	$(document).on("click", ".go-detail", function(){
+		var data = getDataSet();
+		var type = $(this).data("type");
+		data.type = type;
+		console.log(data.no +", "+ data.uNo +", "+ type);
+		getAjaxDetail(data);
+	});
+	
+	$(document).on("click", ".goBack", function(){
+		
+		var data = {};
+		var no = $("#data-set").data("no");
+		no = 1;
+		$("#data-set").data("no", no);
+		var uNo = $("#data-set").data("uNo");
+		data.no = no;
+		data.uNo = uNo;
+		
+		console.log("goBack: "+ data.no +", "+ data.uNo);
+		
+		$("#detail-page").remove();
+		getAjaxMain(data);
+	});
+	
+	$(document).on("click", ".more-see", function(){
+		
+		var no = $("#data-set").data("no");
+		var uNo = $("#data-set").data("uNo");
+		console.log("더보기 현재 no="+ no +", uNo="+ uNo);
+		no++;
+		$("#data-set").data("no", no);
+		
+		console.log("더보기 누르고 no="+ no +", uNo="+ uNo);
+		
+	});
 	
 	$(document).ready(function(){
 		
 		var data = '${data}';
 		var jsonData = JSON.parse(data);
-		console.log("data: "+data);
-		console.log("jsonData: "+jsonData);
-		console.log("jsonData.no: "+jsonData.no);
-		console.log("jsonData.uNo: "+jsonData.uNo);
+		$("#data-set").data("no", jsonData.no);
+		$("#data-set").data("uNo", jsonData.uNo);
 		
-		$.ajax({
-			type: "POST"
-			, url: "/myAssets/get"
-			, data: jsonData
-			, dataType: "json"
-			, beforeSend : function(){
-				showLoader();	
-			}
-		}).done(function(data){
-			makeHTML(data);
-		});
+		console.log(jsonData);
+		
+		getAjaxMain(jsonData);
 		
 	});
+	
+	
 	</script>
 </body>
 </html>
