@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cmt.service.StoreServiceInterface;
 import com.google.gson.Gson;
 
+/*포인트 코인 락코인 로그*/
 @Controller
 public class HistoryController {
 	

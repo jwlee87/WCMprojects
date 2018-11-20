@@ -227,4 +227,10 @@ public class TestController {
 		
 		System.out.println("total= "+sum);
 	}
+	
+	@RequestMapping(value="/myInfo")
+	public String myInfo() {
+		return "redirect:/myInfo/index.html";
+	}
+	
 }

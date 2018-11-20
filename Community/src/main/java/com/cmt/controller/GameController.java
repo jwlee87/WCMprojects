@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cmt.service.ZombieServiceInterface;
 import com.google.gson.Gson;
 
+/*게임 기록 페이지*/
 @Controller
 public class GameController {
 	

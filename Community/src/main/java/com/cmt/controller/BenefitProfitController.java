@@ -13,8 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cmt.dao.BenefitDaoInterface;
 import com.cmt.service.BenefitServiceInterface;
 
+/* 월 광고 수입 보기 */
 @Controller
-public class WorldSponController {
+public class BenefitProfitController {
 	
 	@Autowired
 	BenefitDaoInterface bdi;

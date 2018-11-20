@@ -34,7 +34,6 @@ $(document).ready(function(){
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 	
-	
 	var html = "";
 	var t_head = "<tr><th>NO</th><th>일시</th><th>유저번호</th><th>닉네임</th><th>코드</th><th>포인트</th><th>전 포인트</th><th>후 포인트</th><th>메모</th></tr>";
 	
@@ -116,9 +115,9 @@ $(document).ready(function(){
 		$("#his_table").remove();
 		$(".table_con").append('<table id="his_table"></table>');
 		$("#his_table").append(html);
-		$("#his_table").css("max-width", "1200px").css("width", "100%").css("border", "1px solid #ccc").css("margin", "0 auto");
+		$("#his_table").css("max-width", "1400px").css("width", "100%").css("border", "1px solid #666").css("margin", "0 auto");
 		$("#his_table > tr > th").css("border", "1px solid #ccc").css("text-align", "center");
-		$("#his_table > tr > td").css("border", "1px solid #ccc").css("text-align", "right");
+		$("#his_table > tr > td").css("border", "1px solid #ccc").css("text-align", "right").css("padding", "10px");
 		$("#his_table > tr").mouseenter(function(){
 			$(this).css("background-color", "#ccc").css("font-weight", "bold");
 		}).mouseleave(function(){

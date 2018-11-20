@@ -24,6 +24,7 @@ import com.cmt.domain.Email;
 import com.cmt.service.BoardService;
 import com.cmt.service.MemberService;
 
+/*회사 정보 페이지*/
 @Controller
 public class InfoController {
 	

@@ -36,11 +36,7 @@ public class HashUtil {
 	int DEFAULT_TIMEOUT = 5000;
 	
 	Logger logger = LogManager.getLogger();
-	
-	// default constructor
-	public HashUtil() {
-	}
-	
+
 	// method
 	public String stringToHMACMD5(String keyStr, String plainText) {
 		String encodedString = "";
@@ -174,7 +170,6 @@ public class HashUtil {
 			RewardList apReward, String serverIP) throws Exception {
 		
 		List<RewardList> rewardList = memberService.getRewardList(Integer.parseInt(usn));
-		
 		boolean checkKey = false;
 		String returnValue = "false";
 		// 리워드 리스트가 0이 아닐때
@@ -223,7 +218,6 @@ public class HashUtil {
 				}
 				returnValue = "1111";
 			}
-			
 		// 예외사항 발생
 		} else {
 			logger.debug("리워드 지급 예외상황 발생");
@@ -231,8 +225,6 @@ public class HashUtil {
 		}
 		return returnValue;
 	}
-	
-	
 	
 	
 	/////////////////////////////////

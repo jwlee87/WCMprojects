@@ -33,7 +33,6 @@ public class ApService implements ApServiceInterface {
 	public HashMap<String, Object> addAp(HttpServletRequest req) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		HashMap<String, Object> paramMap = HttpUtil.getParamMap(req);
-		System.out.println("server data= "+paramMap);
 		
 		int returnValue = adi.addAdvertisingProvider(paramMap);
 		if(String.valueOf(returnValue).equals("1")) {
@@ -115,7 +114,7 @@ public class ApService implements ApServiceInterface {
 			if(updateResult == 1) {
 				resultMap.put("result", "success");
 			}else {
-				resultMap.put("result", "false-1");
+				resultMap.put("result", "false");
 			}
 		}else {
 			resultMap.put("result", "false-2");

@@ -1,0 +1,10 @@
+/* style.css */
+.no-margin { margin: 0!important; }
+.no-padding { padding: 0!important; }
+.no-double {margin: 0!important; padding: 0!important;}
+.margin-top-10 { margin-top: 10px; }
+.margin-top-30 { margin-top: 30px; }
+.left-box { width: 50%; float: left; }
+.right-box { width: 50%; float: right; }
+.blank_height_3 { height: 3vh; }
+.blank_height_1 { height: 1vh; }

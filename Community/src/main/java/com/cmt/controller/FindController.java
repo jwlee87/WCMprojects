@@ -23,6 +23,7 @@ import com.cmt.service.FindServiceInterface;
 import com.cmt.service.MemberService;
 import com.google.gson.Gson;
 
+/*직접 비밀번호 찾기*/
 @Controller
 public class FindController {
 	

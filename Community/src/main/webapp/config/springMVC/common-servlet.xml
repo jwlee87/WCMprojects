@@ -43,6 +43,9 @@
 <!-- 				</property> -->
 <!-- 			</bean> -->
 		</mvc:message-converters>
+		<mvc:argument-resolvers>
+			<bean class="org.springframework.mobile.device.DeviceWebArgumentResolver"/>
+		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 	
 	<!-- ========= -->
@@ -79,6 +82,10 @@
 			<mvc:mapping path="/board/deleteCmt"/>
 			<bean class="com.cmt.interceptor.AuthenticationInterceptor"/>
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/myAssets/getDetail"/>
+			<bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor"/>
+		</mvc:interceptor>
 	</mvc:interceptors>
 
 	<!-- ============================= -->
@@ -92,6 +99,8 @@
 	<mvc:resources mapping="/account/**"	location="/account/"/>
 	<mvc:resources mapping="/SE2/**"		location="/SE2/"/>
 	<mvc:resources mapping="/info/**"		location="/info/"/>
+	<mvc:resources mapping="/myInfo/**"		location="/myInfo/"/>
+	<mvc:resources mapping="/myAssets/**"		location="/myAssets/"/>
 	
 	<mvc:default-servlet-handler/>
 	
@@ -107,14 +116,14 @@
 	</bean>
 	
 	<!-- Exception Resolver -->
-	<bean id="exceptionMapping" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="exceptionMappings">
-			<props>
-				<prop key="Exception">resources/views/exception/exception</prop>
-			</props>
-		</property>
-		<property name="exceptionAttribute" value="exceptionMsg"/>
-		<property name="defaultErrorView" value="Error"/>
-	</bean>
+<!-- 	<bean id="exceptionMapping" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> -->
+<!-- 		<property name="exceptionMappings"> -->
+<!-- 			<props> -->
+<!-- 				<prop key="Exception">resources/views/exception/exception</prop> -->
+<!-- 			</props> -->
+<!-- 		</property> -->
+<!-- 		<property name="exceptionAttribute" value="exceptionMsg"/> -->
+<!-- 		<property name="defaultErrorView" value="Error"/> -->
+<!-- 	</bean> -->
 	
 </beans>

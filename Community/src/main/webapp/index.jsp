@@ -6,8 +6,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free Reward App, Free Android App" />
+	<meta name="keywords" content="worldspon, WorldSpon, 월드스폰" />
+	<meta name="author" content="WorldSpon, Inc." />
+	
+	<link rel='shortcut icon' href='/info/img/favicon/ws_p32.png'>
+	<link rel="icon" href="/info/img/favicon/ws_p16.png" sizes="16x16">
+	<link rel="icon" href="/info/img/favicon/ws_p32.png" sizes="32x32">
 
+	<style>
+		.btn btn-default btn-block {
+			
+		}
+	</style>
 <c:import url="/resources/jsp/defaultSetting.jsp"></c:import>
 <link rel="stylesheet" href="/resources/css/index.css?ver=1.0"/>
 
@@ -99,10 +112,25 @@
 				<a href="/lCoin/history" type="button" class="btn btn-default btn-block">락코인 기록</a>
 			</div>
 		</div>
+		<div class="login-con">
+			<div class="login-btn-box">
+				<a href="/log/charge" type="button" class="btn btn-default btn-block">캐시비 충전 기록</a>
+			</div>
+		</div>
+		<div class="login-con">
+			<div class="login-btn-box">
+				<a href="/log/lock" type="button" class="btn btn-danger btn-block">캐시비 락포인트 기록</a>
+			</div>
+		</div>
+		<div class="login-con">
+			<div class="login-btn-box">
+				<a target="_blank" href="https://partner.coin-box.kr/" type="button" class="btn btn-primary btn-block">캐시비 관리자</a>
+			</div>
+		</div>
 		<br><br>
 		<div class="login-con">
 			<div class="login-btn-box">
-				<a href="point/refund" type="button" class="btn btn-default btn-block">포인트 환급</a>
+				<a href="point/refund" type="button" class="btn btn-info btn-block">포인트 환급</a>
 			</div>
 		</div>
 		<div class="login-con">
@@ -110,9 +138,15 @@
 				<a href="/admin/find" type="button" class="btn btn-default btn-block">관리자용 비밀번호 찾기</a>
 			</div>
 		</div>
+		<br><br>
 		<div class="login-con">
 			<div class="login-btn-box">
 				<a href="/ap" type="button" class="btn btn-default btn-block">광고 공급자 관리</a>
+			</div>
+		</div>
+		<div class="login-con">
+			<div class="login-btn-box">
+				<a href="/server" type="button" class="btn btn-default btn-block">서버 관리</a>
 			</div>
 		</div>
 		<br><br>
