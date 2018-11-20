@@ -41,6 +41,7 @@ import com.cmt.domain.Tab;
 import com.cmt.service.BoardService;
 import com.cmt.service.MemberService;
 
+/*게시판*/
 @Controller
 public class HomeController {
 	

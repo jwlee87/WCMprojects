@@ -1,9 +1,5 @@
 package com.cmt.controller;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Period;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +22,7 @@ import com.cmt.service.CashbeeService;
 import com.cmt.service.MyAssetsService;
 import com.google.gson.Gson;
 
+/*내 자산 보기*/
 @Controller
 public class MyAssetsController {
 	
@@ -55,6 +52,7 @@ public class MyAssetsController {
 	public ModelAndView myAssetsMainPage(HttpServletRequest request) throws Exception {
 		HashMap<String, Object> paramMap = HttpUtil.getParamMap(request);
 		paramMap.put("no", 1);
+		paramMap.put("lt", "a");
 		logger.debug(paramMap);
 		
 		ModelAndView mav = new ModelAndView();
@@ -64,7 +62,7 @@ public class MyAssetsController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/myAssets/detail", method=RequestMethod.POST)
+	@RequestMapping(value="/myAssets/getDetail", method=RequestMethod.POST)
 	@ResponseBody
 //	public ModelAndView myAssetsDetailPage(HttpServletRequest request) throws Exception {
 	public HashMap<String, Object> myAssetsDetailPage(HttpServletRequest request) throws Exception {
@@ -72,19 +70,30 @@ public class MyAssetsController {
 		HashMap<String, Object> paramMap = HttpUtil.getParamMap(request);
 		logger.debug(paramMap);
 		
+		String type = (String)paramMap.get("t");
+		String uNo = (String)paramMap.get("uNo");
+		String no = (String)paramMap.get("no");
+		
+		System.out.println(type+", "+uNo+", "+no);
+		
 		Device device = DeviceUtils.getCurrentDevice(request);
+		
+		logger.debug("debug: "+device);
+		
 		if(device.isMobile()) {
 			logger.debug("mobile"+device.getDevicePlatform().toString());
+			
+			
+			
 			return paramMap;
 		}else {
 			logger.debug("Not mobile"+device.getDevicePlatform().toString());
 			return null;
 		}
 		
-		
 	}
 	
-	@RequestMapping(value="/myAssets/get", method=RequestMethod.POST)
+	@RequestMapping(value="/myAssets/getMain", method=RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, Object> getMyAssets(HttpServletRequest request) throws Exception {
 		HashMap<String, Object> paramMap = HttpUtil.getParamMap(request);

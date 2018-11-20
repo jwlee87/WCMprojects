@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cmt.common.HttpClientUtil;
 import com.cmt.service.CashbeeService;
 
+/*코인 박스*/
 @Controller
 public class CashbeeController {
 	
@@ -48,7 +49,7 @@ public class CashbeeController {
 		if(ipCheck)
 		{
 			HashMap<String, Object> responseMap = cashbeeService.requestSelectSender(paramMap);
-			System.out.println("responseMap: "+responseMap);
+			logger.debug("responseMap: "+responseMap);
 			jsonStr = (String) responseMap.get("jsonStr");
 			logger.debug("jsonStr: "+jsonStr);
 		}
@@ -64,13 +65,13 @@ public class CashbeeController {
 		
 		boolean ipCheck = cashbeeService.validationCheck(inAddress);	// 보안상 인입 ip 체크
 		HashMap<String, Object> paramMap = httpClientUtil.getParamMap(request);
-		System.out.println(paramMap);
+		logger.debug(paramMap);
 		
 		String jsonStr = "";
 		if(ipCheck)
 		{
 			HashMap<String, Object> responseMap = cashbeeService.requestCommitSender(paramMap);
-			System.out.println("responseMap: "+responseMap);
+			logger.debug("responseMap: "+responseMap);
 			jsonStr = (String) responseMap.get("jsonStr");
 			logger.debug("jsonStr: "+jsonStr);
 		}

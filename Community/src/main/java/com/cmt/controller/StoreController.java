@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cmt.service.StoreServiceInterface;
 
+/*앱팡 스토어*/
 @Controller
 public class StoreController {
 	

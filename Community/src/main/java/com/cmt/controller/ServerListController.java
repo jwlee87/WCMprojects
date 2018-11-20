@@ -18,6 +18,7 @@ import com.cmt.domain.Board;
 import com.cmt.service.ServerServiceInterface;
 import com.google.gson.Gson;
 
+/*서버 리스트 추가/삭제*/
 @Controller
 public class ServerListController {
 	

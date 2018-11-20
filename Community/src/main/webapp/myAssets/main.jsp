@@ -34,42 +34,129 @@
     	<div class="lds-back"></div>
         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
         
-    <!-- jQuery -->
+   <!-- jQuery -->
 	<script src="/myAssets/js/jquery.min.js"></script>
 	<!-- Bootstrap -->
 	<script src="/myAssets/js/bootstrap.min.js"></script>
 	<!-- Main -->
 	<script src="/myAssets/js/main.js"></script>
+
+<script type="text/javascript">
+
+$(function(){
 	
-	<script>
+	/* 상세목록 클릭 */
+	$(document).on("click", ".go-detail", function(){
+		var data = getDataSet();
+		var type = $(this).data("type");
+		data.type = type;
+		console.log(data.no +", "+ data.uNo +", "+ type);
+		getAjaxDetail(data);
+	});
+
+	/* 뒤로 클릭 */
+	$(document).on("click", ".goBack", function(){
+		var data = {};
+		var no = $("#data-set").data("no");
+		no = 1;
+		$("#data-set").data("no", no);
+		var uNo = $("#data-set").data("uNo");
+		data.no = no;
+		data.uNo = uNo;
+		
+		console.log("goBack: "+ data.no +", "+ data.uNo);
+		
+		$("#detail-page").remove();
+		getAjaxMain(data);
+	});
+
+	/* 더보기  클릭 */
+	$(document).on("click", ".more-see", function(){
+		var no = $("#data-set").data("no");
+		var uNo = $("#data-set").data("uNo");
+		console.log("더보기 현재 no="+ no +", uNo="+ uNo);
+		no++;
+		$("#data-set").data("no", no);
+		console.log("더보기 누르고 no="+ no +", uNo="+ uNo);
+	});
 	
-	function getDataSet(){
+	/* 초기 로드 */
+	init();
+	
+});
+
+function init() {
+	card.fnInit();
+}
+function getDataSet(){
+	return card.fnGetDataSet();
+}
+function getAjaxMain(data){
+	card.fnGetAjaxMain(data);
+}
+function getAjaxDetail(data){
+	card.fnGetAjaxDetail(data);	
+}
+function makeMain(data){
+	card.fnMakeMain(data);
+}
+	
+function makeDetail(data){
+	console.log(data);
+	
+	var no = data.no;
+	var uNo = data.uNo;
+	var l_coin = data.type;
+	
+	var html = "<div id='detail-page'><h1>hello world!</h1><button class='goBack'>뒤로</button><button class='more-see'>더보기</button></div>";
+	
+	$(".container-fluid").remove();
+	$("body").append(html);
+	hideLoader();
+}
+
+var card = {
+	//Init
+	fnInit : function(){
+		var data = '${data}';
+		var jsonData = JSON.parse(data);
+		$("#data-set").data("no", jsonData.no);
+		$("#data-set").data("uNo", jsonData.uNo);
+		console.log(jsonData);
+		getAjaxMain(jsonData);
+	},
+	
+	fnGetDataSet : function(){
 		var no = $("#data-set").data("no");
 		var uNo = $("#data-set").data("uNo");
 		var data = {};
 		data.no = no;
 		data.uNo = uNo;
 		return data;
-	}
-
-	function getAjaxMain(data){
-		$.ajax({
-			type: "POST"
-			, url: "/myAssets/get"
-			, data: data
-			, dataType: "json"
-			, beforeSend : function(){
-				showLoader();
-			}
-		}).done(function(data){
-			makeMain(data);
-		});
-	}
+	},
 	
-	function getAjaxDetail(data){
+	fnGetAjaxMain : function(data){
+		if(!data){
+			alert("정보를 불러올 수 없습니다.");
+		}else{
+			$.ajax({
+				type: "POST"
+				, url: "/myAssets/getMain"
+				, data: data
+				, dataType: "json"
+				, beforeSend : function(){
+					showLoader();
+				}
+			}).done(function(data){
+				makeMain(data);
+			});
+		}
+	},
+	
+	fnGetAjaxDetail : function(data) {
 		$.ajax({
 			type: "POST"
-			, url: "/myAssets/detail"
+			, url: "/myAssets/getDetail"
 			, data: data
 			, dataType: "json"
 			, beforeSend : function(){
@@ -78,11 +165,11 @@
 		}).done(function(data){
 			makeDetail(data);
 		});
-	}
+	},
 	
-	function makeMain(data){
+	fnMakeMain : function(data) {
 		
-		console.log(data.list);
+		console.log("card.fnMakeMain: "+data.list);
 		
 		var no = data.list[0].no;
 		var uNo = data.list[0].uNo;
@@ -96,40 +183,39 @@
 			alert("정보를 불러올 수 없습니다.");
 			return false;
 		}
-		
-		var html = ""; 
-		html += "<div id='main-page' class='main-page-top container-fluid'>"
-				  + "<div class='contents_1'>"
-                       + "<div class='row main-title font-color-white'>"
-                         + "<div class='title_nick more_bigger_normal_font_size bold'>"+nick
-                           + "<span class='normal_font_size'> 님의 자산</span></div>"
-                         + "</div>"
-                         + "<div class='row blank_height_3'></div>"
-                         + "<div class='row blank_height_1'></div>"
-                         + "<div class='row normal_font_size bold'>"
-                           + "<div class='col-12 no-double'>"
-                             + "<div class='top-box-title font-color-ccc'>스폰</div>"
-                             + "<div class='title-amount font-color-white'>"+numberWithCommas(Number(coin+l_coin))+" 개</div>"
-                           + "</div>"
-                         + " <div class='col-12 text-left no-double'>"
-                           + "<div class='top-box-title font-color-ccc'>포인트</div>"
-                           + "<div class='title-amount font-color-white'>"+numberWithCommas(Number(point+l_point))+" 원</div>"
-                         + "</div>"
-                       + "</div>"
-                       + "<div class='row blank_height_1'></div>"
-//                        + "<div class='row'>"
-//                          + "<div class='no-double col-12 more_smaller_size bolder font-color-ccc'>나의 지분율</div>"
-//                          + "<div lass='no-double col-12 more_smaller_size bold font-color-white'>0.1234567890%</div>"
-//                        + "</div>"
-				  + "</div>"
-				+ "</div>"
-				+ "<div class='info-box container-fluid bg-white go-detail' data-type='s'>"
-				  + "<div class='assets-name font-color-gray bold'>스폰</div>"
-				  + "<div class='assets-amount con-spon bold'><a href='#'>" +numberWithCommas(coin)+ " &nbsp;&nbsp;></a></div>"
+			
+		var html = "<div id='main-page' class='main-page-top container-fluid'>"
+				   + "<div class='contents_1'>"
+	                 + "<div class='row main-title font-color-white'>"
+	                   + "<div class='title_nick more_bigger_normal_font_size bold'>"+nick
+	                     + "<span class='normal_font_size'> 님의 자산</span></div>"
+	                   + "</div>"
+	                   + "<div class='row blank_height_3'></div>"
+	                   + "<div class='row blank_height_1'></div>"
+	                   + "<div class='row normal_font_size bold'>"
+	                     + "<div class='col-12 no-double'>"
+	                       + "<div class='top-box-title font-color-ccc'>스폰</div>"
+	                       + "<div class='title-amount font-color-white'>"+numberWithCommas(Number(coin+l_coin))+" 개</div>"
+	                     + "</div>"
+	                     + "<div class='col-12 text-left no-double'>"
+	                       + "<div class='top-box-title font-color-ccc'>포인트</div>"
+	                       + "<div class='title-amount font-color-white'>"+numberWithCommas(Number(point+l_point))+" 원</div>"
+	                     + "</div>"
+	                   + "</div>"
+	                   + "<div class='row blank_height_1'></div>"
+//	                       + "<div class='row'>"
+//	                         + "<div class='no-double col-12 more_smaller_size bolder font-color-ccc'>나의 지분율</div>"
+//	                         + "<div lass='no-double col-12 more_smaller_size bold font-color-white'>0.1234567890%</div>"
+//	                       + "</div>"
+					   + "</div>"
+					 + "</div>"
+				   + "<div class='info-box container-fluid bg-white go-detail' data-type='s'>"
+				   + "<div class='assets-name font-color-gray bold'>스폰</div>"
+				   + "<div class='assets-amount con-spon bold'><a href='#'>" +numberWithCommas(coin)+ " &nbsp;&nbsp;></a></div>"
 				+ "</div>"
 				+ "<div class='info-box container-fluid bg-white go-detail' data-type='p'>"
-				  +"<div class='assets-name font-color-gray bold'>포인트</div>"
-				  + "<div class='assets-amount con-spon bold'><a href='#'> "+numberWithCommas(point)+" &nbsp;&nbsp;></a></div>"
+				   + "<div class='assets-name font-color-gray bold'>포인트</div>"
+				   + "<div class='assets-amount con-spon bold'><a href='#'> "+numberWithCommas(point)+" &nbsp;&nbsp;></a></div>"
 				+ "</div>";
 				if(l_coin != 0){
 					html += "<div class='info-box container-fluid bg-white go-detail' data-type='ls'>"
@@ -144,74 +230,19 @@
 					+ "</div>";
 				}
 				
+				
+				
+				
+				
+				
+				
+				
 		$("body").append(html);
 		hideLoader();
 	}
-	
-	function makeDetail(data){
-		console.log(data);
-		
-		var no = data.no;
-		var uNo = data.uNo;
-		var l_coin = data.type;
-		
-		var html = "<div id='detail-page'><h1>hello world!</h1><button class='goBack'>뒤로</button><button class='more-see'>더보기</button></div>";
-		
-		$(".container-fluid").remove();
-		$("body").append(html);
-		hideLoader();
-	}
-	
-	$(document).on("click", ".go-detail", function(){
-		var data = getDataSet();
-		var type = $(this).data("type");
-		data.type = type;
-		console.log(data.no +", "+ data.uNo +", "+ type);
-		getAjaxDetail(data);
-	});
-	
-	$(document).on("click", ".goBack", function(){
-		
-		var data = {};
-		var no = $("#data-set").data("no");
-		no = 1;
-		$("#data-set").data("no", no);
-		var uNo = $("#data-set").data("uNo");
-		data.no = no;
-		data.uNo = uNo;
-		
-		console.log("goBack: "+ data.no +", "+ data.uNo);
-		
-		$("#detail-page").remove();
-		getAjaxMain(data);
-	});
-	
-	$(document).on("click", ".more-see", function(){
-		
-		var no = $("#data-set").data("no");
-		var uNo = $("#data-set").data("uNo");
-		console.log("더보기 현재 no="+ no +", uNo="+ uNo);
-		no++;
-		$("#data-set").data("no", no);
-		
-		console.log("더보기 누르고 no="+ no +", uNo="+ uNo);
-		
-	});
-	
-	$(document).ready(function(){
-		
-		var data = '${data}';
-		var jsonData = JSON.parse(data);
-		$("#data-set").data("no", jsonData.no);
-		$("#data-set").data("uNo", jsonData.uNo);
-		
-		console.log(jsonData);
-		
-		getAjaxMain(jsonData);
-		
-	});
+}
 	
 	
-	</script>
+</script>
 </body>
 </html>

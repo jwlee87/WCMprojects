@@ -23,6 +23,7 @@ import com.cmt.domain.ServerList;
 import com.cmt.service.BoardService;
 import com.cmt.service.MemberService;
 
+/*앱팡 리워드 통신*/
 @Controller
 public class RewardController {
 	

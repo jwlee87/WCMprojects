@@ -57,12 +57,15 @@ $(document).ready(function(){
 			, data: data
 			, dataType: "json"
 		}).done(function(data){
-			var dataStr = data.result;
+			/* var dataStr = data.result;
 			var beginIndex = dataStr.search("PASSWORD:");
 			var endIndex = dataStr.search("</body>");
-			var resultWord = dataStr.substring(beginIndex, endIndex);
-			if(resultWord.length > 11){
-				alert(resultWord);
+			var resultWord = dataStr.substring(beginIndex, endIndex); */
+			console.log(data);
+			console.log(data.result);
+			console.log(data.result.length);
+			if(data.result.length > 2){
+				alert(data.result);
 			}else{
 				alert("조회된 회원이 없습니다.");
 			}

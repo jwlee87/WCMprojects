@@ -18,6 +18,7 @@ import com.cmt.domain.Board;
 import com.cmt.service.ApServiceInterface;
 import com.google.gson.Gson;
 
+/*광고 공급자 관리 페이지*/
 @Controller
 public class AdvertisingProviderController {
 	

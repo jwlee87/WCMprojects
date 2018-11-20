@@ -143,6 +143,8 @@ public class CashbeeServiceImpl implements CashbeeService {
 						jso.addProperty("message", "미등록 카드입니다.");
 					}else if( code.equals("300") ) {
 						jso.addProperty("message", "사용중지된 카드입니다.");
+					}else if( code.equals("400") ) {
+						jso.addProperty("message", "보유포인트 부족");
 					}else{
 						jso.addProperty("code", "-nnn");
 						jso.addProperty("message", "서버 점검중입니다.");
@@ -210,13 +212,18 @@ public class CashbeeServiceImpl implements CashbeeService {
 				//통신성공시 기록
 				if(reachable)
 				{
-					System.out.println("통신성공");
+					logger.debug("통신성공");
 				}
 				//통신실패시 기록
 				else
 				{
-					System.out.println("통신실패");
-					cashbeeDao.addCompleteCashbee(paramMap);
+					logger.debug("통신실패");
+					
+					if( ((String)paramMap.get("amount")).equals("0") ) {
+						logger.debug("amount 0 is not write");
+					}else {
+						cashbeeDao.addCompleteCashbee(paramMap);
+					}
 				}
 				JsonObject jso = new JsonObject();
 				jso.addProperty("code", "100");

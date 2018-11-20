@@ -83,7 +83,7 @@
 			<bean class="com.cmt.interceptor.AuthenticationInterceptor"/>
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/myAssets/detail**"/>
+			<mvc:mapping path="/myAssets/getDetail"/>
 			<bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
