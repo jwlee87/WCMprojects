@@ -34,16 +34,17 @@ public class MyAssetsController {
 	@Qualifier("myAssetsServiceImpl")
 	private MyAssetsService mas;
 	
-	@Autowired
-	private HttpClientUtil httpClientUtil;
-	
-	///Constructor
-	public MyAssetsController() {
-		
-	}
-	
-//	@RequestMapping(value="/myAssets/main", method=RequestMethod.POST)
-	@RequestMapping(value="/myAssets/main")
+	/**
+	 * 
+	 * @param request
+	 * @paramMap
+	 * no = pageNo
+	 * uNo = userNo
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/myAssets/main", method=RequestMethod.POST)
+//	@RequestMapping(value="/myAssets/main")
 	public ModelAndView myAssetsMainPage(HttpServletRequest request) throws Exception {
 		HashMap<String, Object> paramMap = HttpUtil.getParamMap(request);
 		paramMap.put("no", 1);
@@ -55,7 +56,6 @@ public class MyAssetsController {
 		mav.addObject("data", gson.toJson(paramMap));
 		return mav;
 	}
-	
 	
 	/**
 	 * 
