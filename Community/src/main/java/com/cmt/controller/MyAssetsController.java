@@ -1,5 +1,6 @@
 package com.cmt.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,17 +31,11 @@ public class MyAssetsController {
 	private Logger logger = LogManager.getLogger();
 	
 	@Autowired
-	@Qualifier("cashbeeServiceImpl")
-	private CashbeeService cashbeeService;
-	
-	@Autowired
 	@Qualifier("myAssetsServiceImpl")
 	private MyAssetsService mas;
 	
 	@Autowired
 	private HttpClientUtil httpClientUtil;
-	
-	
 	
 	///Constructor
 	public MyAssetsController() {
@@ -52,7 +47,6 @@ public class MyAssetsController {
 	public ModelAndView myAssetsMainPage(HttpServletRequest request) throws Exception {
 		HashMap<String, Object> paramMap = HttpUtil.getParamMap(request);
 		paramMap.put("no", 1);
-		paramMap.put("lt", "a");
 		logger.debug(paramMap);
 		
 		ModelAndView mav = new ModelAndView();
@@ -62,29 +56,41 @@ public class MyAssetsController {
 		return mav;
 	}
 	
+	
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 * @filed String type : Assets 타입 spon / point / lockspon
+	 * @filed String uNo : 유저 UniqueID
+	 * @filed String no : 현재 페이지 번호
+	 * @filed String lt : 현재 페이지 리스트 타입 lt : a[all] / i[input] / o[output] 
+	 */
 	@RequestMapping(value="/myAssets/getDetail", method=RequestMethod.POST)
-	@ResponseBody
-//	public ModelAndView myAssetsDetailPage(HttpServletRequest request) throws Exception {
-	public HashMap<String, Object> myAssetsDetailPage(HttpServletRequest request) throws Exception {
+	public @ResponseBody HashMap<String, Object> myAssetsDetailPage(HttpServletRequest request) throws Exception {
 		
 		HashMap<String, Object> paramMap = HttpUtil.getParamMap(request);
 		logger.debug(paramMap);
 		
-		String type = (String)paramMap.get("t");
+		String type = (String)paramMap.get("type");
 		String uNo = (String)paramMap.get("uNo");
 		String no = (String)paramMap.get("no");
+		String listType = (String)paramMap.get("listType");
 		
-		System.out.println(type+", "+uNo+", "+no);
+		logger.debug(type+", "+uNo+", "+no+", "+listType);
+		String total = String.valueOf(mas.getTotalCount(paramMap));
+		paramMap.put("total", total);
+		HashMap<String, Object> myAssetsMap = mas.getMyAssets(paramMap);
+		paramMap.putAll(myAssetsMap);
 		
 		Device device = DeviceUtils.getCurrentDevice(request);
 		
 		logger.debug("debug: "+device);
+		logger.debug(paramMap);
 		
 		if(device.isMobile()) {
 			logger.debug("mobile"+device.getDevicePlatform().toString());
-			
-			
-			
 			return paramMap;
 		}else {
 			logger.debug("Not mobile"+device.getDevicePlatform().toString());
@@ -93,9 +99,37 @@ public class MyAssetsController {
 		
 	}
 	
+	@RequestMapping(value="/myAssets/getDetailContents", method=RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> myAssetsDetailContents(HttpServletRequest request) throws Exception {
+		
+		HashMap<String, Object> paramMap = HttpUtil.getParamMap(request);
+		int begin = Integer.parseInt((String)paramMap.get("page[begin]"));
+		int end = Integer.parseInt((String)paramMap.get("page[end]"));
+		String no = (String)paramMap.get("page[no]");
+		String total = (String)paramMap.get("page[total]");
+		String max = (String)paramMap.get("page[max]");
+		
+		paramMap.put("begin", begin);
+		paramMap.put("end", end);
+		paramMap.put("no", no);
+		paramMap.put("total", total);
+		paramMap.put("max", max);
+		
+		paramMap.remove("page[begin]");
+		paramMap.remove("page[end]");
+		paramMap.remove("page[no]");
+		paramMap.remove("page[total]");
+		paramMap.remove("page[max]");
+		paramMap.remove("page[count]");
+		
+		logger.debug(paramMap);
+		
+		paramMap.putAll(mas.getDetailContents(paramMap));
+		return paramMap;
+	}
+	
 	@RequestMapping(value="/myAssets/getMain", method=RequestMethod.POST)
-	@ResponseBody
-	public HashMap<String, Object> getMyAssets(HttpServletRequest request) throws Exception {
+	public @ResponseBody HashMap<String, Object> getMyAssets(HttpServletRequest request) throws Exception {
 		HashMap<String, Object> paramMap = HttpUtil.getParamMap(request);
 		return mas.getMyAssets(paramMap);
 	}

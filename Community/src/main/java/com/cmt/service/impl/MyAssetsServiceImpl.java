@@ -1,6 +1,7 @@
 package com.cmt.service.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,30 +27,25 @@ public class MyAssetsServiceImpl implements MyAssetsService {
 	public MyAssetsServiceImpl() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public int getTotalCount(HashMap<String, Object> paramMap) {
+		return myAssetsDao.getTotalCount(paramMap);
+	}
 
 	@Override
 	public HashMap<String, Object> getMyAssets(HashMap<String, Object> paramMap) {
-		
 		logger.debug(paramMap);
 		List<HashMap<String, Object>> al = myAssetsDao.getMyAssets(paramMap);
 		if( al.size() == 1) {
 			for(HashMap<String, Object> hm : al) {
-				
-				BigDecimal a = new BigDecimal(456789012345.01234567);
-				BigDecimal b = new BigDecimal(56789012345.00056700);
-				Double c = (double) 123456789012.01234567;
-				
-				hm.put("a", a.doubleValue());
-				hm.put("b", b.doubleValue());
-				hm.put("c", c);
-				
 				BigDecimal coin = (BigDecimal) hm.get("_Coin");
 				BigDecimal lCoin = (BigDecimal) hm.get("_LockCoin");
 				hm.put("_Coin", coin);
 				hm.put("_LockCoin", lCoin);
 				hm.put("no", paramMap.get("no"));
 				hm.put("uNo", paramMap.get("uNo"));
-				System.out.println(hm);
+//				System.out.println(hm);
 			}
 		}else {
 			al.add(new HashMap<String, Object>());
@@ -58,5 +54,16 @@ public class MyAssetsServiceImpl implements MyAssetsService {
 		returnMap.put("list", al);
 		return returnMap;
 	}
+
+	@Override
+	public HashMap<String, Object> getDetailContents(HashMap<String, Object> paramMap) {
+		logger.debug(paramMap);
+		ArrayList<HashMap<String, Object>> al = (ArrayList<HashMap<String, Object>>) myAssetsDao.getTransactionList(paramMap);
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", al);
+		return resultMap;
+	}
+
+	
 
 }

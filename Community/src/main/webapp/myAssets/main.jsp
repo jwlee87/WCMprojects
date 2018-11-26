@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="/myAssets/css/font.css">
         <link rel="stylesheet" href="/myAssets/css/grid.css">
         <link rel="stylesheet" href="/myAssets/css/aminate.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         <link rel="stylesheet" href="/myAssets/css/bootstrap.min.css">
         
         <link rel="stylesheet" href="/myAssets/css/loader.css">
@@ -36,8 +37,9 @@
         
    <!-- jQuery -->
 	<script src="/myAssets/js/jquery.min.js"></script>
+	<script src="/myAssets/js/popper.js"></script>
 	<!-- Bootstrap -->
-	<script src="/myAssets/js/bootstrap.min.js"></script>
+	<script src="/myAssets/js/bootstrap.js"></script>
 	<!-- Main -->
 	<script src="/myAssets/js/main.js"></script>
 
@@ -49,10 +51,16 @@ $(function(){
 	$(document).on("click", ".go-detail", function(){
 		var data = getDataSet();
 		var type = $(this).data("type");
+		var lt = $(this).data("lt");
+		$("#data-set").data("lt", lt);
+		$("#data-set").data("type", type);
 		data.type = type;
-		console.log(data.no +", "+ data.uNo +", "+ type);
+		data.listType = lt;
+		console.log($.extend({'location':'event-click.go-detail', 'debug-target':'params'}, data));
 		getAjaxDetail(data);
 	});
+	
+	/* 상세보기 전체보기 */
 
 	/* 뒤로 클릭 */
 	$(document).on("click", ".goBack", function(){
@@ -72,12 +80,49 @@ $(function(){
 
 	/* 더보기  클릭 */
 	$(document).on("click", ".more-see", function(){
+		
+		var data = {};
+		
 		var no = $("#data-set").data("no");
-		var uNo = $("#data-set").data("uNo");
-		console.log("더보기 현재 no="+ no +", uNo="+ uNo);
+		var total = $("#data-set").data("total");
+		var listType = $("#data-set").data("lt");
+		var type = $("#data-set").data("type");
+		var page = pagination(no, total);
+		var max = page.max;
 		no++;
-		$("#data-set").data("no", no);
-		console.log("더보기 누르고 no="+ no +", uNo="+ uNo);
+		if(no >= max){
+			$("#data-set").data("no", max);
+		}else{
+			$("#data-set").data("no", no);
+		}
+		
+		data.no = $("#data-set").data("no");
+		data.uNo = $("#data-set").data("uNo");
+		data.type = type;
+		data.listType = listType;
+		data.total = total;
+		console.log(data);
+		makeDetailContents(data);
+		
+	});
+	
+	/* 내역 옵션 change */
+	$(document).on("click", ".dropdown-item", function(){
+		var data = {};
+		var uNo = $("#data-set").data("uNo");
+		var total = $("#data-set").data("total");
+		var type = $("#data-set").data("type");
+		var lt = $(this).data("lt");
+		$("#data-set").data("lt", lt);
+		data.no = 1;
+		data.uNo = uNo;
+		data.total = total;
+		data.type = type;
+		data.listType = lt;
+		
+		console.log(data);
+		getAjaxDetail(data);
+		
 	});
 	
 	/* 초기 로드 */
@@ -100,20 +145,10 @@ function getAjaxDetail(data){
 function makeMain(data){
 	card.fnMakeMain(data);
 }
-	
-function makeDetail(data){
-	console.log(data);
-	
-	var no = data.no;
-	var uNo = data.uNo;
-	var l_coin = data.type;
-	
-	var html = "<div id='detail-page'><h1>hello world!</h1><button class='goBack'>뒤로</button><button class='more-see'>더보기</button></div>";
-	
-	$(".container-fluid").remove();
-	$("body").append(html);
-	hideLoader();
+function makeDetailContents(data){
+	card.fnGetAjaxContents(data);
 }
+
 
 var card = {
 	//Init
@@ -123,7 +158,7 @@ var card = {
 		$("#data-set").data("no", jsonData.no);
 		$("#data-set").data("uNo", jsonData.uNo);
 		console.log(jsonData);
-		getAjaxMain(jsonData);
+		card.fnGetAjaxMain(jsonData);
 	},
 	
 	fnGetDataSet : function(){
@@ -136,6 +171,7 @@ var card = {
 	},
 	
 	fnGetAjaxMain : function(data){
+		console.log($.extend({'location':'card.fnGetAjaxMain', 'debug-target':'params'}, data));
 		if(!data){
 			alert("정보를 불러올 수 없습니다.");
 		}else{
@@ -148,12 +184,14 @@ var card = {
 					showLoader();
 				}
 			}).done(function(data){
-				makeMain(data);
+				card.fnMakeMain(data);
 			});
 		}
 	},
 	
 	fnGetAjaxDetail : function(data) {
+		console.log($.extend({'location':'card.fnGetAjaxDetail', 'debug-target':'params'}, data));
+		
 		$.ajax({
 			type: "POST"
 			, url: "/myAssets/getDetail"
@@ -163,18 +201,17 @@ var card = {
 				showLoader();
 			}
 		}).done(function(data){
-			makeDetail(data);
+			card.fnMakeDetailTop(data);
 		});
 	},
 	
 	fnMakeMain : function(data) {
-		
-		console.log("card.fnMakeMain: "+data.list);
-		
+		console.log($.extend({'location':'card.fnMakeMain', 'debug-target':'params'}, data.list[0]));
 		var no = data.list[0].no;
 		var uNo = data.list[0].uNo;
 		var nick = data.list[0]._Trademark;
 		var coin = data.list[0]._Coin;
+		var coin
 		var point = data.list[0]._Point;
 		var l_coin = data.list[0]._LockCoin;
 		var l_point = data.list[0]._LockPoint;
@@ -183,61 +220,301 @@ var card = {
 			alert("정보를 불러올 수 없습니다.");
 			return false;
 		}
-			
-		var html = "<div id='main-page' class='main-page-top container-fluid'>"
-				   + "<div class='contents_1'>"
-	                 + "<div class='row main-title font-color-white'>"
-	                   + "<div class='title_nick more_bigger_normal_font_size bold'>"+nick
-	                     + "<span class='normal_font_size'> 님의 자산</span></div>"
-	                   + "</div>"
-	                   + "<div class='row blank_height_3'></div>"
-	                   + "<div class='row blank_height_1'></div>"
-	                   + "<div class='row normal_font_size bold'>"
-	                     + "<div class='col-12 no-double'>"
-	                       + "<div class='top-box-title font-color-ccc'>스폰</div>"
-	                       + "<div class='title-amount font-color-white'>"+numberWithCommas(Number(coin+l_coin))+" 개</div>"
-	                     + "</div>"
-	                     + "<div class='col-12 text-left no-double'>"
-	                       + "<div class='top-box-title font-color-ccc'>포인트</div>"
-	                       + "<div class='title-amount font-color-white'>"+numberWithCommas(Number(point+l_point))+" 원</div>"
-	                     + "</div>"
-	                   + "</div>"
-	                   + "<div class='row blank_height_1'></div>"
-//	                       + "<div class='row'>"
-//	                         + "<div class='no-double col-12 more_smaller_size bolder font-color-ccc'>나의 지분율</div>"
-//	                         + "<div lass='no-double col-12 more_smaller_size bold font-color-white'>0.1234567890%</div>"
-//	                       + "</div>"
-					   + "</div>"
-					 + "</div>"
-				   + "<div class='info-box container-fluid bg-white go-detail' data-type='s'>"
+		var html = "";
+		html += "<div id='main-page' class='main-page-top container-fluid'>"
+				  + "<div class='contents_1'>"
+	                + "<div class='row main-title font-color-white'>"
+	                  + "<div class='title_nick more_bigger_normal_font_size bold'>"+nick
+	                    + "<span class='normal_font_size'> 님의 자산</span></div>"
+	                  + "</div>"
+	                  + "<div class='row blank_height_3'></div>"
+	                  + "<div class='row blank_height_1'></div>"
+	                  + "<div class='row normal_font_size bold'>"
+	                    + "<div class='col-12 no-double'>"
+	                      + "<div class='top-box-title font-color-ccc'>스폰</div>"
+	                      + "<div class='title-amount font-color-white'>"+numberWithCommas(Number(coin+l_coin))+" 개</div>"
+	                    + "</div>"
+	                    + "<div class='col-12 text-left no-double'>"
+	                      + "<div class='top-box-title font-color-ccc'>포인트</div>"
+	                      + "<div class='title-amount font-color-white'>"+numberWithCommas(Number(point+l_point))+" 원</div>"
+	                    + "</div>"
+	                  + "</div>"
+	                  + "<div class='row blank_height_1'></div>"
+//	                      + "<div class='row'>"
+//	                        + "<div class='no-double col-12 more_smaller_size bolder font-color-ccc'>나의 지분율</div>"
+//	                        + "<div lass='no-double col-12 more_smaller_size bold font-color-white'>0.1234567890%</div>"
+//	                      + "</div>"
+				   + "</div>"
+				 + "</div>"
+				 + "<div class='info-box container-fluid bg-white go-detail' data-type='s' data-lt='a'>"
 				   + "<div class='assets-name font-color-gray bold'>스폰</div>"
 				   + "<div class='assets-amount con-spon bold'><a href='#'>" +numberWithCommas(coin)+ " &nbsp;&nbsp;></a></div>"
 				+ "</div>"
-				+ "<div class='info-box container-fluid bg-white go-detail' data-type='p'>"
+				+ "<div class='info-box container-fluid bg-white go-detail' data-type='p' data-lt='a'>"
 				   + "<div class='assets-name font-color-gray bold'>포인트</div>"
 				   + "<div class='assets-amount con-spon bold'><a href='#'> "+numberWithCommas(point)+" &nbsp;&nbsp;></a></div>"
 				+ "</div>";
 				if(l_coin != 0){
-					html += "<div class='info-box container-fluid bg-white go-detail' data-type='ls'>"
+					html += "<div class='info-box container-fluid bg-white go-detail' data-type='ls' data-lt='a'>"
 					  + "<div class='assets-name font-color-gray bold'>락스폰</div>"
 					  + "<div class='assets-amount con-spon bold'><a href='#'>" +numberWithCommas(l_coin)+ " &nbsp;&nbsp;></a></div>"
 					+ "</div>";
 				}
 				if(l_point != 0){
-					html += "<div class='info-box container-fluid bg-white go-detail' data-type='lp'>"
+					html += "<div class='info-box container-fluid bg-white go-detail' data-type='lp' data-listType='a'>"
 					  + "<div class='assets-name font-color-gray bold'>락포인트</div>"
 					  + "<div class='assets-amount con-spon bold'><a href='#'>" +l_point+ " &nbsp;&nbsp;></a></div>"
 					+ "</div>";
 				}
-				
-				
-				
-				
-				
-				
-				
-				
+		$(".detail-page").remove();
 		$("body").append(html);
+		hideLoader();
+	},
+	
+	fnMakeDetailTop : function(data){
+			
+		$("#data-set").data("total", data.total);
+		console.log($.extend({'location':'fnMakeDetailTop', 'debug-target':'params'}, data));
+		
+		var no = data.no;
+		var uNo = data.uNo;
+		var type = data.type;
+		var coin = data.list[0]._Coin;
+		var l_coin = data.list[0]._LockCoin;
+		var point = data.list[0]._Point;
+		var l_point = data.list[0]._LockPoint;
+		
+		console.log(data.listType);
+		if(data.listType == "a"){
+			console.log("listType is a");
+		}else{
+			console.log("listType is not a");
+		}
+		
+		
+		var html = "";
+		html += "<div class='detail-page view-box container-fluid no-double'>"
+			 +     "<div class='detail-top-box container-fluid'>"
+			 +	     "<div>"
+			 +		   "<div class='row assets-menu'>"
+			 +			  "<div class='col-1 no-double'>"
+			 +			    "<a href='#' class='goBack'><i class='fas fa-arrow-left'></i></a>"
+			 +			  "</div>";
+			 
+		if(type == 'p'){
+			html +=		   "<div class='col-4 bolder'>포인트</div></div>";
+		}else if(type == 's'){
+			html +=		   "<div class='col-4 bolder'>스폰</div></div>";
+		}else if(type == 'lp'){
+			html +=		   "<div class='col-4 bolder'>락포인트</div></div>";
+		}else if(type == 'ls'){
+			html +=		   "<div class='col-4 bolder'>락스폰</div></div>";
+		}
+	    html += "<div class='blank_height_3'></div>"
+	         +  "<div class='dropdown'>"
+	         +    "<button class='btn btn-default dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
+		if(data.listType == 'a'){
+			html += "전체내역";
+		}else if(data.listType == 'i'){
+			html += "입금내역";
+		}else if(data.listType == 'o'){
+			html += "출금내역";
+		}
+		html += " <i class='fas fa-angle-down'></i></button>"
+	         +		"<div class='dropdown-menu shadow-lg' aria-labelledby='dropdownMenuButton'>";
+		if(data.listType == 'a'){
+			html += "<a class='dropdown-item' href='#' data-lt='a'>전체내역 <i class='fas fa-angle-down'></i></a>"
+				 +  "<a class='dropdown-item' href='#' data-lt='i'>입금내역</a>"
+				 +  "<a class='dropdown-item' href='#' data-lt='o'>출금내역</a>";
+		}else if(data.listType == 'i'){
+			html += "<a class='dropdown-item' href='#' data-lt='a'>전체내역</a>"
+				 +  "<a class='dropdown-item' href='#' data-lt='i'>입금내역 <i class='fas fa-angle-down'></i></a>"
+				 +  "<a class='dropdown-item' href='#' data-lt='o'>출금내역</a>";
+		}else if(data.listType == 'o'){
+			html += "<a class='dropdown-item' href='#' data-lt='a'>전체내역</a>"
+				 +  "<a class='dropdown-item' href='#' data-lt='i'>입금내역</a>"
+				 +  "<a class='dropdown-item' href='#' data-lt='o'>출금내역 <i class='fas fa-angle-down'></i></a>";
+		}
+		html += "</div></div>"
+			 + "<div class='blank_height_3'></div>"
+			 + "<div class='col-12 bolder'>";
+		if(type == 's'){
+			html += numberWithCommas(coin)+"</div>";
+		}else if(type == 'p'){
+			html += numberWithCommas(point)+"</div>";
+		}else if(type == 'ls'){
+			html += numberWithCommas(l_coin)+"</div>";
+		}else if(type == 'lp'){
+			html += numberWithCommas(l_point)+"</div>";
+		}
+		html += "<div class='blank_height_1'></div>"
+	         +  "<div class='col-12 micro_font_size bold font-color-gray'>";
+		if(type == 's'){
+			html += "스폰지갑</div>";
+		}else if(type == 'p'){
+			html += "포인트지갑</div>";
+		}else if(type == 'ls'){
+			html += "락스폰지갑</div>";
+		}else if(type == 'lp'){
+			html += "락포인트지갑</div>";
+		}
+		html += "</div></div>";
+
+//     <!-- Contents Box -->
+		html += "<div id='contents-box' class='contents-box container-fluid'></div>";
+		
+		$(".container-fluid").remove();
+		$("body").append(html);
+		hideLoader();
+		
+		console.log(html);
+		
+		
+		console.log("탑 나가기전");
+		console.log(data)
+		console.log("탑 종료");
+		
+		card.fnGetAjaxContents(data);
+	},
+	
+	fnGetAjaxContents : function(data){
+		
+		var no = data.no;
+		var uNo = data.uNo;
+		var type = data.type;
+		var listType = data.listType;
+		var total = data.total;
+		data.page = pagination(data.no, data.total);
+		delete data.list;
+		
+		console.log($.extend({"location":"fnGetAjaxContents"}, data));
+		
+		$.ajax({
+			type: "POST",
+			url: "/myAssets/getDetailContents",
+			data: data,
+			dataType: "json",
+			beforeSend : function(){
+				showLoader();
+			}
+		}).done(function(data){
+			card.fnMakeContents(data);
+		});
+	},
+	
+	fnMakeContents : function(data){
+		console.log($.extend({"location": "fnMakeContents"}, data));
+		
+		var html = "";
+		var array = data.list;
+		console.log(array);
+		
+		array.forEach(function(e){
+			html += "<div class='detail-info-box'>"
+					+ "<div class='row'>"
+					+ "<div class='col-3 left-info'>"
+						+ "<div class='i-box'>";
+						
+			/* 스폰 */
+			if(data.type == 's'){
+				if( Number(e.coin) > 0){
+					html += "<i class='fas fa-plus-circle income m-auto'></i></div>";
+				}else if( Number(e.coin) < 0){
+					html += "<i class='fas fa-minus-circle income m-auto'></i></div>";
+				}
+				html += "<div class='row'>"
+					+ "<i class='far fa-clock t_time m-auto'><span class='bold'>"+e.hms+"</span></i>"
+					+ "</div>"
+					+ "</div>"
+					+ "<div class='col-9 text-right'>"
+					+ "<div class='row'>"
+					+ "<div class='ml-auto target-date bolder'>"+ ((e.ymd).split("-"))[0] +"년 "
+					+ ((e.ymd).split("-"))[1] +"월 "+ ((e.ymd).split("-"))[2] +"일 "+ getWeekday(e.ymd)
+					+ "</div>"
+					+ "</div>"
+					+ "<div class='row text-right'>"
+					+ "<div class='col-12 no-double memo'>"+e.memo+"</div>";
+				
+				if( Number(e.coin) > 0){
+					html += "<div class='col-12 no-double target-amount-income bolder'>입금 &nbsp;"+ numberWithCommas(e.coin) +"</div>";
+				}else if( Number(e.coin) < 0){
+					html += "<div class='col-12 no-double target-amount-withdraw bolder'>출금 &nbsp"+ numberWithCommas(-1*e.coin) +"</div>";
+				}
+				html += "<div class='ml-auto balance-amount'> 잔액 "+ numberWithCommas(e.aCoin) +"</div>"
+					+ "</div></div></div></div>"
+			
+			/* 포인트 */
+			}else if(data.type == 'p'){
+				if( Number(e.point) > 0){
+					html += "<i class='fas fa-plus-circle income m-auto'></i></div>";
+				}else if( Number(e.point) < 0){
+					html += "<i class='fas fa-minus-circle income m-auto'></i></div>";
+				}
+				html += "<div class='row'>"
+					+ "<i class='far fa-clock t_time m-auto'><span class='bold'>"+e.hms+"</span></i>"
+					+ "</div>"
+					+ "</div>"
+					+ "<div class='col-9 text-right'>"
+					+ "<div class='row'>"
+					+ "<div class='ml-auto target-date bolder'>"+ ((e.ymd).split("-"))[0] +"년 "
+					+ ((e.ymd).split("-"))[1] +"월 "+ ((e.ymd).split("-"))[2] +"일 "+ getWeekday(e.ymd)
+					+ "</div>"
+					+ "</div>"
+					+ "<div class='row text-right'>"
+					+ "<div class='col-12 no-double memo'>"+e.memo+"</div>";
+				
+				if( Number(e.point) > 0){
+					html += "<div class='col-12 no-double target-amount-income bolder'>입금 &nbsp;"+ numberWithCommas(e.point) +"</div>";
+				}else if( Number(e.point) < 0){
+					html += "<div class='col-12 no-double target-amount-withdraw bolder'>출금 &nbsp"+ numberWithCommas(-1*e.point) +"</div>";
+				}
+				html += "<div class='ml-auto balance-amount'> 잔액 "+ numberWithCommas(e.aPoint) +"</div>"
+					+ "</div></div></div></div>"
+					
+			/* 락스폰 */
+			}else if(data.type == 'ls'){
+				if( Number(e.lCoin) > 0){
+					html += "<i class='fas fa-plus-circle income m-auto'></i></div>";
+				}else if( Number(e.lCoin) < 0){
+					html += "<i class='fas fa-minus-circle income m-auto'></i></div>";
+				}
+				html += "<div class='row'>"
+					+ "<i class='far fa-clock t_time m-auto'><span class='bold'>"+e.hms+"</span></i>"
+					+ "</div>"
+					+ "</div>"
+					+ "<div class='col-9 text-right'>"
+					+ "<div class='row'>"
+					+ "<div class='ml-auto target-date bolder'>"+ ((e.ymd).split("-"))[0] +"년 "
+					+ ((e.ymd).split("-"))[1] +"월 "+ ((e.ymd).split("-"))[2] +"일 "+ getWeekday(e.ymd)
+					+ "</div>"
+					+ "</div>"
+					+ "<div class='row text-right'>"
+					+ "<div class='col-12 no-double memo'>"+e.memo+"</div>";
+				
+				if( Number(e.lCoin) > 0){
+					html += "<div class='col-12 no-double target-amount-income bolder'>입금 &nbsp;"+ numberWithCommas(e.lCoin) +"</div>";
+				}else if( Number(e.lCoin) < 0){
+					html += "<div class='col-12 no-double target-amount-withdraw bolder'>출금 &nbsp"+ numberWithCommas(-1*e.lCoin) +"</div>";
+				}
+				html += "<div class='ml-auto balance-amount'> 잔액 "+ numberWithCommas(e.aLcoin) +"</div>"
+					+ "</div></div></div></div>"
+			}
+			
+		})
+		
+		if(data.no < data.max){
+			html += "<div class='more-see'>"
+				+ "<div class='m-auto text-center bold'>더보기</div>"
+				+ "</div>";
+		}else{
+			html += "<br><div>"
+				+ "<div class='m-auto text-center'> 더이상 내역이 없습니다. </div>"
+				+ "</div><br>";
+		}
+		
+		$(".more-see").remove();
+		
+		$("#contents-box").append(html);
 		hideLoader();
 	}
 }

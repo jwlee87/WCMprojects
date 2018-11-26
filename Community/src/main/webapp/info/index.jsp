@@ -277,7 +277,7 @@
 				    <h3 style="color: white;"><b>WORLDSPON Inc.</b></h3>
 				    <p><span style="font-size: 0.9em!important;">사업자등록번호 : 374-86-00996</span><br>
 				    <span style="font-size: 0.9em!important;">업종 : 전자상거래</span><br>
-				    <span style="font-size: 0.9em!important;">대표이사 : 황동하</span><br>
+				    <span style="font-size: 0.9em!important;">대표이사 : 김성봉</span><br>
 				    <span style="font-size: 0.9em!important;">주소 : 서울특별시 강남구 테헤란로63길 14, 9층(삼성동, 인화빌딩)</span>
 				    </p><br><br>
 				</div>
