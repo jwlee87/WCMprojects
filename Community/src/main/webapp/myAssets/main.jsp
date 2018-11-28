@@ -56,7 +56,7 @@ $(function(){
 		$("#data-set").data("type", type);
 		data.type = type;
 		data.listType = lt;
-		console.log($.extend({'location':'event-click.go-detail', 'debug-target':'params'}, data));
+// 		console.log($.extend({'location':'event-click.go-detail', 'debug-target':'params'}, data));
 		getAjaxDetail(data);
 	});
 	
@@ -72,7 +72,7 @@ $(function(){
 		data.no = no;
 		data.uNo = uNo;
 		
-		console.log("goBack: "+ data.no +", "+ data.uNo);
+// 		console.log("goBack: "+ data.no +", "+ data.uNo);
 		
 		$("#detail-page").remove();
 		getAjaxMain(data);
@@ -101,7 +101,7 @@ $(function(){
 		data.type = type;
 		data.listType = listType;
 		data.total = total;
-		console.log(data);
+// 		console.log(data);
 		makeDetailContents(data);
 		
 	});
@@ -120,7 +120,7 @@ $(function(){
 		data.type = type;
 		data.listType = lt;
 		
-		console.log(data);
+// 		console.log(data);
 		getAjaxDetail(data);
 		
 	});
@@ -157,7 +157,7 @@ var card = {
 		var jsonData = JSON.parse(data);
 		$("#data-set").data("no", jsonData.no);
 		$("#data-set").data("uNo", jsonData.uNo);
-		console.log(jsonData);
+// 		console.log(jsonData);
 		card.fnGetAjaxMain(jsonData);
 	},
 	
@@ -171,7 +171,7 @@ var card = {
 	},
 	
 	fnGetAjaxMain : function(data){
-		console.log($.extend({'location':'card.fnGetAjaxMain', 'debug-target':'params'}, data));
+// 		console.log($.extend({'location':'card.fnGetAjaxMain', 'debug-target':'params'}, data));
 		if(!data){
 			alert("정보를 불러올 수 없습니다.");
 		}else{
@@ -190,7 +190,7 @@ var card = {
 	},
 	
 	fnGetAjaxDetail : function(data) {
-		console.log($.extend({'location':'card.fnGetAjaxDetail', 'debug-target':'params'}, data));
+// 		console.log($.extend({'location':'card.fnGetAjaxDetail', 'debug-target':'params'}, data));
 		
 		$.ajax({
 			type: "POST"
@@ -206,7 +206,7 @@ var card = {
 	},
 	
 	fnMakeMain : function(data) {
-		console.log($.extend({'location':'card.fnMakeMain', 'debug-target':'params'}, data.list[0]));
+// 		console.log($.extend({'location':'card.fnMakeMain', 'debug-target':'params'}, data.list[0]));
 		var no = data.list[0].no;
 		var uNo = data.list[0].uNo;
 		var nick = data.list[0]._Trademark;
@@ -274,7 +274,7 @@ var card = {
 	fnMakeDetailTop : function(data){
 			
 		$("#data-set").data("total", data.total);
-		console.log($.extend({'location':'fnMakeDetailTop', 'debug-target':'params'}, data));
+// 		console.log($.extend({'location':'fnMakeDetailTop', 'debug-target':'params'}, data));
 		
 		var no = data.no;
 		var uNo = data.uNo;
@@ -284,11 +284,11 @@ var card = {
 		var point = data.list[0]._Point;
 		var l_point = data.list[0]._LockPoint;
 		
-		console.log(data.listType);
+// 		console.log(data.listType);
 		if(data.listType == "a"){
-			console.log("listType is a");
+// 			console.log("listType is a");
 		}else{
-			console.log("listType is not a");
+// 			console.log("listType is not a");
 		}
 		
 		
@@ -367,12 +367,12 @@ var card = {
 		$("body").append(html);
 		hideLoader();
 		
-		console.log(html);
+// 		console.log(html);
 		
 		
-		console.log("탑 나가기전");
-		console.log(data)
-		console.log("탑 종료");
+// 		console.log("탑 나가기전");
+// 		console.log(data)
+// 		console.log("탑 종료");
 		
 		card.fnGetAjaxContents(data);
 	},
@@ -387,7 +387,7 @@ var card = {
 		data.page = pagination(data.no, data.total);
 		delete data.list;
 		
-		console.log($.extend({"location":"fnGetAjaxContents"}, data));
+// 		console.log($.extend({"location":"fnGetAjaxContents"}, data));
 		
 		$.ajax({
 			type: "POST",
@@ -403,11 +403,11 @@ var card = {
 	},
 	
 	fnMakeContents : function(data){
-		console.log($.extend({"location": "fnMakeContents"}, data));
+// 		console.log($.extend({"location": "fnMakeContents"}, data));
 		
 		var html = "";
 		var array = data.list;
-		console.log(array);
+// 		console.log(array);
 		
 		array.forEach(function(e){
 			html += "<div class='detail-info-box'>"
