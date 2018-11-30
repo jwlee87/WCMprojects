@@ -157,8 +157,11 @@ var card = {
 		var jsonData = JSON.parse(data);
 		$("#data-set").data("no", jsonData.no);
 		$("#data-set").data("uNo", jsonData.uNo);
-// 		console.log(jsonData);
-		card.fnGetAjaxMain(jsonData);
+		if((jsonData.check)=="error"){
+			alert("잘못된 접근입니다!");
+		}else{
+			card.fnGetAjaxMain(jsonData);
+		}
 	},
 	
 	fnGetDataSet : function(){
@@ -207,11 +210,17 @@ var card = {
 	
 	fnMakeMain : function(data) {
 // 		console.log($.extend({'location':'card.fnMakeMain', 'debug-target':'params'}, data.list[0]));
+		
+		console.log(data);
+
+		if(data == null){
+			alert("세션이 만료되었습니다.");
+		}
+		
 		var no = data.list[0].no;
 		var uNo = data.list[0].uNo;
 		var nick = data.list[0]._Trademark;
 		var coin = data.list[0]._Coin;
-		var coin
 		var point = data.list[0]._Point;
 		var l_coin = data.list[0]._LockCoin;
 		var l_point = data.list[0]._LockPoint;

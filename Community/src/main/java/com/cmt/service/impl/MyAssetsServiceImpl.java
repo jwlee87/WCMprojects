@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.cmt.common.HttpUtil;
 import com.cmt.dao.MyAssetsDao;
 import com.cmt.service.MyAssetsService;
 
@@ -23,6 +25,7 @@ public class MyAssetsServiceImpl implements MyAssetsService {
 	@Autowired
 	@Qualifier("myAssetsDaoImpl")
 	private MyAssetsDao myAssetsDao;
+	
 
 	public MyAssetsServiceImpl() {
 		// TODO Auto-generated constructor stub
@@ -64,6 +67,44 @@ public class MyAssetsServiceImpl implements MyAssetsService {
 		return resultMap;
 	}
 
-	
+	@Override
+	public Map<String, Object> makeRandomString(String uNo) {
+		
+		long start = System.currentTimeMillis();
+		String beginTime = String.valueOf(start);
+		String authStr = HttpUtil.generateRandomStr();
+		
+		Map<String, Object> objMap = new HashMap<String, Object>();
+		objMap.put("authStr", authStr);
+		objMap.put("uNo", uNo);
+		objMap.put("beginTime", beginTime);
+		objMap.put("no", 1);
+		return objMap;
+	}
+
+	@Override
+	public boolean timeValidationChecker(long start, long end) {
+		long duration = end - start;
+		if( (duration / 1000) >= 10 ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public List<Map<String, Object>> getMapList() {
+		return myAssetsDao.getMapList();
+	}
+
+	@Override
+	public int addTempUrl(Map<String, Object> objMap) {
+		return myAssetsDao.addTempUrl(objMap);
+	}
+
+	@Override
+	public synchronized int deleteTempUrl(Map<String, Object> paramMap) {
+		return myAssetsDao.deleteTempUrl(paramMap);
+	}
 
 }

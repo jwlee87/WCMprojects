@@ -39,6 +39,12 @@ public class HttpUtil {
 	// field
 	private int DEFAULT_TIMEOUT = 5000;
 	private Logger logger = LogManager.getLogger();
+	private final static List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
+	
+	
+	public static final List<Map<String, Object>> getMapList(){
+		return mapList;
+	}
 	
 	public static HashMap<String, Object> getParamMap(HttpServletRequest req) {
 		HashMap<String, Object> result = new HashMap<String, Object>();

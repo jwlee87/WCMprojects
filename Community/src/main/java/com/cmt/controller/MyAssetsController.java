@@ -1,8 +1,9 @@
 package com.cmt.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,63 +31,29 @@ import com.google.gson.Gson;
 public class MyAssetsController {
 	
 	///Field
-	private Logger logger = LogManager.getLogger();
+//	private Logger logger = LogManager.getLogger();
 	
 	@Autowired
 	@Qualifier("myAssetsServiceImpl")
 	private MyAssetsService mas;
 	
 	@RequestMapping(value="/myAssets/init", method=RequestMethod.POST)
-//	@RequestMapping(value="/myAssets/init", method=RequestMethod.GET)
+//	@RequestMapping(value="/myAssets/init")
 	public void myAssetsInit(HttpServletRequest request, HttpSession session, HttpServletResponse response) throws Exception {
 		/**
 		 * uNo , pid
 		 */
-		@SuppressWarnings("unchecked")
-		
-		ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>)session.getAttribute("msList");
 		HashMap<String, Object> paramMap = HttpUtil.getParamMap(request);
 		String uNo = (String)paramMap.get("uNo");
 		String returnString = "";
 		
-		if(list == null) {
-			
-			logger.debug("session null 이므로 session 생성");
-			
-			session.setMaxInactiveInterval(60);
-			String authStr = HttpUtil.generateRandomStr();
-			logger.debug(authStr);
-			
-			paramMap.put("no", 1);
-			paramMap.put("uNo", uNo);
-			paramMap.put("authStr", authStr);
-			returnString = "http://worldspon.net/myAssets/main/"+authStr;
-			
-			ArrayList<HashMap<String, Object>> tempList = new ArrayList<HashMap<String, Object>>();
-			tempList.add(paramMap);
-			session.setAttribute("msList", tempList);
-		} else {
-			
-			logger.debug("session not null 이므로 session 가져오기");
-			
-			String authStr = "";
-			for( HashMap<String, Object> sessionMap : list) {
-				Iterator<String> keys = sessionMap.keySet().iterator();
-				while( keys.hasNext() ) {
-					String key = keys.next();
-					if(key.equals("uNo")) {
-						if(sessionMap.get(key).equals(uNo)) {
-							logger.debug("가져온 세션의 uNo가 입력받은 uNo와 일치할때");
-							logger.debug(sessionMap);
-							authStr = (String) sessionMap.get("authStr");
-						}
-					}
-				}
-			}
-			returnString = "http://worldspon.net/myAssets/main/"+authStr;
-		}
+		Map<String, Object> objMap = mas.makeRandomString(uNo);
 		
-		logger.debug(returnString);
+		mas.addTempUrl(objMap);
+		String authString = (String)objMap.get("authStr");
+		returnString = "http://worldspon.net/myAssets/main/"+authString.trim();
+		
+//		logger.debug(objMap);
 		response.setCharacterEncoding("utf-8");
 		response.getWriter().write(returnString);
 	}
@@ -100,30 +67,56 @@ public class MyAssetsController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/myAssets/main/{authStr}", method=RequestMethod.GET)
+	@RequestMapping(value="/myAssets/main/{authStr}")
 	public ModelAndView myAssetsMainPage(HttpServletRequest request, HttpSession session, @PathVariable String authStr) throws Exception {
 		
-		logger.debug("main start");
-		@SuppressWarnings("unchecked")
-		ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>)session.getAttribute("msList");
-		HashMap<String, Object> paramMap = new HashMap<String, Object>();
-		ModelAndView mav = new ModelAndView();
-		if(list != null) {
-			for(HashMap<String, Object> sessionMap : list) {
-				Iterator<String> keys = sessionMap.keySet().iterator();
-				while(keys.hasNext()) {
-					String key = keys.next();
-					if(sessionMap.get(key).equals(authStr)) {
-						paramMap.putAll(sessionMap);
-						Gson gson = new Gson();
-						mav.addObject("data", gson.toJson(paramMap));
-						mav.setViewName("myAssets/main");
+//		logger.debug("main start");
+//		logger.debug("authStr: "+authStr.length());
+//		logger.debug("authStr: "+authStr.trim().length());
+		List<Map<String, Object>>  mapList = mas.getMapList();
+//		logger.debug(mapList);
+		
+		long end = System.currentTimeMillis();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		resultMap.put("check", "error");
+		for(int i=0; i<mapList.size(); i++) {
+			Map<String, Object> tempMap = mapList.get(i);
+			Iterator<String> keys = tempMap.keySet().iterator();
+			while(keys.hasNext()) {
+				String key = keys.next();
+				if(key.equals("beginTime")) {
+					String beginTime = (String)tempMap.get(key);
+					long start = Long.parseLong(beginTime);
+					if(mas.timeValidationChecker(start, end)) {
+//						logger.debug("유효시간 초과로 인한 리스트 삭제");
+						mas.deleteTempUrl(tempMap);
+						resultMap.put("check", "error");
 					}
 				}
 			}
 		}
-		
-		logger.debug(paramMap);
+		mapList = mas.getMapList();
+		for(int j=0; j<mapList.size(); j++) {
+			Map<String, Object> tempMap = mapList.get(j);
+			Iterator<String> keys = tempMap.keySet().iterator();
+			while(keys.hasNext()) {
+				String key = keys.next();
+				if(key.equals("authStr")) {
+					String mapAuthStr = (String) tempMap.get(key);
+					if(mapAuthStr.equals(authStr)) {
+						resultMap.putAll(tempMap);
+						resultMap.put("check", "true");
+					}
+				}
+			}
+		}
+		ModelAndView mav = new ModelAndView();
+		Gson gson = new Gson();
+		mav.addObject("data", gson.toJson(resultMap));
+		mav.setViewName("myAssets/main");
+//		logger.debug(resultMap);
+//		logger.debug("mapList: "+mapList+", size: "+mapList.size());
 		return mav;
 	}
 	
@@ -141,14 +134,13 @@ public class MyAssetsController {
 	public @ResponseBody HashMap<String, Object> myAssetsDetailPage(HttpServletRequest request) throws Exception {
 		
 		HashMap<String, Object> paramMap = HttpUtil.getParamMap(request);
-		logger.debug(paramMap);
+//		logger.debug(paramMap);
 		
-		String type = (String)paramMap.get("type");
-		String uNo = (String)paramMap.get("uNo");
-		String no = (String)paramMap.get("no");
-		String listType = (String)paramMap.get("listType");
-		
-		logger.debug(type+", "+uNo+", "+no+", "+listType);
+//		String type = (String)paramMap.get("type");
+//		String uNo = (String)paramMap.get("uNo");
+//		String no = (String)paramMap.get("no");
+//		String listType = (String)paramMap.get("listType");
+//		logger.debug(type+", "+uNo+", "+no+", "+listType);
 		String total = String.valueOf(mas.getTotalCount(paramMap));
 		paramMap.put("total", total);
 		HashMap<String, Object> myAssetsMap = mas.getMyAssets(paramMap);
@@ -156,14 +148,14 @@ public class MyAssetsController {
 		
 		Device device = DeviceUtils.getCurrentDevice(request);
 		
-		logger.debug("debug: "+device);
-		logger.debug(paramMap);
+//		logger.debug("debug: "+device);
+//		logger.debug(paramMap);
 		
 		if(device.isMobile()) {
-			logger.debug("mobile"+device.getDevicePlatform().toString());
+//			logger.debug("mobile"+device.getDevicePlatform().toString());
 			return paramMap;
 		}else {
-			logger.debug("Not mobile"+device.getDevicePlatform().toString());
+//			logger.debug("Not mobile"+device.getDevicePlatform().toString());
 			return null;
 		}
 		
@@ -192,7 +184,7 @@ public class MyAssetsController {
 		paramMap.remove("page[max]");
 		paramMap.remove("page[count]");
 		
-		logger.debug(paramMap);
+//		logger.debug(paramMap);
 		
 		paramMap.putAll(mas.getDetailContents(paramMap));
 		return paramMap;
