@@ -11,9 +11,18 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cmt.dao.BenefitDaoInterface;
 import com.cmt.service.BenefitServiceInterface;
 import com.google.gson.Gson;
-
+/**
+ * 
+ * @author 작성자
+ * @Params [데이터타입과 변수명과 그 역할]
+ *  int a 인덱스역할 
+ *  String b 이름 
+ *  long c 시간
+ * @date 최초생성일
+ * 
+ */
 @Service
-public class BenefitService implements BenefitServiceInterface {
+public class BenefitServiceImpl implements BenefitServiceInterface {
 	
 	@Autowired
 	BenefitDaoInterface bdi;

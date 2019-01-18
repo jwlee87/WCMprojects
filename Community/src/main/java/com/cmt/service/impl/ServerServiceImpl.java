@@ -13,7 +13,7 @@ import com.cmt.dao.ServerDaoInterface;
 import com.cmt.service.ServerServiceInterface;
 
 @Service
-public class ServerService implements ServerServiceInterface {
+public class ServerServiceImpl implements ServerServiceInterface {
 	
 	///Field
 	@Autowired

@@ -14,7 +14,7 @@ import com.cmt.service.PointServiceInterface;
 import com.google.gson.Gson;
 
 @Service
-public class PointService implements PointServiceInterface {
+public class PointServiceImpl implements PointServiceInterface {
 
 	@Autowired
 	private PointDaoInterface pdi;

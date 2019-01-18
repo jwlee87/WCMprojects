@@ -19,17 +19,9 @@ import com.cmt.service.MyAssetsService;
 @Service("myAssetsServiceImpl")
 public class MyAssetsServiceImpl implements MyAssetsService {
 	
-	///Field
-	private Logger logger = LogManager.getLogger();
-	
 	@Autowired
 	@Qualifier("myAssetsDaoImpl")
 	private MyAssetsDao myAssetsDao;
-	
-
-	public MyAssetsServiceImpl() {
-		// TODO Auto-generated constructor stub
-	}
 	
 	@Override
 	public int getTotalCount(HashMap<String, Object> paramMap) {
@@ -38,7 +30,7 @@ public class MyAssetsServiceImpl implements MyAssetsService {
 
 	@Override
 	public HashMap<String, Object> getMyAssets(HashMap<String, Object> paramMap) {
-		logger.debug(paramMap);
+//		logger.debug(paramMap);
 		List<HashMap<String, Object>> al = myAssetsDao.getMyAssets(paramMap);
 		if( al.size() == 1) {
 			for(HashMap<String, Object> hm : al) {
@@ -48,7 +40,7 @@ public class MyAssetsServiceImpl implements MyAssetsService {
 				hm.put("_LockCoin", lCoin);
 				hm.put("no", paramMap.get("no"));
 				hm.put("uNo", paramMap.get("uNo"));
-//				System.out.println(hm);
+				System.out.println(hm);
 			}
 		}else {
 			al.add(new HashMap<String, Object>());
@@ -60,7 +52,7 @@ public class MyAssetsServiceImpl implements MyAssetsService {
 
 	@Override
 	public HashMap<String, Object> getDetailContents(HashMap<String, Object> paramMap) {
-		logger.debug(paramMap);
+//		logger.debug(paramMap);
 		ArrayList<HashMap<String, Object>> al = (ArrayList<HashMap<String, Object>>) myAssetsDao.getTransactionList(paramMap);
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("list", al);
@@ -78,14 +70,13 @@ public class MyAssetsServiceImpl implements MyAssetsService {
 		objMap.put("authStr", authStr);
 		objMap.put("uNo", uNo);
 		objMap.put("beginTime", beginTime);
-		objMap.put("no", 1);
 		return objMap;
 	}
 
 	@Override
 	public boolean timeValidationChecker(long start, long end) {
 		long duration = end - start;
-		if( (duration / 1000) >= 10 ) {
+		if( (duration / 1000) >= 100 ) {
 			return true;
 		} else {
 			return false;

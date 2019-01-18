@@ -14,7 +14,7 @@ import com.cmt.dao.ZombieDaoInterface;
 import com.cmt.service.ZombieServiceInterface;
 
 @Service
-public class ZombieService implements ZombieServiceInterface {
+public class ZombieServiceImpl implements ZombieServiceInterface {
 
 	@Autowired
 	private ZombieDaoInterface zdi;

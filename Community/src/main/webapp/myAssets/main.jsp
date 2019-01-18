@@ -35,7 +35,7 @@
     	<div class="lds-back"></div>
         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
         
-   <!-- jQuery -->
+    <!-- jQuery -->
 	<script src="/myAssets/js/jquery.min.js"></script>
 	<script src="/myAssets/js/popper.js"></script>
 	<!-- Bootstrap -->
@@ -56,7 +56,7 @@ $(function(){
 		$("#data-set").data("type", type);
 		data.type = type;
 		data.listType = lt;
-// 		console.log($.extend({'location':'event-click.go-detail', 'debug-target':'params'}, data));
+		console.log($.extend({'location':'event-click.go-detail', 'debug-target':'params'}, data));
 		getAjaxDetail(data);
 	});
 	
@@ -89,6 +89,7 @@ $(function(){
 		var type = $("#data-set").data("type");
 		var page = pagination(no, total);
 		var max = page.max;
+		
 		no++;
 		if(no >= max){
 			$("#data-set").data("no", max);
@@ -155,10 +156,13 @@ var card = {
 	fnInit : function(){
 		var data = '${data}';
 		var jsonData = JSON.parse(data);
-		$("#data-set").data("no", jsonData.no);
+		$("#data-set").data("no", 1);
 		$("#data-set").data("uNo", jsonData.uNo);
+		
+// 		console.log($("#data-set").data("no"));
+		
 		if((jsonData.check)=="error"){
-			alert("잘못된 접근입니다!");
+			alert("인증 유효시간이 초과되었습니다! \n정상적인 경로로 다시 접근해주세요.");
 		}else{
 			card.fnGetAjaxMain(jsonData);
 		}
@@ -174,7 +178,7 @@ var card = {
 	},
 	
 	fnGetAjaxMain : function(data){
-// 		console.log($.extend({'location':'card.fnGetAjaxMain', 'debug-target':'params'}, data));
+		console.log($.extend({'location':'card.fnGetAjaxMain', 'debug-target':'params'}, data));
 		if(!data){
 			alert("정보를 불러올 수 없습니다.");
 		}else{
@@ -211,7 +215,7 @@ var card = {
 	fnMakeMain : function(data) {
 // 		console.log($.extend({'location':'card.fnMakeMain', 'debug-target':'params'}, data.list[0]));
 		
-		console.log(data);
+// 		console.log(data);
 
 		if(data == null){
 			alert("세션이 만료되었습니다.");
@@ -396,7 +400,7 @@ var card = {
 		data.page = pagination(data.no, data.total);
 		delete data.list;
 		
-// 		console.log($.extend({"location":"fnGetAjaxContents"}, data));
+//		console.log($.extend({"location":"fnGetAjaxContents"}, data));
 		
 		$.ajax({
 			type: "POST",

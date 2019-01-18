@@ -13,7 +13,7 @@ import com.cmt.dao.FindDaoInterface;
 import com.cmt.service.FindServiceInterface;
 
 @Service
-public class FindService implements FindServiceInterface {
+public class FindServiceImpl implements FindServiceInterface {
 	
 	@Autowired
 	private FindDaoInterface fdi;

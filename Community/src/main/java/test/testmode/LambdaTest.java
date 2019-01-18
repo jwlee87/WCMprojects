@@ -31,6 +31,8 @@ public class LambdaTest {
 		
 		Predicate<String> stringCompare = (String str) -> str.compareTo("abc")==0?true:false;
 		System.out.println("Predicate test for abc="+ stringCompare.test("abc"));
+		stringCompare = (String str) -> str.compareTo("abc")==0?false:true;
+		System.out.println("Predicate test for abc="+ stringCompare.test("abc"));
 		
 	}
 	

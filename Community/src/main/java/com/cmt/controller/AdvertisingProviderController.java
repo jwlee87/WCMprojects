@@ -30,7 +30,6 @@ public class AdvertisingProviderController {
 	@RequestMapping(value="/ap")
 	public ModelAndView getApList(HttpSession session, HttpServletRequest request, @ModelAttribute Board board, Model model) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		Gson gson = new Gson();
 		mav.addObject("list", gson.toJsonTree(asi.getApList()));
 		mav.setViewName("resources/views/advertising/list");

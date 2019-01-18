@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.cmt.service.MariaServiceInterface;
 
-public class MariaService implements MariaServiceInterface {
+public class MariaServiceImpl implements MariaServiceInterface {
 	
 
 	@Override

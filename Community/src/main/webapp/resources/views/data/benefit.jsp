@@ -328,7 +328,12 @@ $(document).ready(function(){
 			if(whichMonth == 'pm'){
 				
 				var paramMap = {}
-				paramMap['month'] = Number(date.getMonth());
+				
+				if(Number(date.getMonth()) == 0){
+					paramMap['month'] = 12;
+				}else{
+					paramMap['month'] = Number(date.getMonth());
+				}
 				paramMap['totalProfit'] = totalProfit;
 				paramMap['totalLose'] = totalLose;
 				paramMap['netIncome'] = parseFloat(Number(totalProfit) - Number(totalLose)).toFixed(2);
@@ -339,7 +344,7 @@ $(document).ready(function(){
 					+ "<td>"+numberWithCommas(paramMap.totalLose)+" <b>달러</b></td>"
 					+ "<td>"+numberWithCommas(paramMap.netIncome)+" <b>달러</b></td></tr></table>";
 				
-				makeHighcharts(Number(date.getMonth()));
+				makeHighcharts(paramMap['month']);
 				makeHalfPieChart(paramMap);
 				$(".info_box").append(profitAmoutText);
 				$("th").css("text-align", "center");

@@ -16,7 +16,7 @@ import com.cmt.domain.Member;
 import com.cmt.service.StoreServiceInterface;
 
 @Service
-public class StoreService implements StoreServiceInterface {
+public class StoreServiceImpl implements StoreServiceInterface {
 
 	@Autowired
 	private StoreDaoInterface sdi;

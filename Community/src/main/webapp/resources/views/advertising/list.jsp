@@ -50,9 +50,9 @@
 		<table class="table table-striped table-hover">
 			<thead>
 				<tr>
-					<th scope="col" class="align-center" style="width: 3%;">No</th>
-					<th scope="col" class="align-center" style="width: 16%; min-width: 100px;">회사명</th>
-					<th scope="col" class="align-center" style="width: 16%;">URL</th>
+					<th scope="col" class="align-center" style="width: 5%; ">식별No.</th>
+					<th scope="col" class="align-center" style="width: 18%; min-width: 100px;">회사명</th>
+					<th scope="col" class="align-center" style="width: 12%;">URL</th>
 					<th scope="col" class="align-center" style="width: 8%;">아이디</th>
 					<th scope="col" class="align-center" style="width: 8%;">비밀번호</th>
 					<th scope="col" class="align-center" style="width: 15%; min-width: 140px;">삽입 위치</th>
@@ -315,7 +315,8 @@ $(document).ready(function(){
 			for(var i = 0; i < list.length; i++){
 				var addr = list[i].site_address;
 				html += "<tr style='height: 2em; font-size: 1.2em; padding: 0.5em;' >"
-					 + "<th scope='row' class='uniqueID align-center'>"+(i + 1)+"</th>"
+// 					 + "<th scope='row' align-center'>"+(i + 1)+"</th>"
+					 + "<th scope='row' class='uniqueID align-center'>"+list[i].no+"</th>"
 					 + "<td class='align-center td_company_name'>"+list[i].company_name+"</td>"
 					 + "<td class='align-center td_company_url' style='padding: 0.2em;'><a class='btn btn-primary' href='"+addr+"' target='_blank' style='font-size: 1em;'"
 					 + " data-toggle='tooltip' data-html='true' title='<p style=\"font-size: 2em;\">"+addr+"'>이동</a></td>"
@@ -324,7 +325,7 @@ $(document).ready(function(){
 					 + "<td class='align-center td_part_name'>"+list[i].part_name+"</td>"
 					 + "<td class='align-center td_note'>"+list[i].note+"</td>"
 					 + "<td class='align-center td_btn_box' style='padding: 0.2em 0.1em 0.2em 0.1em;'>"
-					 + "<button class='btn btn-outline-success modify_btn' style='font-size: 1em; margin-right: 0.1em;'>수정</button>"
+					 + "<button class='btn btn-outline-success modify_btn' style='font-size: 1em; margin-right: 0.1em;' disabled>수정</button>"
 					 + "<button class='btn btn-outline-danger modify_delete_btn' style='font-size: 1em;margin-left: 0.1em;'>삭제</button>"
 					 + "</td></tr>";
 			}
@@ -377,7 +378,7 @@ $(document).ready(function(){
 				var b_note = thisElement.find(".td_note").text();
 				var btnBox = thisElement.find(".td_btn_box");
 				
-				console.log("수정1: "+companyUrl)
+				console.log("수정1: "+companyUrl);
 				
 				var text = "<button id='update_complete_btn' class='btn btn-success' style='font-size: 1em; margin-right: 0.1em;'>적용</button>"
 						 + "<button class='btn btn-danger modify_cancle_btn' style='font-size: 1em;margin-left: 0.1em;'>취소</button>";
