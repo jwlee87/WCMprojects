@@ -1,5 +1,6 @@
 package com.cmt.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import com.cmt.common.HashUtil;
 import com.cmt.common.HttpUtil;
 import com.cmt.dao.FindDaoInterface;
 import com.cmt.dao.MemberDao;
+import com.cmt.dao.MyAssetsDao;
 import com.cmt.dao.StoreDaoInterface;
 import com.cmt.domain.Board;
 import com.cmt.domain.Email;
@@ -82,11 +84,32 @@ public class TestController {
 	@Autowired
 	private FindDaoInterface fdi;
 	
+	@Autowired
+	private MyAssetsDao mad;
+	
 	///Constructor
 	public TestController() {
 	}
 	
 	///Method
+	@RequestMapping(value="/dbdbdb")
+	public void dbdbdb(HttpServletRequest req) {
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("t", (String)req.getParameter("t"));
+		paramMap.put("uNo", 41);
+		paramMap.put("listType", (String)req.getParameter("lt"));
+		paramMap.put("begin", 1);
+		paramMap.put("end", 10);
+		logger.debug(mad.getTotalCount(paramMap));
+		ArrayList<HashMap<String, Object>> ptl = (ArrayList<HashMap<String, Object>>) mad.getTransactionList(paramMap);
+		logger.debug(ptl.size());
+		for( HashMap<String, Object> tm : ptl) {
+			logger.debug(tm);
+		}
+	}
+	
+	
+	
 	@RequestMapping(value="/boardTest")
 	public String boardTest(HttpSession session, HttpServletRequest request, @ModelAttribute Board board, Model model) throws Exception {
 		int boardUniqueID = board.getBoardUniqueID();

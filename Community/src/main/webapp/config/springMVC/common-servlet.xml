@@ -68,10 +68,8 @@
 			<mvc:mapping path="/line"/>
 			<mvc:mapping path="/line/add"/>
 			<mvc:mapping path="/line/addAction"/>
-			<mvc:mapping path="/game/history"/>
 			<mvc:mapping path="/benefit/data/pm"/>
 			<mvc:mapping path="/benefit/data/cm"/>
-			<mvc:mapping path="/point/refund"/>
 			<mvc:mapping path="/point/update"/>
 			<mvc:mapping path="/board"/>
 			<mvc:mapping path="/board/write"/>
@@ -85,6 +83,21 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/myAssets/getDetail"/>
 			<bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/p2p"/>
+			<mvc:mapping path="/p2p/*"/>
+			<mvc:mapping path="/game/*"/>
+			<mvc:mapping path="/point/history"/>
+			<mvc:mapping path="/coin/history"/>
+			<mvc:mapping path="/lCoin/history"/>
+			<mvc:mapping path="/log/charge"/>
+			<mvc:mapping path="/log/lock"/>
+			<mvc:mapping path="/point/refund"/>
+			<mvc:mapping path="/admin/find"/>
+			<mvc:mapping path="/ap"/>
+			<mvc:mapping path="/server"/>
+			<bean class="com.cmt.interceptor.AdminCheckInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
 
@@ -100,7 +113,8 @@
 	<mvc:resources mapping="/SE2/**"		location="/SE2/"/>
 	<mvc:resources mapping="/info/**"		location="/info/"/>
 	<mvc:resources mapping="/myInfo/**"		location="/myInfo/"/>
-	<mvc:resources mapping="/myAssets/**"		location="/myAssets/"/>
+	<mvc:resources mapping="/myAssets/**"	location="/myAssets/"/>
+	<mvc:resources mapping="/p2p/**"		location="/p2p/"/>
 	
 	<mvc:default-servlet-handler/>
 	

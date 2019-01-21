@@ -69,18 +69,32 @@
 		
 		
 		$("#check_btn").on("click", function(){
+			
+			var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
+			
 			var pass = $("#pass").val();
 			var passCheck = $("#passCheck").val();
 			var userUniqueID = $("#userUniqueID").val();
 			
-			if(pass.length < 4){
+			if(regExp.test(pass)){
+				alert("특수문자가 포함될 수 없습니다.");
+				$("#pass").val("").focus();
+				$("#passCheck").val("");
+				return false;
+			}else if(pass.length < 4){
 				alert("비밀번호가 너무 짧습니다.");
+				$("#pass").val("");
+				$("#passCheck").val("");
 				return false;
 			}else if(pass.length > 20){
 				alert("비밀번호는 20자 이하로 만들어주세요.");
+				$("#pass").val("");
+				$("#passCheck").val("");
 				return false;
 			}else if(pass != passCheck){
 				alert("비밀번호가 일치하지 않습니다.");
+				$("#pass").val("");
+				$("#passCheck").val("");
 				return false;
 			}else{
 				

@@ -114,6 +114,11 @@
 		</div>
 		<div class="login-con">
 			<div class="login-btn-box">
+				<a href="/p2p" type="button" class="btn btn-default btn-block">P2P거래 기록</a>
+			</div>
+		</div>
+		<div class="login-con">
+			<div class="login-btn-box">
 				<a href="/log/charge" type="button" class="btn btn-default btn-block">캐시비 충전 기록</a>
 			</div>
 		</div>
@@ -130,7 +135,7 @@
 		<br><br>
 		<div class="login-con">
 			<div class="login-btn-box">
-				<a href="point/refund" type="button" class="btn btn-info btn-block">포인트 환급</a>
+				<a href="/point/refund" type="button" class="btn btn-info btn-block">포인트 환급</a>
 			</div>
 		</div>
 		<div class="login-con">

@@ -4,9 +4,9 @@
 	left: 0;
 	width: 100vw;
 	height: 100vh;
-/* 	background-color: #cccccc; */
 	z-index: 1000;
-	opacity: 0.5;
+	background-color: #000;
+	opacity: 0.3;
 }
 
 .lds-ring {
