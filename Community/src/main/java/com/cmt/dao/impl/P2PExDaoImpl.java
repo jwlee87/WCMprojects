@@ -34,13 +34,12 @@ public class P2PExDaoImpl implements P2PExDaoInterface {
 
 	@Override
 	public int getTotalCount(Map<String, Object> paramMap) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.selectOne("p2pEx.getTotalCount", paramMap);
 	}
 
 	@Override
 	public List<Map<String, Object>> getP2PExList(Map<String, Object> paramMap) {
-		return sqlSession.selectList("p2pEx.getP2PExList");
+		return sqlSession.selectList("p2pEx.getP2PExList", paramMap);
 	}
 
 }
