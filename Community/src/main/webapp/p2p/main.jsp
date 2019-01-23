@@ -45,216 +45,6 @@
 		</style>
 	</head>
 	<body>
-<<<<<<< HEAD
-<div id="data-set"></div>
-<div class="lds-back"></div>
-<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-<div class="container col-xl-10 col-lg-12 mx-auto"></div>
-
-<div class="col-xl-10 col-lg-12 mx-auto"><br><br>
-	<div class="row">
-		<div class="col-auto mr-auto btn-group" role="group" aria-label="Basic example">
-		<!--<button type="button" class="btn btn-primary">전체보기</button>-->
-			<button type="button" class="btn btn-outline-primary">전체보기</button>
-		<!--<button type="button" class="btn btn-outline-danger">분쟁상태</button>-->
-			<button type="button" class="btn btn-danger">분쟁상태</button>
-		</div>
-		<div class="col-auto p-1"><a href="javascript:history.go(-1)"> 뒤로 </a></div>
-	</div><br><br>
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th scope="col">순서</th>
-				<th scope="col">거래고유번호</th>
-				<th scope="col"><a href="#">신청일시 △</a></th>
-				<th scope="col">보내는 사람</th>
-				<th scope="col">보내는 품목 / 수량</th>
-				<th scope="col">받는 사람</th>
-				<th scope="col">받는 품목 / 수량</th>
-				<th scope="col">단계</th>
-				<th scope="col">승인한 사람</th>
-				<th scope="col">상태</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th scope="row">1</th>
-				<td>#3001</td>
-				<td>2019-01-18 12:00:00</td>
-				<td>개발이</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-purple">스폰</button><b>20,000개</b></td>
-				<td>test02</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button><b>3,000,000,000</b>원</td>
-				<!-- state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 -->
-				<td><b>2</b> 단계</td>
-				<td>개발이</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-danger">분쟁</button></td>
-			</tr>
-			<tr>
-				<th scope="row">2</th>
-				<td>#3002</td>
-				<td>2019-01-16 15:00:00</td>
-				<td>개발이</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-secondary">락스폰</button> / <b>20,000개</b></td>
-				<td>test02</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button> / <b>3,000,000,000</b>원</td>
-				<!-- state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 -->
-				<td><b>2</b> 단계</td>
-				<td>개발이</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-danger">분쟁</button></td>
-			</tr>
-			<tr>
-				<th scope="row">3</th>
-				<td>#3003</td>
-				<td>2019-01-16 15:00:00</td>
-				<td>개발이</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-purple">스폰</button> / <b>20,000개</b></td>
-				<td>test02</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button> / <b>3,000,000,000</b>원</td>
-				<!-- state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 -->
-				<td><b>1</b> 단계</td>
-				<td>test02</td>
-				<!-- state 0 1단계 진행중 -->
-				<td>진행중...</td>
-			</tr>
-			<tr>
-				<th scope="row">4</th>
-				<td>#3004</td>
-				<td>2019-01-16 15:00:00</td>
-				<td>개발이</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-purple">스폰</button> / <b>20,000개</b></td>
-				<td>test02</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button> / <b>3,000,000,000</b>원</td>
-				<!-- state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 -->
-				<td><b>2</b> 단계</td>
-				<td>개발이</td>
-				<!-- state 1 2단계 진행중 -->
-				<td>진행중...</td>
-			</tr>
-			<tr>
-				<th scope="row">5</th>
-				<td>#3005</td>
-				<td>2019-01-16 15:00:00</td>
-				<td>개발이</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button> / <b>3,000,000,000</b>원</td>
-				<td>test02</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-purple">스폰</button> / <b>20,000개</b></td>
-				<td><b>1</b> 단계</td>
-				<td>개발이</td>
-				<!-- state 4 1단계 거절 -->
-				<td>취소중...</td>
-			</tr>
-		</tbody>
-	</table>
-	<nav aria-label="Page navigation example">
-			<ul class="pagination justify-content-center">
-				<li class="page-item disabled">
-					<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-				</li>
-				<li class="page-item"><a class="page-link" href="#">1</a></li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
-				<li class="page-item">
-					<a class="page-link" href="#">Next</a>
-				</li>
-		</ul>
-	</nav>
-</div>
-	
-<!-- jQuery -->
-<script src="/myAssets/js/jquery.min.js"></script>
-<script src="/myAssets/js/popper.js"></script>
-<!-- Bootstrap -->
-<script src="/myAssets/js/bootstrap.js"></script>
-<!-- Main -->
-<script src="/myAssets/js/main.js"></script>
-<script type="text/javascript">
-showLoader();
-$(function(){
-	var config = {
-		listType: "all",
-		pageNo: "1",
-		oderby: "asc"
-	}
-	init(config);
-})
-
-//초기 로드 함수
-function init(config){
-	card.fnInit(config);
-}
-
-var card = {
-	//Init
-	fnInit : function(config){
-		$.ajax({
-			type: "POST",
-			url: "/p2p/init",
-			data: "{key: data, value: momm}",
-			dataType: "json",
-			beforeSend: function(){
-				showLoader();
-			}
-		}).done(data => {
-			data.config = config;
-			makeHTML.fnCreateHeader(config);
-			makeHTML.fnInit(data)
-		});
-	}
-}
-
-var makeHTML = {
-	fnInit : function (data){
-		console.log(typeof data);
-// 		console.log(data.config);
-		var listData = JSON.parse(data.data);
-		
-		
-		
-		var i = 0;
-		listData.forEach( o => {
-			console.log(++i);
-			console.log(o);
-			var html = "";
-			html += "<h1>"+i+"</h1>"
-				+ "<h2>"+o.dt+"</h2>"
-				+ "<h2>"+o.title+"</h2>"
-				+ "<p>"+o.reqUserNick+"</p>"
-				+ "<p>";
-			if(o.type == 0){
-				html += "포인트로 코인";
-			}else if(o.type == 1){
-				html += "코인으로 포인트";
-			}
-			html +="</p>"
-				+ "<p>"+o.pAmount+"</p>"
-				+ "<p>"+o.cAmount+"</p>"
-				+ "<p>"+o.resUserNick+"</p>";
-			$(".container").append(html);
-		});
-		hideLoader();
-	},
-	
-	fnCreateHeader : function(config){
-		
-		console.log(config);
-		
-		var html = "<br><br>"
-		 + "<div class='row'><div class='col-auto mr-auto btn-group' role='group' aria-label='Basic example'>";
-		if(config.listType.trim() === "all"){
-			html += "<button type='button' class='btn btn-primary'>전체보기</button>"
-				+ "<button type='button' class='btn btn-outline-danger'>분쟁상태</button>";
-		}else if(config.listType.trim() === "diff"){
-			html += "<button type='button' class='btn btn-outline-primary'>전체보기</button>"
-				+ "<button type='button' class='btn btn-danger'>분쟁상태</button>";
-		}else{
-			alert("페이지 오류! 관리자에 문의하세요.");
-		}
-		html += "</div><div class='col-auto p-1'><a href='http://www.worldspon.net'> 뒤로 </a></div></div>";
-		
-		$(".container").append(html);
-=======
-
 <div id="data-set"></div>
 <div class="lds-back"></div>
 <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
@@ -265,7 +55,7 @@ var makeHTML = {
 			<tr>
 				<th scope="col">순서</th>
 				<th scope="col">거래고유번호</th>
-				<th scope="col"><a href="#">신청일시 △</a></th>
+				<th scope="col">신청일시</th>
 				<th scope="col">보내는 사람</th>
 				<th scope="col">보내는 품목 / 수량</th>
 				<th scope="col">받는 사람</th>
@@ -280,91 +70,6 @@ var makeHTML = {
 		</tbody>
 	</table>
 </div>
-	<!--
-
-	<tbody>
-			<tr>
-				<th scope="row">1</th>
-				<td>#3001</td>
-				<td>2019-01-18 12:00:00</td>
-				<td>개발이</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-purple">스폰</button><b>20,000개</b></td>
-				<td>test02</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button><b>3,000,000,000</b>원</td>
-				 state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 
-				<td><b>2</b> 단계</td>
-				<td>개발이</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-danger">분쟁</button></td>
-			</tr>
-			<tr>
-				<th scope="row">2</th>
-				<td>#3002</td>
-				<td>2019-01-16 15:00:00</td>
-				<td>개발이</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-secondary">락스폰</button> / <b>20,000개</b></td>
-				<td>test02</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button> / <b>3,000,000,000</b>원</td>
-				 state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 
-				<td><b>2</b> 단계</td>
-				<td>개발이</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-danger">분쟁</button></td>
-			</tr>
-			<tr>
-				<th scope="row">3</th>
-				<td>#3003</td>
-				<td>2019-01-16 15:00:00</td>
-				<td>개발이</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-purple">스폰</button> / <b>20,000개</b></td>
-				<td>test02</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button> / <b>3,000,000,000</b>원</td>
-				 state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 
-				<td><b>1</b> 단계</td>
-				<td>test02</td>
-				 state 0 1단계 진행중 
-				<td>진행중...</td>
-			</tr>
-			<tr>
-				<th scope="row">4</th>
-				<td>#3004</td>
-				<td>2019-01-16 15:00:00</td>
-				<td>개발이</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-purple">스폰</button> / <b>20,000개</b></td>
-				<td>test02</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button> / <b>3,000,000,000</b>원</td>
-				 state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 
-				<td><b>2</b> 단계</td>
-				<td>개발이</td>
-				 state 1 2단계 진행중 
-				<td>진행중...</td>
-			</tr>
-			<tr>
-				<th scope="row">5</th>
-				<td>#3005</td>
-				<td>2019-01-16 15:00:00</td>
-				<td>개발이</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button> / <b>3,000,000,000</b>원</td>
-				<td>test02</td>
-				<td class="pt-1 pb-1"><button type="button" class="btn btn-purple">스폰</button> / <b>20,000개</b></td>
-				<td><b>1</b> 단계</td>
-				<td>개발이</td>
-				 state 4 1단계 거절 
-				<td>취소중...</td>
-			</tr>
-		</tbody>
-	페이지네이션
-	<nav aria-label="Page navigation example">
-			<ul class="pagination justify-content-center">
-				<li class="page-item disabled">
-					<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-				</li>
-				<li class="page-item"><a class="page-link" href="#">1</a></li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
-				<li class="page-item">
-					<a class="page-link" href="#">Next</a>
-				</li>
-		</ul>
-	</nav>-->
 	
 <!-- jQuery -->
 <script src="/myAssets/js/jquery.min.js"></script>
@@ -379,7 +84,7 @@ $(function(){
 	var config = {
 		listType: "all",
 		pageNo: "1",
-		oderby: "asc"
+		orderBy: "asc"
 	}
 	init(config);
 
@@ -389,14 +94,12 @@ $(function(){
 // 전체 리스트 클릭
 $(document).on("click", "#listAll", function(){
 		var config = {listType: "all", pageNo: "1", orderBy: "asc"}
-		console.log("전체 리스트 클릭");
 		card.fnInit(config);
 	});
 
 // 분쟁 리스트 클릭
 $(document).on("click", "#listDiff", function(){
 	var config = {listType: "diff",	pageNo: "1", orderBy: "asc"}
-	console.log("분쟁 리스트 클릭");
 	card.fnInit(config);
 });
 
@@ -404,16 +107,13 @@ $(document).on("click", "#listDiff", function(){
 $(document).on("click", ".btn-diff", function(){
 	// var uno = $(this).parent().parent().find("td")[0].text();
 	var uno = $(this).parent().parent().find("td")[0];
-	// console.log(uno.innerText.trim());
 	var uid = uno.innerText.trim().substring(1);
-	console.log(uid);
 	var data = {"uid": uid};
 	
 	var boolean = false;
 	boolean = confirm("처리하시겠습니까?");
 
 	if(boolean){
-		alert("승인");
 		card.fnCommServer(data);
 	}
 });
@@ -425,8 +125,28 @@ function init(config){
 
 var card = {
 	//Init
+	fnInitZero : function(){
+		var config = {
+			listType: "all",
+			pageNo: "1",
+			orderBy: "asc",
+			params: "no"
+		}
+		$.ajax({
+			type: "POST",
+			url: "/p2p/init",
+			data: config,
+			dataType: "json",
+			beforeSend: ()=>{
+				showLoader();
+			}
+		}).done(data => {
+			makeHTML.fnCreateHeader(data.config);
+			makeHTML.fnInit(data.data);
+		});
+	},
+	
 	fnInit : function(config){
-		console.log(config);
 		$.ajax({
 			type: "POST",
 			url: "/p2p/init",
@@ -451,7 +171,12 @@ var card = {
 				showLoader();
 			}
 		}).done(data => {
-			console.log(data);
+			if(data.msg == "true"){
+				card.fnInitZero();
+			}else{
+				alert("처리중 에러가 발생했습니다.");
+				card.fnInitZero();
+			}
 		});
 	}
 }
@@ -459,21 +184,18 @@ var card = {
 var makeHTML = {
 	fnInit : function (data){
 		$("#tbody").remove();
-		console.log(typeof data);
 		var listData = JSON.parse(data);
 		var i = 0;
 		var html = '<tbody id="tbody">';
 		listData.forEach( o => {
-			console.log(++i);
-			console.log(o);
-			html += '<tr><th scope="row">'+i+'</th>'
+			html += '<tr><th scope="row">'+(++i)+'</th>'
 				+ '<td>#'+o.no+'</td>'
 				+ '<td>'+o.dt+'</td>'
 				+ '<td>'+o.reqUserNick+'</td>';
 			if(o.type == 1){
 				html += '<td class="pt-1 pb-1">';
 				if(o.cAmount > 0){
-					html += '<button type="button" class="btn btn-purple"> / <b> '
+					html += '<button type="button" class="btn btn-purple">스폰</button> / <b> '
 						+ numberWithCommas(o.cAmount)+'개</b></td>';
 				}else{
 					html += '<button type="button" class="btn btn-secondary">락스폰</button> / <b>'
@@ -491,7 +213,7 @@ var makeHTML = {
 			}else if(o.type == 0){
 				html += '<td class="pt-1 pb-1">';
 				if(o.cAmount > 0){
-					html += '<button type="button" class="btn btn-purple"> / <b> '
+					html += '<button type="button" class="btn btn-purple">스폰</button> / <b> '
 						+ numberWithCommas(o.cAmount)+'개</b></td>';
 				}else{
 					html += '<button type="button" class="btn btn-secondary">락스폰</button> / <b>'
@@ -527,7 +249,6 @@ var makeHTML = {
 			}
 			
 		});
-		console.log(html);
 
 		$("table").append(html);
 		hideLoader();
@@ -549,9 +270,7 @@ var makeHTML = {
 		}
 		html += "</div><div class='col-auto p-1'><a href='javascript:history.go(-1)'> 뒤로 </a></div></div><br><br></div>";
 
-		console.log(html);
 		$(".header-con").append(html);
->>>>>>> refs/heads/dev-wona
 	}
 }
 </script>

@@ -88,21 +88,23 @@ public class P2PExServiceImpl implements P2PExService {
 			serverURL = null;
 		}
 		String serverIP = "";
-		if(serverURL != null) {	serverIP = serverURL.getAddress();	}
-		else { serverIP = NULL_CHECK; }
-			logger.debug("serverURL is null /// sending false ///");
+		if(serverURL != null) {
+			serverIP = serverURL.getAddress();
+		}else { 
+			serverIP = NULL_CHECK;
+		}
 		if(!serverIP.equals(NULL_CHECK)) {
 			logger.debug("serverURL is not null /// sending start ///");
+		} else {
+			logger.debug("serverURL is null /// sending false ///");
 		}
-		logger.debug(serverIP);
 		HttpPost post = new HttpPost("http://"+serverIP);
 		post.setConfig(httpClientUtil.reqeustConfig(DEFAULT_TIMEOUT));
 		List<NameValuePair> paramList = httpClientUtil.convertParam(paramMap);
 		paramList.add(0, new BasicNameValuePair("Command", "70001"));
-		System.out.println(paramList);
 		try {
 			post.setEntity(new UrlEncodedFormEntity(paramList, "UTF-8"));
-			boolean flag = true;
+			boolean flag = false;
 			
 			try {
 				HttpResponse httpResponse = httpClientPooling.execute(post);
@@ -110,7 +112,7 @@ public class P2PExServiceImpl implements P2PExService {
 				String body = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8.name());
 				HttpClientUtils.closeQuietly(httpResponse);
 				logger.debug("[statusCode] "+statusCode+", [받은 값]: "+body);
-				returnMap = httpClientUtil.stringToHashMap(body, "&");
+				if(body.equals(""))	flag = true;
 			} catch (IOException e) {
 				flag = false;
 				e.printStackTrace();
@@ -120,18 +122,18 @@ public class P2PExServiceImpl implements P2PExService {
 				returnMap.put("msg", "httpClientUtil.stringToHashMap Exception");
 				e.printStackTrace();
 			} finally {
-				Gson gson = new Gson();
 				if(flag) {
-					// 받은 값 json 으로 리턴
+					returnMap.put("msg", "true");
+				}else {
+					returnMap.put("msg", "false");
 				}
-				returnMap.put("msg", gson.toString());
 			}
-			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 			returnMap.put("msg", "파라미터 인코딩 에러");
 		}
-		return null;
+		logger.debug(returnMap);
+		return returnMap;
 	}
 
 }
