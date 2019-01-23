@@ -45,21 +45,12 @@
 		</style>
 	</head>
 	<body>
+
 <div id="data-set"></div>
 <div class="lds-back"></div>
 <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-<div class="container col-xl-10 col-lg-12 mx-auto"></div>
-
-<div class="col-xl-10 col-lg-12 mx-auto"><br><br>
-	<div class="row">
-		<div class="col-auto mr-auto btn-group" role="group" aria-label="Basic example">
-		<!--<button type="button" class="btn btn-primary">전체보기</button>-->
-			<button type="button" class="btn btn-outline-primary">전체보기</button>
-		<!--<button type="button" class="btn btn-outline-danger">분쟁상태</button>-->
-			<button type="button" class="btn btn-danger">분쟁상태</button>
-		</div>
-		<div class="col-auto p-1"><a href="javascript:history.go(-1)"> 뒤로 </a></div>
-	</div><br><br>
+<div class="container col-xl-10 col-lg-12 mx-auto">
+	<div class="header-con"></div>
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -75,7 +66,14 @@
 				<th scope="col">상태</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="tbody">
+
+		</tbody>
+	</table>
+</div>
+	<!--
+
+	<tbody>
 			<tr>
 				<th scope="row">1</th>
 				<td>#3001</td>
@@ -84,7 +82,7 @@
 				<td class="pt-1 pb-1"><button type="button" class="btn btn-purple">스폰</button><b>20,000개</b></td>
 				<td>test02</td>
 				<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button><b>3,000,000,000</b>원</td>
-				<!-- state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 -->
+				 state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 
 				<td><b>2</b> 단계</td>
 				<td>개발이</td>
 				<td class="pt-1 pb-1"><button type="button" class="btn btn-danger">분쟁</button></td>
@@ -97,7 +95,7 @@
 				<td class="pt-1 pb-1"><button type="button" class="btn btn-secondary">락스폰</button> / <b>20,000개</b></td>
 				<td>test02</td>
 				<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button> / <b>3,000,000,000</b>원</td>
-				<!-- state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 -->
+				 state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 
 				<td><b>2</b> 단계</td>
 				<td>개발이</td>
 				<td class="pt-1 pb-1"><button type="button" class="btn btn-danger">분쟁</button></td>
@@ -110,10 +108,10 @@
 				<td class="pt-1 pb-1"><button type="button" class="btn btn-purple">스폰</button> / <b>20,000개</b></td>
 				<td>test02</td>
 				<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button> / <b>3,000,000,000</b>원</td>
-				<!-- state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 -->
+				 state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 
 				<td><b>1</b> 단계</td>
 				<td>test02</td>
-				<!-- state 0 1단계 진행중 -->
+				 state 0 1단계 진행중 
 				<td>진행중...</td>
 			</tr>
 			<tr>
@@ -124,10 +122,10 @@
 				<td class="pt-1 pb-1"><button type="button" class="btn btn-purple">스폰</button> / <b>20,000개</b></td>
 				<td>test02</td>
 				<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button> / <b>3,000,000,000</b>원</td>
-				<!-- state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 -->
+				 state 0 : 1딘계 / 1 : 2단계 / 4 : 1단계 / 14 : 2단계 
 				<td><b>2</b> 단계</td>
 				<td>개발이</td>
-				<!-- state 1 2단계 진행중 -->
+				 state 1 2단계 진행중 
 				<td>진행중...</td>
 			</tr>
 			<tr>
@@ -140,11 +138,11 @@
 				<td class="pt-1 pb-1"><button type="button" class="btn btn-purple">스폰</button> / <b>20,000개</b></td>
 				<td><b>1</b> 단계</td>
 				<td>개발이</td>
-				<!-- state 4 1단계 거절 -->
+				 state 4 1단계 거절 
 				<td>취소중...</td>
 			</tr>
 		</tbody>
-	</table>
+	페이지네이션
 	<nav aria-label="Page navigation example">
 			<ul class="pagination justify-content-center">
 				<li class="page-item disabled">
@@ -157,8 +155,7 @@
 					<a class="page-link" href="#">Next</a>
 				</li>
 		</ul>
-	</nav>
-</div>
+	</nav>-->
 	
 <!-- jQuery -->
 <script src="/myAssets/js/jquery.min.js"></script>
@@ -176,7 +173,41 @@ $(function(){
 		oderby: "asc"
 	}
 	init(config);
-})
+
+
+	
+});
+// 전체 리스트 클릭
+$(document).on("click", "#listAll", function(){
+		var config = {listType: "all", pageNo: "1", orderBy: "asc"}
+		console.log("전체 리스트 클릭");
+		card.fnInit(config);
+	});
+
+// 분쟁 리스트 클릭
+$(document).on("click", "#listDiff", function(){
+	var config = {listType: "diff",	pageNo: "1", orderBy: "asc"}
+	console.log("분쟁 리스트 클릭");
+	card.fnInit(config);
+});
+
+//분쟁 해결 버튼 클릭
+$(document).on("click", ".btn-diff", function(){
+	// var uno = $(this).parent().parent().find("td")[0].text();
+	var uno = $(this).parent().parent().find("td")[0];
+	// console.log(uno.innerText.trim());
+	var uid = uno.innerText.trim().substring(1);
+	console.log(uid);
+	var data = {"uid": uid};
+	
+	var boolean = false;
+	boolean = confirm("처리하시겠습니까?");
+
+	if(boolean){
+		alert("승인");
+		card.fnCommServer(data);
+	}
+});
 
 //초기 로드 함수
 function init(config){
@@ -186,72 +217,131 @@ function init(config){
 var card = {
 	//Init
 	fnInit : function(config){
+		console.log(config);
 		$.ajax({
 			type: "POST",
 			url: "/p2p/init",
-			data: "{key: data, value: momm}",
+			data: config,
 			dataType: "json",
-			beforeSend: function(){
+			beforeSend: ()=>{
 				showLoader();
 			}
 		}).done(data => {
-			data.config = config;
-			makeHTML.fnCreateHeader(config);
-			makeHTML.fnInit(data)
+			makeHTML.fnCreateHeader(data.config);
+			makeHTML.fnInit(data.data);
+		});
+	},
+
+	fnCommServer : function(data){
+		$.ajax({
+			type: "POST",
+			url: "/p2p/clear",
+			data: data,
+			dataType: "json",
+			beforeSend: ()=>{
+				showLoader();
+			}
+		}).done(data => {
+			console.log(data);
 		});
 	}
 }
 
 var makeHTML = {
 	fnInit : function (data){
+		$("#tbody").remove();
 		console.log(typeof data);
-// 		console.log(data.config);
-		var listData = JSON.parse(data.data);
-		
-		
-		
+		var listData = JSON.parse(data);
 		var i = 0;
+		var html = '<tbody id="tbody">';
 		listData.forEach( o => {
 			console.log(++i);
 			console.log(o);
-			var html = "";
-			html += "<h1>"+i+"</h1>"
-				+ "<h2>"+o.dt+"</h2>"
-				+ "<h2>"+o.title+"</h2>"
-				+ "<p>"+o.reqUserNick+"</p>"
-				+ "<p>";
-			if(o.type == 0){
-				html += "포인트로 코인";
-			}else if(o.type == 1){
-				html += "코인으로 포인트";
+			html += '<tr><th scope="row">'+i+'</th>'
+				+ '<td>#'+o.no+'</td>'
+				+ '<td>'+o.dt+'</td>'
+				+ '<td>'+o.reqUserNick+'</td>';
+			if(o.type == 1){
+				html += '<td class="pt-1 pb-1">';
+				if(o.cAmount > 0){
+					html += '<button type="button" class="btn btn-purple"> / <b> '
+						+ numberWithCommas(o.cAmount)+'개</b></td>';
+				}else{
+					html += '<button type="button" class="btn btn-secondary">락스폰</button> / <b>'
+						+ numberWithCommas(o.lcAmount)+'개</b></td>';
+				}
+			}else if(o.type == 0){
+				html += '<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button> / <b> '
+					+numberWithCommas(o.pAmount)+'원</b></td>';
 			}
-			html +="</p>"
-				+ "<p>"+o.pAmount+"</p>"
-				+ "<p>"+o.cAmount+"</p>"
-				+ "<p>"+o.resUserNick+"</p>";
-			$(".container").append(html);
+
+			html += '<td>'+o.resUserNick+'</td>';
+			if(o.type == 1){
+				html += '<td class="pt-1 pb-1"><button type="button" class="btn btn-gold">포인트</button> / <b> '
+					+ numberWithCommas(o.pAmount)+'원</b></td>';
+			}else if(o.type == 0){
+				html += '<td class="pt-1 pb-1">';
+				if(o.cAmount > 0){
+					html += '<button type="button" class="btn btn-purple"> / <b> '
+						+ numberWithCommas(o.cAmount)+'개</b></td>';
+				}else{
+					html += '<button type="button" class="btn btn-secondary">락스폰</button> / <b>'
+						+ numberWithCommas(o.lcAmount)+'개</b></td>';
+				}
+			}
+			if(o.level == 0 || o.level == 4){
+				html += '<td><b> 1 </b></td>';
+			}else if(o.level == 1 || o.level == 14){
+				html += '<td><b> 2 </b></td>';
+			}
+
+			if(o.reqState == 0 && o.resState == 0){
+				html += '<td> - </td>';
+			}else if(o.reqState == 0 && o.resState == 2){
+				html += '<td> - </td>';
+			}else if(o.reqState == 2 && o.resState == 0){
+				html += '<td> - </td>';
+			}else if(o.reqState == 1 && o.resState == 0){
+				html += '<td>'+o.reqUserNick+'</td>';
+			}else if(o.reqState == 0 && o.resState == 1){
+				html += '<td>'+o.resUserNick+'</td>';
+			}
+
+			if(o.level == 0){
+				html += '<td> 진행중.. </td>';
+			}else if(o.level == 1){
+				html += '<td> 진행중.. </td>';
+			}else if(o.level == 4){
+				html += '<td> 취소중.. </td>';
+			}else if(o.level == 14){
+				html += '<td class="pt-1 pb-1"><button type="button" class="btn btn-diff btn-danger">분쟁</button></td>';
+			}
+			
 		});
+		console.log(html);
+
+		$("table").append(html);
 		hideLoader();
 	},
 	
-	fnCreateHeader : function(config){
-		
-		console.log(config);
-		
-		var html = "<br><br>"
+	fnCreateHeader : function(param){
+		var data = JSON.parse(param);
+		$("#header").remove();
+		var html = "<div id='header'><br><br>"
 		 + "<div class='row'><div class='col-auto mr-auto btn-group' role='group' aria-label='Basic example'>";
-		if(config.listType.trim() === "all"){
-			html += "<button type='button' class='btn btn-primary'>전체보기</button>"
-				+ "<button type='button' class='btn btn-outline-danger'>분쟁상태</button>";
-		}else if(config.listType.trim() === "diff"){
-			html += "<button type='button' class='btn btn-outline-primary'>전체보기</button>"
-				+ "<button type='button' class='btn btn-danger'>분쟁상태</button>";
+		if(data.listType.trim() === "all"){
+			html += "<button id='listAll' type='button' class='btn btn-primary'>전체보기</button>"
+				+ "<button id='listDiff' type='button' class='btn btn-outline-danger'>분쟁상태</button>";
+		}else if(data.listType.trim() === "diff"){
+			html += "<button id='listAll' type='button' class='btn btn-outline-primary'>전체보기</button>"
+				+ "<button id='listDiff' type='button' class='btn btn-danger'>분쟁상태</button>";
 		}else{
 			alert("페이지 오류! 관리자에 문의하세요.");
 		}
-		html += "</div><div class='col-auto p-1'><a href='http://www.worldspon.net'> 뒤로 </a></div></div>";
-		
-		$(".container").append(html);
+		html += "</div><div class='col-auto p-1'><a href='javascript:history.go(-1)'> 뒤로 </a></div></div><br><br></div>";
+
+		console.log(html);
+		$(".header-con").append(html);
 	}
 }
 </script>

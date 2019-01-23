@@ -43,16 +43,24 @@ public class P2PExController {
 	}
 	
 	@PostMapping(value="/p2p/init")
-	public @ResponseBody Map<String, Object> doGetP2PExinit(HttpServletRequest req) {
-		
-		logger.debug("h1h1h1h1h1h1");
-		
-//		ModelAndView mav = new ModelAndView();
+	public @ResponseBody Map<String, Object> doPostP2PExinit(HttpServletRequest req) {
+		HashMap<String, Object> paramMap = HttpUtil.getParamMap(req);
 		Map<String, Object> returnMap = new HashMap<String, Object>();
-		Map<String, Object> paramMap = new HashMap<String, Object>();
 		Gson gson = new Gson();
+		
+		returnMap.put("config", gson.toJson(paramMap));
 		returnMap.put("data", gson.toJson(psi.getP2PExList(paramMap)));
+		
+		logger.debug(psi.getP2PExList(paramMap).size());
+		logger.debug(returnMap.get("data"));
 		return returnMap;
+	}
+	
+//	분쟁해결
+	@PostMapping(value="/p2p/clear")
+	public @ResponseBody Map<String, Object> clearP2PEx(HttpServletRequest req){
+		HashMap<String, Object> paramMap = HttpUtil.getParamMap(req);
+		return psi.updateRequestClear(paramMap);
 	}
 	
 //	@RequestMapping(value="/myAssets/init")
