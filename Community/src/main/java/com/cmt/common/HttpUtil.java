@@ -41,6 +41,17 @@ public class HttpUtil {
 	private Logger logger = LogManager.getLogger();
 	private final static List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
 	
+	private static final Gson gson = new Gson();
+
+	// 스트링이 json 포맷인지 검사
+	public static boolean isJSONValid(String jsonInString) {
+		try {
+			gson.fromJson(jsonInString, Object.class);
+			return true;
+		} catch(com.google.gson.JsonSyntaxException ex) { 
+			return false;
+		}
+	}
 	
 	public static final List<Map<String, Object>> getMapList(){
 		return mapList;
