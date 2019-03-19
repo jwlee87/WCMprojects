@@ -110,6 +110,10 @@ $(document).on("click", ".btn-diff", function(){
 	var uid = uno.innerText.trim().substring(1);
 	var data = {"uid": uid};
 	
+	console.log(uno);
+	console.log(uid);
+	console.log(data);
+	
 	var boolean = false;
 	boolean = confirm("처리하시겠습니까?");
 
@@ -222,7 +226,7 @@ var makeHTML = {
 			}
 			if(o.level == 0 || o.level == 4){
 				html += '<td><b> 1 </b></td>';
-			}else if(o.level == 1 || o.level == 14){
+			}else if(o.level == 3 || o.level == 14){
 				html += '<td><b> 2 </b></td>';
 			}
 
@@ -236,6 +240,10 @@ var makeHTML = {
 				html += '<td>'+o.reqUserNick+'</td>';
 			}else if(o.reqState == 0 && o.resState == 1){
 				html += '<td>'+o.resUserNick+'</td>';
+			}else if(o.reqState == 1 && o.resState == 2){
+				html += '<td>'+o.reqUserNick+'</td>';
+			}else if(o.reqState == 2 && o.resState == 1){
+				html += '<td>'+o.resUserNick+'</td>';
 			}
 
 			if(o.level == 0){
@@ -245,6 +253,8 @@ var makeHTML = {
 			}else if(o.level == 4){
 				html += '<td> 취소중.. </td>';
 			}else if(o.level == 14){
+				html += '<td class="pt-1 pb-1"><button type="button" class="btn btn-diff btn-danger">분쟁</button></td>';
+			}else if(o.level == 3){
 				html += '<td class="pt-1 pb-1"><button type="button" class="btn btn-diff btn-danger">분쟁</button></td>';
 			}
 			

@@ -14,6 +14,7 @@ public class Member {
 	private String phone;
 	private String eMail;
 	private int _class;
+	private String wallet;
 	
 	///Constructor
 	public Member() {
@@ -108,11 +109,20 @@ public class Member {
 		this._class = _class;
 	}
 
+	public String getWallet() {
+		return wallet;
+	}
+
+	public void setWallet(String wallet) {
+		this.wallet = wallet;
+	}
+
 	@Override
 	public String toString() {
 		return "Member [uniqueID=" + uniqueID + ", infoLocate=" + infoLocate + ", tradeMark=" + tradeMark
 				+ ", password=" + password + ", point=" + point + ", lockPoint=" + lockPoint + ", coin=" + coin
-				+ ", lockCoin=" + lockCoin + ", phone=" + phone + ", eMail=" + eMail + ", _class="+_class+"]";
+				+ ", lockCoin=" + lockCoin + ", phone=" + phone + ", eMail=" + eMail + ", _class=" + _class
+				+ ", wallet=" + wallet + "]";
 	}
 	
 }

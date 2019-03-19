@@ -19,7 +19,6 @@ public class CommonScheduler {
 	///Field
 	private Logger logger = LogManager.getLogger();
 	
-	
 	@Scheduled(cron="0/5 * * * * *")
 	public void scheduleRun() throws ParseException {
 		

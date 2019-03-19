@@ -4,10 +4,6 @@ import java.util.HashMap;
 
 public class StringToHashMap {
 
-	public StringToHashMap() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public static void main(String[] args) throws Exception {
 		
 		String body1 = "code=100&message=ok&ap=10084";

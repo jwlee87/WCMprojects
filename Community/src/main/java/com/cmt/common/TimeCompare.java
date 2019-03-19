@@ -19,9 +19,6 @@ public class TimeCompare {
 	private long writeDate;
 	private boolean newThing = false;
 	
-	@SuppressWarnings("unused")
-	private Logger logger = LogManager.getLogger();
-	
 	///Constructor
 	public TimeCompare() {
 	}

@@ -52,6 +52,9 @@ public class HttpUtil {
 			return false;
 		}
 	}
+	public static boolean isNotSingleString(String jsonInString) {
+		return jsonInString.contains("{");
+	}
 	
 	public static final List<Map<String, Object>> getMapList(){
 		return mapList;
@@ -78,7 +81,7 @@ public class HttpUtil {
 			String paramName = keys.iterator().next().toString();
 			result.put(paramName, xssUnescape((String)paramMap.get(paramName)));
 		}
-		System.out.println(result);
+//		System.out.println(result);
 		return result;
 	}
 	
@@ -89,7 +92,7 @@ public class HttpUtil {
 			String paramName = keys.iterator().next().toString();
 			result.put(paramName, xssEscape((String)paramMap.get(paramName)));
 		}
-		System.out.println(result);
+//		System.out.println(result);
 		return result;
 	}
 	
